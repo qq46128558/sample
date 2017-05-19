@@ -44,6 +44,7 @@ class WS {
 						else{
 							$buffer = $this->decode($buffer);
 							$this->send($socket, $buffer); 
+							$this->send($socket, 'welcome~'); 
 						}
 					}
 				}
