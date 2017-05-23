@@ -3,7 +3,7 @@
 echo -e "\033[33;1m注意；一键安装需要切换到root用户进行\033[0m"
 #查找本地包
 
-gz=`ls onex_ecstore*gz`
+gz=`ls ONex-OMS*gz`
 
 for gzfile in ${gz}
 do
@@ -130,7 +130,7 @@ printf '重启防火墙。。。。。。。。。。。。。。。。。。。
 service iptables restart >>setup_log 2>&1
 check_status
 
-printf '创建ecstore 目录。。。。。。。。。。。。。。。。。。'
+printf '创建ShopexErp 目录。。。。。。。。。。。。。。。。。。'
 mkdir -p /data/httpd
 
 check_status
@@ -158,18 +158,18 @@ fi
 
 if [ ! -f ${zendfile}.ldward.bak ]; then cp ${zendfile} ${zendfile}.ldward.bak;fi
   sudo sed -i '/zend_loader.license_path/d' ${zendfile} >/dev/null 2>&1
-  sudo sed -i "\$a zend_loader.license_path='/data/httpd/ecstore/config/developer.zl'" ${zendfile} >>setup_log 2>&1
+  sudo sed -i "\$a zend_loader.license_path='/data/httpd/ShopexErp/config/developer.zl'" ${zendfile} >>setup_log 2>&1
 check_status
 unset zendfile
 check_status
 
-printf '修改网站目录为/data/httpd/ecstore/。。。。。。。。'
+printf '修改网站目录为/data/httpd/ShopexErp/。。。。。。。。'
 nginxconf='/usr/local/nginx/conf/vhosts/default.conf'
 if [ ! -f ${nginxconf}.ldward.bak ]; then sudo cp ${nginxconf} ${nginxconf}.ldward.bak; fi
 if [ -f ${nginxconf} ]; then
 sudo sed -i '/root/d' ${nginxconf}
-#sudo sed -i 'i/root \/data\/httpd\/ecstore\/;' ${nginxconf}
-sudo sed -i '/index/a root \/data\/httpd\/ecstore\/;' ${nginxconf}
+#sudo sed -i 'i/root \/data\/httpd\/ShopexErp\/;' ${nginxconf}
+sudo sed -i '/index/a root \/data\/httpd\/ShopexErp\/;' ${nginxconf}
 check_status
 else
 echo '[失败:找不到配置文件]'
@@ -208,22 +208,22 @@ printf '开机自启动MYSQL服务......'
 sudo chkconfig mysqld on
 check_status
 
-printf '创建ecstore数据库。。。。。。。。。。。。。。。。'
-dbexists=`mysql -uroot -e"select 1 from information_schema.schemata where schema_name='ecstore';"`
+printf '创建OMS数据库。。。。。。。。。。。。。。。。'
+dbexists=`mysql -uroot -e"select 1 from information_schema.schemata where schema_name='oms';"`
 if [ -z "${dbexists}" ]; then
-mysql -uroot -e"create database ecstore;" >/dev/null 2>&1
+mysql -uroot -e"create database oms;" >/dev/null 2>&1
 check_status
 else
 echo '【已存在】'
 fi
 
-printf '授权用户使用ecstore数据库。。。。。。。。。。。'
-mysql -uroot -e"grant all privileges on ecstore.* to 'ec_admin'@'%' identified by 'ec_admin@123';" >>setup_log  2>&1
+printf '授权用户使用oms数据库。。。。。。。。。。。'
+mysql -uroot -e"grant all privileges on oms.* to 'ec_admin'@'%' identified by 'ec_admin@123';" >>setup_log  2>&1
 check_status
 
 printf '定时任务配置。。。。。。。。。。。。。。。。。'
-echo "* * * * * /data/httpd/ecstore/scirpt/queue/queue.sh ${phpfile} >/dev/null "> ldward.crontab.tmp
-echo "* * * * * ${phpfile} /data/httpd/ecstore/script/crontab/crontab.php >/dev/null" >>ldward.crontab.tmp
+echo "* * * * * /data/httpd/ShopexErp/scirpt/queue/queue.sh ${phpfile} >/dev/null "> ldward.crontab.tmp
+echo "* * * * * ${phpfile} /data/httpd/ShopexErp/script/crontab/crontab.php >/dev/null" >>ldward.crontab.tmp
 crontab -uroot ldward.crontab.tmp >>setup_log 2>&1
 check_status
 rm -f ldward.crontab.tmp
@@ -331,8 +331,8 @@ printf "开机自启动FTP服务。。。。。。。。。。。。。。。。
 chkconfig vsftpd on
 check_status
 
-printf "修改ecstore目录权限。。。。。。。。。。。。。。。"
-chown -R www:www /data/httpd/ecstore
+printf "修改ShopexErp目录权限。。。。。。。。。。。。。。。"
+chown -R www:www /data/httpd/ShopexErp
 check_status
 
 echo "mysql 用户名：ec_admin"
