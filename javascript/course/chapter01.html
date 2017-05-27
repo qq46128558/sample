@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<p id="p1"><p>
+<script>
+'use strict';
+// 以//开头直到行末的是注释
+
+//另一种块注释是用/*...*/把多行字符包裹起来
+/* 从这里开始是块注释
+仍然是注释
+仍然是注释
+注释结束 */
+
+//JavaScript严格区分大小写
+
+var p1=document.getElementById('p1');
+p1.innerText=p1.innerText+"所有的JavaScript代码都应该使用strict模式,在JavaScript代码的第一行写上 'use strict';\n\n";
+p1.innerText=p1.innerText+"JavaScript不区分整数和浮点数,统一用Number表示:"+"\n";
+p1.innerText=p1.innerText+"1+2="+(1+2)+" "+typeof(1+2)+"\n";
+p1.innerText=p1.innerText+"(1+2)*5/2="+((1+2)*5/2)+ " "+typeof((1+2)*5/2)+"\n";
+p1.innerText=p1.innerText+"2/0="+(2/0)+" " +typeof(2/0)+"\n";
+p1.innerText=p1.innerText+"0/0="+(0/0)+" "+typeof(0/0)+"\n";
+p1.innerText=p1.innerText+"10%3="+(10%3)+" "+"%求余运算"+"\n";
+p1.innerText=p1.innerText+"false==0:"+(false==0)+"\n";
+p1.innerText=p1.innerText+"false===0:"+(false===0)+"\n";
+p1.innerText=p1.innerText+"NaN===NaN:"+(NaN===NaN)+"\n";
+p1.innerText=p1.innerText+"isNaN(NaN):"+isNaN(NaN)+"\n";
+p1.innerText=p1.innerText+"1/3===(1-2/3):"+(1/3===(1-2/3))+" 浮点数在运算过程中会产生误差\n";
+p1.innerText=p1.innerText+"Math.abs(1/3-(1-2/3))<0.0000001:"+(Math.abs(1/3-(1-2/3))<0.0000001)+ " 要比较两个浮点数是否相等，只能计算它们之差的绝对值，看是否小于某个阈值\n";
+p1.innerText=p1.innerText+"\n数组元素:"+"\n";
+p1.innerText=p1.innerText+"var arr=[1,2,3.14,'Hello',null,true];\n";
+var arr=[1,2,3.14,'Hello',null,true];
+p1.innerText=p1.innerText+"arr[0]="+arr[0]+";\n";
+p1.innerText=p1.innerText+"arr[5]="+arr[5]+";\n";
+p1.innerText=p1.innerText+"arr[6]="+arr[6]+";\n";
+p1.innerText=p1.innerText+"\nJavaScript对象的键都是字符串类型，值可以是任意数据类型:"+"\n";
+p1.innerText=p1.innerText+"var person={name:'Bob',age:20,tags:['js','web','mobile'],city:'Beijing',hasCar:true,zipcode:null}\n";
+var person={name:'Bob',age:20,tags:['js','web','mobile'],city:'Beijing',hasCar:true,zipcode:null};
+p1.innerText=p1.innerText+"person.name="+person.name+";\n";
+p1.innerText=p1.innerText+"person.zipcode="+person.zipcode+";\n";
+
+
+</script>
