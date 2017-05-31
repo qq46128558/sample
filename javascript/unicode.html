@@ -1,0 +1,31 @@
+<script type="text/javascript">// <![CDATA[
+//编码
+var decToHex = function(str) {
+    var res=[];
+    for(var i=0;i < str.length;i++)
+    	//截取每一个字符,转成16进制,前面拼上00补全, 最后截取后4位
+        res[i]=("00"+str.charCodeAt(i).toString(16)).slice(-4);
+        //以\u连接数组上各个值, 最后在最前面再加上一位\u
+    return "\\u"+res.join("\\u");
+}
+//解码
+var hexToDec = function(str) {
+	//将\替换成%
+    str=str.replace(/\\/g,"%");
+    //使用unescape解码
+    return unescape(str);
+}
+var bianma=function()
+{
+document.getElementById('code12').value=decToHex(document.getElementById('code11').value);
+}
+var jiema=function()
+{
+document.getElementById('code12').value=hexToDec(document.getElementById('code11').value);
+}
+// ]]></script>
+
+<p><textarea id="code11" style="width: 500px; height: 100px;" rows="5" cols="50" height="100"></textarea> <br />
+<input onclick="bianma()" type="button" value="编码" />&nbsp;
+<input onclick="jiema()" type="button" value="解码" /><br />
+<textarea id="code12" style="width: 500px; height: 100px;" rows="5" cols="50"></textarea></p>
