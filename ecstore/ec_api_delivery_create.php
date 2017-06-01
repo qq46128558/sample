@@ -33,7 +33,7 @@ function curl($url,$post_data){
 $params = array(
   'method' => 'b2c.delivery.create',
   'order_bn'=>'170505143814430',//订单号
-  'delivery_bn'=>'F170505143814430',//发货单号
+  'delivery_bn'=>'X170505143814430',//发货单号
   'ship_distinct'=>'蝶山区',//收货人所在地区
   'logi_name'=>'顺丰速运',//物流公司
   'ship_name'=>'Peter',//收货人
@@ -43,12 +43,7 @@ $params = array(
   'ship_zip'=>'519001',//邮政编码
   'ship_mobile'=>'13928010001',//收货人手机
   'memo'=>'周末不收货',//订单备注
-  'items'=>array( //订单发货明细
-    'product_bn'=>'P4CB2BB43BEBED', //货号
-    'product_name'=>'CLINIQUE 倩碧 眼部护理水凝霜 15ml', //商品名称
-    'number'=>'1',//发货数量
-    'batch_name'=>'39001',//批次号
-   ),
+  'items'=>'[{"product_bn":"P4CB2BB43BEBED","product_name":"CLINIQUE 倩碧 眼部护理水凝霜 15ml","number":"1","batch_name":"39001"}]',
 );
 
 $token = "e19ee2eb76995e5a17cb6b4f315825fa0b2a3e4fccf6e5238f3ca4ae2ca7754a";
@@ -68,3 +63,5 @@ echo "final:\n".$params['sign']."\n";
 $url = "192.168.239.138/index.php/api";
 $output = curl($url,$params);
 echo $output;
+
+//var_dump(json_decode($params['items']));
