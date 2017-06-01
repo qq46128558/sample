@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+var xiaoming = {
+  name: '小明',
+  birth: 1990,
+  //属性名middle-school不是一个有效的变量,需要用单引号括着
+  'middle-school': 'No.1 Middle School',
+  height: 1.70,
+  weight: 65,
+  //最后可不加逗号
+  score: null
+};
+var xiaomingArr=['小明',1990,'No.1 Middle School',1.70,65,null];
+
+document.write("对象xiaoming(用for...in展示)的属性:<br>");
+for (var o in xiaoming){
+	document.write(o+"<br>");
+}
+document.write("继承得到的属性,'toString' in xiaoming:"+('toString' in xiaoming)+"<br>");
+document.write("自身拥有的属性,xiaoming.hasOwnProperty('toString'):"+(xiaoming.hasOwnProperty('toString'))+"<br>");
+
+document.write("<br>var xiaomingArr=['小明',1990,'No.1 Middle School',1.70,65,null];<br>for...in循环Array:<br>")
+for (var o in xiaomingArr){
+	document.write(o+":"+xiaomingArr[o]+" |typeof "+o+":"+typeof(o)+"<br>");
+}
+
+document.write("<br>ES6规范引入了新的数据类型Map:<br>");
+var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+document.write("var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);<br>");
+document.write("m.get('Michael'):"+m.get('Michael')+"<br>");
+m.set('Adam',65);
+document.write("m.set('Adam',65);m.get('Adam'):"+m.get('Adam')+"<br>");
+document.write("m.has('Bob'):"+m.has('Bob')+"<br>");
+m.delete('Adam');
+document.write("m.delete('Adam');m.get('Adam'):"+m.get('Adam')+"<br>");
+document.write("<br>ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型, 可以使用for...of遍历:<br>");
+
+</script>
