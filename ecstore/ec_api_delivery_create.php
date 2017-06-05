@@ -31,10 +31,10 @@ function curl($url,$post_data){
 }
 
 $params = array(
-  'task'=>'delivery_create_170503105491428', //对应表sdb_apiactionlog_apilog的日志编号,防止重刷, 可自定义
+  'task'=>'DC_170503105491428_'.time(), //对应表sdb_apiactionlog_apilog的日志编号,防止重刷, 可自定义
   'method' => 'b2c.delivery.create',
   'order_bn'=>'170503105491428',//订单号
-  'delivery_bn'=>'170503105491428',//配送流水号,发货单号,未明确是什么
+  'delivery_bn'=>'170503105491428_'.time(),//配送流水号,发货单号,未明确是什么
   'delivery'=>'快递',//配送方式  sdb_b2c_dlytype
   'ship_distinct'=>'蝶山区',//收货人所在地区 sdb_ectools_regions
   'money'=>'0',//配送费用
@@ -55,6 +55,8 @@ $params = array(
   'buyer_uname'=>'U8发货员',//购买人 操作员
   'status'=>'succ',
   'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"2","batch_name":"36999"},{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"9","batch_name":"37000"}]',
+  //'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"2","batch_name":"36999"}]',
+  //'items'=>'[{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"1","batch_name":"37000"}]',
 );
 
 $token = "e19ee2eb76995e5a17cb6b4f315825fa0b2a3e4fccf6e5238f3ca4ae2ca7754a";
@@ -77,7 +79,7 @@ echo $output;
 
 //需要调第二个接口:订单发货状态更新接口
 $params = array(
-  'task'=>'order_update_170503105491428', //对应表sdb_apiactionlog_apilog的日志编号, 防止重刷, 可自定义
+  'task'=>'OU_170503105491428_'.time(), //对应表sdb_apiactionlog_apilog的日志编号, 防止重刷, 可自定义
   'method' => 'b2c.order.ship_status_update',
   'order_bn'=>'170503105491428',
   'ship_status'=>1, //0(未发货) 1(已发货) 2(部分发货) 3(部分退货) 4(已退货)
