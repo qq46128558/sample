@@ -41,6 +41,7 @@ $params = array(
   'is_protect'=>'0',//是否保价 布尔型会sign error
   'logi_no'=>'123457',//物流单号
   'logi_name'=>'顺丰速运',//物流公司 sdb_b2c_dlycorp
+  'logi_phone'=>'13928013666',//物流电话
   'ship_name'=>'彼得',//收货人
   'ship_states'=>'广西',//收货人所在省份 sdb_ectools_regions
   'ship_city'=>'梧州市',//收货人所在城市 sdb_ectools_regions
@@ -55,8 +56,13 @@ $params = array(
   'buyer_uname'=>'U8发货员',//购买人 操作员
   'status'=>'succ',
   'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"2","batch_name":"36999"},{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"9","batch_name":"37000"}]',
-  //'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"2","batch_name":"36999"}]',
+  'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"2","batch_name":"36999"}]',
   //'items'=>'[{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"1","batch_name":"37000"}]',
+
+  //同一商品多个批次
+  //'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"1","batch_name":"40001"},{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"1","batch_name":"40002"},{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"4","batch_name":"40003"},{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"5","batch_name":"40004"}]',
+  //'items'=>'[{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"1","batch_name":"40001"},{"product_bn":"P4CB2BB85A40AD","product_name":"芳草集 甘草排毒保湿面膜120G","number":"1","batch_name":"40002"}]',
+  //'items'=>'[{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"4","batch_name":"40003"},{"product_bn":"P58DA027EC92E9","product_name":"图片测试","number":"5","batch_name":"40004"}]',
 );
 
 $token = "e19ee2eb76995e5a17cb6b4f315825fa0b2a3e4fccf6e5238f3ca4ae2ca7754a";
