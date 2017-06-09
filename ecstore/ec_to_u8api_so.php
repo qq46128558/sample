@@ -11,6 +11,7 @@ $json = <<<u8api
 	,"B2BDocNo":"170605181664332"
 	,"PaymentStatus":"未支付"
 	,"MonCutomer":"否"
+	,"Sender":"否"
 	,"ItemCode":"0302001"
 	,"Qty":1
 	,"Price":550.000
