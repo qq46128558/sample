@@ -4,7 +4,7 @@
 
 //一统项目调用U8修改销售订单状态, 接口测试
 try{
-	$wsdl ="http://web.kingzest.com/webservices/WebService.asmx?wsdl";
+	$wsdl ="http://web.kingzest.com/webserviceshx/WebService.asmx?wsdl";
 	$client = new SoapClient($wsdl);
 	$output = $client->changestatus('170606162017027','部分付款','是');
 	var_dump($output);
