@@ -46,13 +46,14 @@ fi
 
 check
 
-printf '安装wegt.....'
+printf '安装Wget.....'
 yum install wget -y >>setup_log 2>&1
 check
 
 
 
 #进入YUM目录
+printf '下载商派yum源......'
 cd /etc/yum.repos.d/
 if [ ! -f shopex-lnmp.repo ] ; then
 wget http://mirrors.shopex.cn/shopex/shopex-lnmp/shopex-lnmp.repo >setup_log 2>&1
@@ -89,7 +90,7 @@ if [ ! -f /etc/sysconfig/iptables.lkb.bak ]; then cp /etc/sysconfig/iptables /et
 
 
 
-printf '安装redis。。。。'
+printf '安装Redis......'
 yum install  redis -y >setup_log 2>&1
 check
 
@@ -99,7 +100,6 @@ printf '开放80端口......'
 #这里注意是用-I参数, 表示规则插在最前面, 如果用-A参数, 则会限制防问
 cat /etc/sysconfig/iptables|grep "\-\-dport 80"|grep "INPUT"|grep "ACCEPT" >>setup_log 2>&1
 if [ $? == 1 ]; then 
-	INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 	iptables -I INPUT -p tcp --dport 80 -j ACCEPT >>setup_log 2>&1
 	check
 else
@@ -344,12 +344,16 @@ echo 'anon_other_write_enable=YES' >>${ftpuser}
 check
 
 
+
 printf '创建FTP根目录及权限......'
 mkdir -p /data/ftp
 chmod -R 774 /data/ftp
 chown -R ftp:www /data/ftp
 check
 
+printf '重启vsftpd服务......'
+service vsftpd restart >setup_log 2>&1
+check
 
 printf '开机自启动FTP服务......'
 chkconfig vsftpd on

@@ -12,11 +12,13 @@ $json = <<<u8api
 	,"PaymentStatus":"未支付"
 	,"MonCutomer":"否"
 	,"Sender":"否"
+	,"Pmtname":"首批100个打9折,鸡汁首批20个打7折,一统原创200ml本味鲜首批打折,1.96蒸鱼豉油首批打折"
 	,"ItemCode":"0302001"
-	,"Qty":1
-	,"Price":550.000
+	,"Qty":40
+	,"Amount":5877.6
 	,"B2BLineNo":"229"}
 u8api;
+//"Price":146.94  不传入单价
 $json = '{ "orders":[ '.$json;
 $json .= " ]}";
 try{
