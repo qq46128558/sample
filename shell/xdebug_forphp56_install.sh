@@ -3,16 +3,14 @@
 timestart=`date +%s`
 #检查是否执行成功
 function CheckStatus(){
-#退格用于刷新显示秒数
-echo -en '\b\b\b\b'
 if [ $? == 0 ]
 then
 	timeend=`date +%s`;
 	#3位格式化显示秒数
-	printf  "%3us" `expr ${timeend} - ${timestart}`; 
+	#printf  "%3us" `expr ${timeend} - ${timestart}`; 
+	times=`expr ${timeend} - ${timestart}`
+	echo -en "\r累计用时:${times}s......"
 	if [[ $1 == "end" ]]; then
-		sleep 2;
-		echo -en '\b\b\b\b'
 		echo -e "[\033[32;1m成功\033[0m]";
 		echo -e "\033[32m(请手动复制vim插件文件并修改端口为9010)\033[0m"
 	fi
@@ -31,7 +29,7 @@ logfile=~/sh.log;
 echo -e "\033[33;1m注意: 当前安装需要切换到root用户进行.\033[0m"
 #echo "(按任意键继续, 按Ctrl+C终止.)"
 #read
-printf '开始安装XDEBUG(预计时间8分钟)......    '
+echo '开始安装XDEBUG(预计用时9分钟):'
 #安装wget
 sudo yum install wget -y>>${logfile} 2>&1
 CheckStatus
