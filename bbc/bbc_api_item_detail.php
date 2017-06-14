@@ -1,4 +1,5 @@
 <?php
+/*无Oauth认证*/
 error_reporting(E_ALL & ~E_NOTICE);
 
 //Unicode解码函数
@@ -48,8 +49,9 @@ $params = array(
 	'item_id'=>28, //商品id。必须是正整数
 	// 'fields'=>'', //(暂未知如何传入)要获取的商品字段集。多个字段用“,”分隔
 );
-
+$token='';
 $params['sign'] = strtoupper(md5(strtoupper(md5(assemble($params))).$token));
+//此处结尾是topapi
 $url = "192.168.239.138/index.php/topapi";
 $output = curl($url,$params);
 echo unicode_decode($output);
