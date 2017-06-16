@@ -1,5 +1,5 @@
 <?php
-/*获取商品详情,无Oauth认证*/
+/*获取订单列表, 不需Oauth认证, 地址是/api结尾*/
 error_reporting(E_ALL & ~E_NOTICE);
 
 //Unicode解码函数
@@ -42,18 +42,20 @@ function curl($url,$post_data){
   return $output;
 }
 
-$params = array(
-	'method'=>'item.detail',
-	'format'=>'json', //返回数据是json格式的，目前只支持json
-	'v'=>'v1', //标识该接口的版本
-	'item_id'=>28, //商品id。必须是正整数
-	// 'fields'=>'', //(暂未知如何传入)要获取的商品字段集。多个字段用“,”分隔
-);
+$sysParams['method'] = 'trade.get.list';
+$sysParams['timestamp'] = time();
+$sysParams['format'] = 'json';
+$sysParams['v'] = 'v1';
+$sysParams['sign_type'] = 'MD5';
+
+$apiParams['fields'] = '*';
+$params = array_merge($sysParams, $apiParams);
+
+// $token='2ed6c12c7b8a1a2c84b064ebe47263152c0b655355470714862bcc8dbdd949b2';
 $token='';
 $params['sign'] = strtoupper(md5(strtoupper(md5(assemble($params))).$token));
-//此处结尾是topapi
-$url = "192.168.239.138/index.php/topapi";
+
+//此处结尾是api
+$url = "192.168.239.138/index.php/api";
 $output = curl($url,$params);
 echo unicode_decode($output);
-
-
