@@ -15,9 +15,9 @@ exists=`grep "set nu" ~/.vimrc`
 if [ -z "$exists" ]; then sed -i '$a\set nu' ~/.vimrc; fi;
 
 #环境变量(profile)
-if [ ! -f ~/.profile ]; then cp /etc/profile ~/.profile; fi;
-sed -i '/export PS1=/d' ~/.profile
+#if [ ! -f ~/.profile ]; then cp /etc/profile ~/.profile; fi;
+sed -i '/export PS1=/d' ~/.bash_profile
 ps="export PS1='[\u\#_\A@\033[36m\w\033[0m]$'"
-echo ${ps}>>~/.profile
+echo ${ps}>>~/.bash_profile
 #shell进程不同,执行也无效果
 #source ~/.profile
