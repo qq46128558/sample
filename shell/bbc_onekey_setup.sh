@@ -160,7 +160,7 @@ check
 
 
 
-mkdir -p /data/www
+mkdir -p /data/httpd
 
 printf "解压${package}...."
 cd - >/dev/null
