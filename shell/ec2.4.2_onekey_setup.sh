@@ -313,7 +313,7 @@ echo 'Mysql 用户名: ec_admin'
 echo 'Mysql 密  码: ec_admin@123'
 echo 'FTP   用户名: ec_ftp'
 echo 'FTP   密  码: ec_ftp@123'
-echo "注意开户config.php的php56配置:define('EC_PHP_VERSION','php5.6')"
+echo "注意开启config.php的php56配置:define('EC_PHP_VERSION','php5.6')"
 sudo rm -f ${ec_setuplog}
 unset ec_setuplog
 
