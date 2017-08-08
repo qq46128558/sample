@@ -1,0 +1,118 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+
+document.write("-----------var xx=function()-----------<br>");
+//第二种定义函数的方式
+var abs=function(x){
+	if (typeof x!=='number') {throw 'Not a number.';}
+	if (x>0){return x;}else{return -x;}
+};
+//注意第二种方式按照完整语法需要在函数体末尾加一个;，表示赋值语句结束。
+// document.write("abs():"+abs()+"<br>");
+document.write("abs():"+abs(-6)+"<br>");
+
+document.write("-----------arguments-----------<br>");
+//JavaScript还有一个关键字arguments，它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数。arguments类似Array但它不是一个Array：
+function foo(x){
+	document.write("x:"+x+"<br>");
+	for (var i=0;i<arguments.length;i++){
+		document.write('arguments['+i+']:'+arguments[i]+"<br>");
+	}
+}
+foo(10,20,30);
+
+document.write("-----------rest(用到apply)-----------<br>");
+//ES6标准引入了rest参数
+//会用用函数的apply方法: 要指定函数的this指向哪个对象，可以用函数本身的apply方法，它接收两个参数，第一个参数就是需要绑定的this变量，第二个参数是Array，表示函数本身的参数。
+function sum(...rest){
+	var value=0;
+	rest.forEach(function (element){
+		value+=element;
+	});
+	return value;
+}
+var args=[];
+for (var i=1;i<=100;i++){
+	args.push(i);
+}
+document.write('计算1到100之和:'+sum.apply(null,args)+"<br>");
+
+/*注意return语句不要这样写:
+return
+{ name: 'foo' };
+*/
+
+//由于JavaScript的函数可以嵌套，此时，内部函数可以访问外部函数定义的变量，反过来则不行：
+//如果内部函数定义了与外部函数重名的变量，则内部函数的变量将“屏蔽”外部函数的变量。
+
+//JavaScript的函数定义有个特点，它会先扫描整个函数体的语句，把所有申明的变量“提升”到函数顶部
+//JavaScript引擎自动提升了变量y的声明，但不会提升变量y的赋值
+document.write("-----------变量定义与赋值-----------<br>");
+function xy(){
+	var x='Hello '+y;
+	document.write("x='Hello'+y:"+x+"<br>");
+	var y='Bob';
+	document.write("y:"+y+"<br>");
+}
+xy();
+
+//不在任何函数内定义的变量就具有全局作用域。实际上，JavaScript默认有一个全局对象window，全局作用域的变量实际上被绑定到window的一个属性：
+//alert()函数其实也是window的一个变量：
+document.write("-----------禁掉alert-----------<br>");
+var oldalert=window.alert;
+window.alert=function(){}
+alert('abc');
+document.write("已经禁掉.<br>");
+alert=oldalert;
+document.write("现在还原.<br>");
+alert('abc_back');
+
+//减少冲突的一个方法是把自己的所有变量和函数全部绑定到一个全局变量中
+//许多著名的JavaScript库都是这么干的：jQuery，YUI，underscore等等。
+document.write("-----------全局变量-----------<br>");
+var myapp={}
+myapp.name='myapp';
+myapp.version='1.0';
+myapp.foo=function(){return 'foo';}
+document.write('myapp.name:'+myapp.name+"<br>");
+document.write('myapp.version:'+myapp.version+"<br>");
+document.write('myapp.foo:'+myapp.foo()+"<br>");
+
+document.write("-----------let(use try...catch)-----------<br>");
+//for循环等语句块中是无法定义具有局部作用域的变量
+//ES6引入了新的关键字let，用let替代var可以申明一个块级作用域的变量
+var sum=0;
+for(let j=0;j<=100;j++){
+	sum+=j;
+}
+try{
+	document.write('j in for loop:'+j+"<br>");
+}
+catch(e){
+	document.write(e+"<br>");
+}
+
+//ES6标准引入了新的关键字const来定义常量，const与let都具有块级作用域：
+document.write("-----------定义常量-----------<br>");
+const PI=3.14;
+document.write(PI+"<br>");
+
+
+document.write("-----------apply-----------<br>");
+//apply()把参数打包成Array再传入；
+//call()把参数按顺序传入。
+//Math.max.apply(null, [3, 5, 4]); // 5
+//Math.max.call(null, 3, 5, 4); // 5
+var old_parseInt=parseInt;
+var count=0;
+parseInt=function(){
+	count+=1;
+	return old_parseInt.apply(null,arguments);
+}
+parseInt(10);
+parseInt(20);
+parseInt(30);
+document.write('parseInt count:'+count+"<br>");
+
+</script>
