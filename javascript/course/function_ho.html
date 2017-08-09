@@ -1,0 +1,78 @@
+<!DOCTYPE>
+<script type="text/javascript">
+document.write("-----------简单的高阶函数-----------<br>");
+//一个函数可以接收另一个函数作为参数，这种函数就称之为高阶函数
+//编写高阶函数，就是让函数的参数能够接收别的函数
+function add(x,y,f){
+	return f(x)+f(y);
+}
+document.write("add(25,36,Math.sqrt):"+add(25,36,Math.sqrt)+"<br>");
+
+
+document.write("-----------数组操作:map/reduce-----------<br>");
+var arr=[1,3,5,7,9];
+function foo(element,index,array,other){
+	document.write("map element:"+element+" ");
+	document.write("index:"+index+ " ");
+	document.write("array:"+array+" ");
+	document.write("other:"+other+" <br>");
+	return 1;
+}
+//好像不能指定传入参数,只适用于一个参数的传入函数?
+document.write(arr.map(foo)+"<br>");
+
+//Array的reduce()把一个函数作用在这个Array的[x1, x2, x3...]上，这个函数必须接收两个参数，reduce()把结果继续和序列的下一个元素做累积计算
+function fooReduce(elementx,elementy,index,array,other){
+	document.write("reduce elementx:"+elementx+" ");
+	document.write("elementy:"+elementy+ " ");
+	document.write("index:"+index+" ");
+	document.write("array:"+array+" ");
+	document.write("other:"+other+" <br>");
+	return 1;
+}
+document.write(arr.reduce(fooReduce)+"<br>");
+
+var arr1=['1','2','3'];
+//parseInt(string, radix)没有忽略第二个参数
+document.write("['1','2','3']:"+arr1.map(parseInt)+"(因为parseInt有两个参数)<br>");
+document.write("正确结果:"+arr1.map(function(x){return parseInt(x);})+"<br>");
+
+
+document.write("-----------数组操作:filter-----------<br>");
+// filter()把传入的函数依次作用于每个元素，然后根据返回值是true还是false决定保留还是丢弃该元素。
+var arr2 = [1, 2, 4, 5, 6, 9, 10, 15];
+function myfilter(element,index,array,other){
+	document.write("filter element:"+element+" ");
+	document.write("index:"+index+" ");
+	document.write("array:"+array+" ");
+	document.write("other:"+other+" <br>");
+	//删除偶数
+	return element%2==0? false:true;
+}
+document.write("删除偶数 filter:"+arr2.filter(myfilter)+"<br>");
+
+
+document.write("-----------数组操作:sort-----------<br>");
+//通常规定，对于两个元素x和y，如果认为x < y，则返回-1，如果认为x == y，则返回0，如果认为x > y，则返回1
+//Array的sort()方法默认把所有元素先转换为String再排序
+//幸运的是，sort()方法也是一个高阶函数，它还可以接收一个比较函数来实现自定义的排序。
+function mysort(elementx,elementy,index,array,other){
+	document.write("reduce elementx:"+elementx+" ");
+	document.write("elementy:"+elementy+ " ");
+	document.write("index:"+index+" ");
+	document.write("array:"+array+" ");
+	document.write("other:"+other+" <br>");
+	/*升序
+	if (elementx<elementy){return -1;};
+	if (elementx>elementy){return 1;};
+	*/
+	//降序
+	if (elementx<elementy){return 1;};
+	if (elementx>elementy){return -1;};
+	return 0;
+}
+document.write("sort:"+arr2.sort(mysort)+"<br>");
+//sort()方法会直接对Array进行修改
+
+
+</script>
