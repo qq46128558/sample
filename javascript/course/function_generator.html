@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+
+document.write("-----------生成器-----------<br>");
+//generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次。
+//generator和函数不同的是，generator由function*定义（注意多出的*号），并且，除了return语句，还可以用yield返回多次。
+//以斐波那契数列为例
+function* fib(max){
+	var a=0,b=1,n=1,t;
+	while (n<max){
+		yield a;
+		t=a+b;
+		a=b;
+		b=t;
+		n++;
+	}
+	return a;
+}
+var f=fib(5);
+var o=f.next();
+//读f.next()有哪些属性
+for (let x in o){
+	document.write('f.next() attribute:'+ x+"<br>");
+}
+
+while (!o.done){
+	document.write('fib(5) next() value:'+o.value+' done:'+o.done+ ' <br>');
+	o=f.next();
+}
+	document.write('fib(5) next() value:'+o.value+' done:'+o.done+ ' <br>');
+
+document.write("-----------for...of迭代generator-----------<br>");
+//用for ... of循环迭代generator对象,这种方式不需要我们自己判断done
+for (let x of fib(10)){
+	document.write(x+"<br>");
+}
+//因为generator可以在执行过程中多次返回，所以它看上去就像一个可以记住执行状态的函数，利用这一点，写一个generator就可以实现需要用面向对象才能实现的功能
+
+</script>
+

@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+document.write("-----------箭头函数-----------<br>");
+var fn=x=>x*x;
+document.write('x=>x*x:'+fn(10)+"<br>");
+
+fn=(x,y)=>x+y;
+document.write('(x,y)=>x+y:'+fn(10,11)+"<br>");
+
+//箭头函数完全修复了this的指向，this总是指向词法作用域，也就是外层调用者obj
+// 由于this在箭头函数中已经按照词法作用域绑定了，所以，用call()或者apply()调用箭头函数时，无法对this进行绑定，即传入的第一个参数被忽略
+
+var obj={
+	birth:1990,
+	getage:function (year){
+		//此处this.birth是1990
+		var fn=year=>year-this.birth;
+		return fn(year);
+	},
+	//此处this.birth是NaN
+	getage2:year=>year-this.birth,
+}
+document.write('getage:'+obj.getage(2017)+"<br>");
+document.write('getage2:'+obj.getage2(2017)+"<br>");
+
+</script>

@@ -24,7 +24,7 @@ foo(10,20,30);
 
 document.write("-----------rest(用到apply)-----------<br>");
 //ES6标准引入了rest参数
-//会用用函数的apply方法: 要指定函数的this指向哪个对象，可以用函数本身的apply方法，它接收两个参数，第一个参数就是需要绑定的this变量，第二个参数是Array，表示函数本身的参数。
+//会用到函数的apply方法: 要指定函数的this指向哪个对象，可以用函数本身的apply方法，它接收两个参数，第一个参数就是需要绑定的this变量，第二个参数是Array，表示函数本身的参数。
 function sum(...rest){
 	var value=0;
 	rest.forEach(function (element){
