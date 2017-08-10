@@ -3,8 +3,8 @@ require_once __DIR__.'/../../b2b2c/bootstrap/autoload.php';
 require_once __DIR__.'/../../b2b2c/bootstrap/start.php';
 
 /*参考源码:app/system/lib/data/user/vcode.php*/
-$account='peter';
-$type='register';
+$account='dgw@yn-ce.com';
+$type='activation';
 $obj=kernel::single('system_data_user_vcode');
 
 /*可选用代码*/
