@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+// JavaScript不区分类和实例的概念，而是通过原型（prototype）来实现面向对象编程。
+// JavaScript的原型链和Java的Class区别就在，它没有“Class”的概念，所有对象都是实例，所谓继承关系不过是把一个对象的原型指向另一个对象而已。
+// 在编写JavaScript代码时，不要直接用obj.__proto__去改变一个对象的原型
+// Object.create()方法可以传入一个原型对象
+
+// 原型对象
+var Student={
+	name:'Robot',
+	height:1.2,
+	run:function(){console.log('01.'+this.name+' is running...');}
+}
+
+// 基于Student原型创建一个新对象
+function createStudent(name){
+	var s=Object.create(Student);
+	// 初始化新对象
+	s.name=name;
+	return s;
+}
+
+// 这是创建原型继承的一种方法
+var xiaoming=createStudent('小明');
+xiaoming.run();
+console.log('02.'+(xiaoming.__proto__===Student));
+
+var xiaohong=Object.create(Student);
+xiaohong.name="小红";
+xiaohong.run();
+
+// JavaScript对每个创建的对象都会设置一个原型，指向它的原型对象。
+// 当我们用obj.xxx访问一个对象的属性时，JavaScript引擎先在当前对象上查找该属性，如果没有找到，就到其原型对象上找，如果还没有找到，就一直上溯到Object.prototype对象，最后，如果还没有找到，就只能返回undefined。
+// 例如，创建一个Array对象：
+// var arr = [1, 2, 3];
+// 其原型链是：
+// arr ----> Array.prototype ----> Object.prototype ----> null
+// Array.prototype定义了indexOf()、shift()等方法，因此你可以在所有的Array对象上直接调用这些方法。
+// 函数也是一个对象，它的原型链是：
+// foo ----> Function.prototype ----> Object.prototype ----> null
+// 由于Function.prototype定义了apply()等方法，因此，所有函数都可以调用apply()方法。
+// 很容易想到，如果原型链很长，那么访问一个对象的属性就会因为花更多的时间查找而变得更慢，因此要注意不要把原型链搞得太长。
+
+</script>

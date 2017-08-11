@@ -1,0 +1,63 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+
+// 为了区分普通函数和构造函数，按照约定，构造函数首字母应当大写，而普通函数首字母应当小写，这样，一些语法检查工具如jslint将可以帮你检测到漏写的new。
+function Student(name){
+	this.name=name;
+	this.hello=function(){console.log('01.Hello,'+this.name+'!');}
+}
+
+// 这确实是一个普通函数，但是在JavaScript中，可以用关键字new来调用这个函数，并返回一个对象：
+var xiaoming=new Student('小明');
+xiaoming.hello();
+console.log('02.'+typeof xiaoming);
+console.log('03.'+typeof Student);
+// 注意，如果不写new，这就是一个普通函数，它返回undefined。但是，如果写了new，它就变成了一个构造函数，它绑定的this指向新创建的对象，并默认返回this，也就是说，不需要在最后写return this;。
+// 在strict模式下，this.name = name将报错，因为this绑定为undefined，在非strict模式下，this.name = name不报错，因为this绑定为window，于是无意间创建了全局变量name，并且返回undefined，这个结果更糟糕。
+// var xiaohong=Student('小红');
+var xiaohong=new Student('小红');
+
+// 新创建的xiaoming的原型链是：
+// xiaoming ----> Student.prototype ----> Object.prototype ----> null
+// 用new Student()创建的对象还从原型上获得了一个constructor属性，它指向函数Student本身：
+console.log('04.'+(xiaoming.constructor===Student));
+console.log('05.'+(Student===Student.prototype.constructor));
+// 函数Student恰好有个属性prototype指向xiaoming、xiaohong的原型对象
+console.log('06.'+(xiaoming.__proto__===Student.prototype));
+console.log('07.'+(Object.getPrototypeOf(xiaoming)===Student.prototype));
+// xiaoming、xiaohong这些对象可没有prototype这个属性，不过可以用__proto__这个非标准用法来查看
+console.log('08.'+(xiaoming.__proto__!==xiaoming.prototype));
+// 现在我们就认为xiaoming、xiaohong这些对象“继承”自Student。
+
+
+// hello函数实际上只需要共享同一个函数就可以了，这样可以节省很多内存。
+Student.prototype.welcome=function(){
+	console.log('09.Welcome '+this.name+"!");
+}
+xiaoming.welcome();
+xiaohong.welcome();
+
+
+// 我们还可以编写一个createDoctor()函数，在内部封装所有的new操作
+// 一个常用的编程模式像这样
+function Doctor(props){
+	this.name=props.name||'匿名';
+	this.grade=props.grade||1;
+}
+Doctor.prototype.hello=function(){
+	console.log('10.Hello doctor '+this.name+'!');
+}
+function createDoctor(props){
+	return new Doctor(props||{});
+}
+// 这个createDoctor()函数有几个巨大的优点：一是不需要new来调用，二是参数非常灵活，可以不传，也可以这么传：
+var xiaoqiang=createDoctor(
+{name:'小强',}
+);
+xiaoqiang.hello();
+console.log('11.'+xiaoqiang.grade);
+// 由于参数是一个Object，我们无需记忆参数的顺序。如果恰好从JSON拿到了一个对象，就可以直接创建
+
+
+</script>
