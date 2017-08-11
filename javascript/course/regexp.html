@@ -3,7 +3,7 @@
 'use strict';
 // 是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了
 // 用\d可以匹配一个数字，\w可以匹配一个字母或数字
-// - \s可以匹配一个空格（也包括Tab等空白符），所以\s+表示至少有一个空格，例如匹配' '，'\t\t'等；
+// \s可以匹配一个空格（也包括Tab等空白符），所以\s+表示至少有一个空格，例如匹配' '，'\t\t'等；
 // .可以匹配任意字符
 // 要匹配变长的字符，在正则表达式中，用*表示任意个字符（包括0个），用+表示至少一个字符，用?表示0个或1个字符，用{n}表示n个字符，用{n,m}表示n-m个字符：
 // 由于'-'是特殊字符，在正则表达式中，要用'\'转义
@@ -22,5 +22,44 @@ document.write("<br>02."+re2.test("1392801605A"));
 
 // 用正则表达式切分字符串比用固定的字符更灵活
 var arr='a  b c'.split(/\s+/);
+//如果用户输入了一组标签，记得可以用正则表达式来把不规范的输入转化成正确的数组。
 document.write("<br>03."+arr);
+
+// 用()表示的就是要提取的分组（Group）
+// 如果正则表达式中定义了组，就可以在RegExp对象上用exec()方法提取出子串来。
+// exec()方法在匹配成功后，会返回一个Array，第一个元素是正则表达式匹配到的整个字符串，后面的字符串表示匹配成功的子串。
+// exec()方法在匹配失败时返回null。
+re1=/^(\d{3})\-(\d{3,8})$/;
+document.write("<br>04."+re1.exec('010 12345'));
+document.write("<br>05."+re1.exec('010-12345'));
+
+// 正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符
+re1=/^(\d+)(0*)$/;
+document.write("<br>06."+re1.exec('102300'));
+// 加个?就可以让\d+采用非贪婪匹配：
+re1=/^(\d+?)(0*)$/;
+document.write("<br>07."+re1.exec('102300'));
+re1=/(\d+?)(0*)/;
+document.write("<br>08."+re1.exec('102300'));
+
+// JavaScript的正则表达式还有几个特殊的标志，最常用的是g，表示全局匹配：
+// 全局匹配可以多次执行exec()方法来搜索一个匹配的字符串。当我们指定g标志后，每次运行exec()，正则表达式本身会更新lastIndex属性，表示上次匹配到的最后索引：
+var s="JavaScript,VBScript,JScript and ECMAScript";
+re1=new RegExp('[a-zA-z]+Script','g');
+// 等价于 re1=/[a-zA-z]+Script/g;
+document.write("<br>09."+re1.exec(s));
+document.write("<br>10."+re1.lastIndex);
+document.write("<br>11."+re1.exec(s));
+document.write("<br>12."+re1.lastIndex);
+document.write("<br>13."+re1.exec(s));
+document.write("<br>14."+re1.lastIndex);
+document.write("<br>15."+re1.exec(s));
+document.write("<br>16."+re1.lastIndex);
+document.write("<br>17."+re1.exec(s));
+document.write("<br>18."+re1.lastIndex);
+// 全局匹配类似搜索，因此不能使用/^...$/，那样只会最多匹配一次。
+// 正则表达式还可以指定i标志，表示忽略大小写，m标志，表示执行多行匹配。
+// 如果你经常遇到正则表达式的问题，你可能需要一本正则表达式的参考书
+
+
 </script>
