@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<script type="text/javascript">
+'use strict';
+
+// 在prototype_inherit我们看到了JavaScript的对象模型是基于原型实现的，特点是简单，缺点是理解起来比传统的类－实例模型要困难，最大的缺点是继承的实现需要编写大量代码，并且需要正确实现原型链。
+// 新的关键字class从ES6开始正式被引入到JavaScript中。class的目的就是让定义类更简单。
+
+// 如果用新的class关键字来编写Student
+class Student{
+	constructor(name){this.name=name;}
+	hello(){console.log('01.Hello '+this.name+"!");}
+}
+// class的定义包含了构造函数constructor和定义在原型对象上的函数hello()（注意没有function关键字）
+
+// 用class定义对象的另一个巨大的好处是继承更方便了
+class PrimaryStudent extends Student{
+	// 记得用super调用父类的构造方法!
+	constructor(name){
+		super(name);
+		this.grade=1;
+	}
+	getGrade(){console.log('02.Grade '+this.grade+"!");}
+}
+
+// 用class的好处就是极大地简化了原型链代码
+var xiaohua=new PrimaryStudent('小华');
+xiaohua.grade='S';
+xiaohua.hello();
+xiaohua.getGrade();
+console.log('03.'+(typeof xiaohua));
+
+console.log('04.'+(xiaohua.__proto__===PrimaryStudent.prototype));
+console.log('05.'+(xiaohua.__proto__.__proto__===Student.prototype));
+console.log('06.'+(xiaohua instanceof PrimaryStudent));
+console.log('07.'+(xiaohua instanceof Student));
+
+
+</script>
