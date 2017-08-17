@@ -2,7 +2,7 @@
 echo -e "\033[33;1m注意: 一键安装需要切换到root用户进行.\033[0m"
 
 #查找本地包
-gz=`ls b2b2c-common*.gz`
+gz=`ls b2b2c-*.gz`
 for gzfile in $gz
 do
 if [ -f $gzfile ]; then 
@@ -179,7 +179,7 @@ sed -i "\$a zend_loader.license_path='/data/httpd/b2b2c/config/developer.zl'" ${
 
 
 check 
-unset sendfile
+unset zendfile
 
 
 
@@ -243,8 +243,8 @@ mysql -uroot  -e"grant all privileges on bbc.* to 'ec_admin'@'%' identified by '
 check
 
 printf '定时任务配置......'
-echo "* * * * * /data/httpd/bbc/script/queue/queue.sh ${phpfile} > /dev/null" >lkb.crontab.tmp
-echo "* * * * * ${phpfile} /data/httpd/bbc/script/crontab/crontab.php >/dev/null" >>lkb.crontab.tmp
+echo "* * * * * /data/httpd/b2b2c/script/queue/queue.sh ${phpfile} > /dev/null" >lkb.crontab.tmp
+echo "* * * * * ${phpfile} /data/httpd/b2b2c/script/crontab/crontab.php >/dev/null" >>lkb.crontab.tmp
 sudo crontab -uwww lkb.crontab.tmp >setup_log 2>&1
 check
 rm -f lkb.crontab.tmp
@@ -316,7 +316,7 @@ db_load -T -t hash -f ${ftptxt} ${ftpdb}
 check
 unset ftptxt
 unset ftpdb
-#认证完成，可以txt文件的密码行
+#认证完成，可以删除txt文件的密码行
 sed -i '/ec_ftp@123/d' ${ftptxt}>>setup_log 2>&1
 
 printf '编辑FTP上传文件......'
