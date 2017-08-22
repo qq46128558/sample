@@ -1,0 +1,88 @@
+<!DOCTYPE>
+<body>
+<dl id='drink-menu' style=='border:solid 1px #ccc;padding:6px;'>
+<dt>摩卡</dt>
+	<dd>热摩卡咖啡</dd>
+<dt>酸奶</dt>
+	<dd id='bjlsn'>北京老酸奶</dd>
+<dt>果汁</dt>
+	<dd class='apple'>鲜榨苹果汁</dd>
+</dl>
+</body>
+<script type="text/javascript">
+'use strict';
+// document对象表示当前页面。由于HTML在浏览器中以DOM形式表示为树形结构，document对象就是整个DOM树的根节点。
+document.title="Document对象";
+console.log('01.'+document.title);
+// 最常用的查找
+var menu=document.getElementById('drink-menu');
+var drinks=document.getElementsByTagName('dt');
+console.log('02.'+menu.tagName);
+var s='';
+for(var i=0;i<drinks.length;i++){
+	s+=drinks[i].innerHTML+',';
+}
+console.log('03.提供的饮料:'+s.substr(0,s.length-1));
+
+// document对象还有一个cookie属性，可以获取当前页面的Cookie。
+// Cookie是由服务器发送的key-value标示符。因为HTTP协议是无状态的，但是服务器要区分到底是哪个用户发过来的请求，就可以用Cookie来区分。当一个用户成功登录后，服务器发送一个Cookie给浏览器，例如user=ABC123XYZ(加密的字符串)...，此后，浏览器访问该网站时，会在请求头附上这个Cookie，服务器根据Cookie即可区分出用户。
+// Cookie还可以存储网站的一些设置，例如，页面显示的语言等等。
+console.log('04.'+document.cookie);
+
+// history对象保存了浏览器的历史记录, JavaScript可以调用history对象的back()或forward ()
+// 任何情况，你都不应该使用history这个对象了。
+
+// 操作DOM
+// 操作一个DOM节点实际上就是这么几个操作
+// - 更新：更新该DOM节点的内容，相当于更新了该DOM节点表示的HTML的内容；
+// - 遍历：遍历该DOM节点下的子节点，以便进行进一步操作；
+// - 添加：在该DOM节点下新增一个子节点，相当于动态增加了一个HTML节点；
+// - 删除：将该节点从HTML中删除，相当于删掉了该DOM节点的内容以及它包含的所有子节点。
+// 先定位ID为drink-menu的节点，再返回其内部所有dd节点：HTMLCollection
+var dd=document.getElementById('drink-menu').getElementsByTagName('dd');
+console.log('05.'+dd[0].innerHTML);
+// 先定位ID为drink-menu的节点，再返回其内部所有class包含apple的节点：HTMLCollection
+var apple=document.getElementById('drink-menu').getElementsByClassName('apple');
+console.log('06.'+apple[0].innerHTML);
+// 返回ID为drink-menu的节点：HTMLDListElement
+var drink_menu=document.getElementById('drink-menu');
+// 获取节点drink_menu下的所有直属子节点, HTMLCollection
+console.log('07.'+drink_menu.children);
+// 获取节点drink_menu下第一个、最后一个子节点, HTMLElement
+console.log('08.'+drink_menu.firstElementChild);
+console.log('09.'+drink_menu.lastElementChild);
+
+// selector语法
+// 通过querySelector获取ID为drink-menu的节点, HTMLDListElement
+var q1=document.querySelector('#drink-menu');
+console.log('10.'+q1);
+// 通过querySelectorAll获取q1节点内的符合条件的所有节点, NodeList
+var qNodeList=q1.querySelectorAll('dd');
+console.log('11.'+qNodeList);
+
+// 更新DOM
+// 一种是修改innerHTML属性，这个方式非常强大，不但可以修改一个DOM节点的文本内容，还可以直接通过HTML片段修改DOM节点内部的子树：
+document.getElementById('bjlsn').innerHTML='上海老酸奶';
+console.log('12.'+qNodeList[1].innerHTML);
+// 第二种是修改innerText或textContent属性，这样可以自动对字符串进行HTML编码，保证无法设置任何HTML标签：
+// innerText不返回隐藏元素的文本，而textContent返回所有文本
+document.getElementById('bjlsn').innerText='北京老酸奶';
+console.log('13.'+qNodeList[1].innerText);
+document.getElementById('bjlsn').textContent='杭州老酸奶';
+console.log('14.'+qNodeList[1].textContent);
+
+// 修改CSS也是经常需要的操作。DOM节点的style属性对应所有的CSS，可以直接获取或设置。因为CSS允许font-size这样的名称，但它并非JavaScript有效的属性名，所以需要在JavaScript中改写为驼峰式命名fontSize：
+var bjlsn=document.getElementById('bjlsn');
+bjlsn.style.color='#ff0000';
+bjlsn.style.fontSize='20px';
+bjlsn.style.paddingTop='2em';
+bjlsn.style.fontWeight='bold';
+
+// 插入DOM
+// 如果这个DOM节点不是空的，使用innerHTML修改会直接替换掉原来的所有子节点。
+
+
+
+
+
+</script>
