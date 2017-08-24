@@ -13,7 +13,7 @@ var_dump($setSmsSign);
 
 
 // php配置文件
-// 读取
+// 读取 config类:app\base\lib\static\config.php
 $data=config::get('database.connections.default.host');
 var_dump($data);
 
