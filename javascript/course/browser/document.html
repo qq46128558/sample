@@ -62,14 +62,21 @@ console.log('11.'+qNodeList);
 
 // 更新DOM
 // 一种是修改innerHTML属性，这个方式非常强大，不但可以修改一个DOM节点的文本内容，还可以直接通过HTML片段修改DOM节点内部的子树：
-document.getElementById('bjlsn').innerHTML='上海老酸奶';
+document.getElementById('bjlsn').innerHTML='<i>上海老酸奶</i>';
 console.log('12.'+qNodeList[1].innerHTML);
+console.log('12.1.'+qNodeList[1].innerText);
+console.log('12.2'+qNodeList[1].textConent);
 // 第二种是修改innerText或textContent属性，这样可以自动对字符串进行HTML编码，保证无法设置任何HTML标签：
 // innerText不返回隐藏元素的文本，而textContent返回所有文本
-document.getElementById('bjlsn').innerText='北京老酸奶';
-console.log('13.'+qNodeList[1].innerText);
-document.getElementById('bjlsn').textContent='杭州老酸奶';
-console.log('14.'+qNodeList[1].textContent);
+document.getElementById('bjlsn').innerText='杭州老酸奶';
+console.log('13.'+qNodeList[1].innerHTML);
+console.log('13.1.'+qNodeList[1].innerText);
+console.log('13.2.'+qNodeList[1].textConent);
+document.getElementById('bjlsn').textContent='北京老酸奶';
+console.log('14.'+qNodeList[1].innerHTML);
+console.log('13.1.'+qNodeList[1].innerText);
+console.log('14.2'+qNodeList[1].textContent);
+
 
 // 修改CSS也是经常需要的操作。DOM节点的style属性对应所有的CSS，可以直接获取或设置。因为CSS允许font-size这样的名称，但它并非JavaScript有效的属性名，所以需要在JavaScript中改写为驼峰式命名fontSize：
 var bjlsn=document.getElementById('bjlsn');
@@ -77,11 +84,47 @@ bjlsn.style.color='#ff0000';
 bjlsn.style.fontSize='20px';
 bjlsn.style.paddingTop='2em';
 bjlsn.style.fontWeight='bold';
+console.log('15.修改了样式');
 
 // 插入DOM
 // 如果这个DOM节点不是空的，使用innerHTML修改会直接替换掉原来的所有子节点。
+// 使用appendChild
+var bai=document.createElement('dd');
+bai.id='bai';
+bai.innerText='蜂蜜百香果';
+menu.appendChild(bai);
+console.log('16.增加了节点:'+bai.innerText);
+
+// 使用insertBefore
+var shlsn=document.createElement('dd');
+shlsn.id='shlsn';
+shlsn.innerText="上海老酸奶";
+menu.insertBefore(shlsn,bjlsn);
+console.log('17.增加了节点:'+shlsn.innerText);
+
+// 删除DOM
+// 要删除一个节点，首先要获得该节点本身以及它的父节点，然后，调用父节点的removeChild把自己删掉：
+// children属性是一个只读属性，并且它在子节点变化时会实时更新
+// 删除多个节点时，要注意children属性时刻都在变化。
+shlsn.parentElement.removeChild(shlsn);
+console.log('18.删除了节点:'+shlsn.innerText);
 
 
+// ----------------------------------------------------------------
+// 用JavaScript操作表单和操作DOM是类似的，因为表单本身也是DOM树。
+// 获得了一个<input>节点的引用，就可以直接调用value获得对应的用户输入值
+// 对于单选框和复选框，value属性返回的永远是HTML预设的值，而我们需要获得的实际是用户是否“勾上了”选项，所以应该用checked判断
+// HTML5新增了大量标准控件，常用的包括date、datetime、datetime-local、color等，它们都使用<input>标签：
+// 不支持HTML5的浏览器无法识别新的控件，会把它们当做type="text"来显示
+
+// JavaScript可以以两种方式来处理表单的提交
+// 方式一是通过<form>元素的submit()方法提交一个表单，例如，响应一个<button>的click事件，在JavaScript代码中提交表单：
+// form.submit();
+// 第二种方式是响应<form>本身的onsubmit事件
+// <form id="test-form" onsubmit="return checkForm()">
+  // <button type="submit">Submit</button>
+// 注意要return true来告诉浏览器继续提交，如果return false，浏览器将不会继续提交form，这种情况通常对应用户输入有误，提示用户错误信息后终止提交form。
+// 没有name属性的<input>的数据不会被提交。
 
 
 
