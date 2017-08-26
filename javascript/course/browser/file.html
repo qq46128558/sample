@@ -1,0 +1,45 @@
+<html>
+<!DOCTYPE>
+<head>
+<script type="text/javascript">
+'use strict';
+var upload;
+window.onload=function(){
+	upload=document.getElementById('upload');
+	upload.addEventListener('change',function(){
+	// 随着HTML5的普及，新增的File API允许JavaScript读取文件内容，获得更多的文件信息。
+	// 读取文件
+	var reader=new FileReader();
+	// JavaScript中，执行多任务实际上都是异步调用
+	// 发起一个异步操作来读取文件内容
+	// 以DataURL的形式读取文件
+	reader.readAsDataURL(upload.files[0]);
+
+	// 不知道什么时候操作结束，因此需要先设置一个回调函数
+	reader.onload=function(e){
+		// 当文件读取完成后，自动调用此函数
+		var data=e.target.result;
+		var preview=document.getElementById('preview');
+		preview.style.backgroundImage='url('+data+')';
+	};
+
+	});
+}
+function selectfile(){
+	console.log('01.'+upload.value);
+	console.log('02.'+upload.value.endsWith('.jpg'));
+	console.log('03.'+upload.files[0]);
+	console.log('04.'+upload.files[0].size);
+	console.log('05.'+upload.files[0].lastModifiedDate);
+	console.log('06.'+upload.files[0].type);
+}
+
+// JavaScript代码都不可能同时有多于1个线程在执行。
+</script>
+</head>
+<body>
+<!-- <浏览器只允许用户点击<input type="file">来选择本地文件，用JavaScript对<input type="file">的value赋值是没有任何效果的。当用户选择了上传某个文件后，JavaScript也无法获得该文件的真实路径 -->
+<input id="upload" type="file" enctype="multipart/form-data" method="post" onchange="selectfile();"/>
+<div id="preview" style="width:600px;height:500px;"></div>
+</body>
+</html>

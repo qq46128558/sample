@@ -1,0 +1,77 @@
+<html>
+<!DOCTYPE>
+<head>
+<script>
+'use strict';
+// AJAX 用JavaScript执行异步网络请求
+// Web的运作原理：一次HTTP请求对应一个页面。
+// 如果要让用户留在当前页面中，同时发出新的HTTP请求，就必须用JavaScript发送这个新请求，接收到数据后，再用JavaScript更新页面，这样一来，用户就感觉自己仍然停留在当前页面，但是数据却可以不断地更新
+// AJAX请求是异步执行的，也就是说，要通过回调函数获得响应
+// AJAX主要依靠XMLHttpRequest对象
+// 当创建了XMLHttpRequest对象后，要先设置onreadystatechange的回调函数。在回调函数中，通常我们只需通过readyState === 4判断请求是否完成，如果已完成，再根据status === 200判断是否是一个成功的响应。
+
+// 新建XMLHttpRequest对象
+var request=new XMLHttpRequest();
+// 状态发生变化时，函数被回调
+request.onreadystatechange=function(){
+	console.log('01.'+request.readyState);
+	console.log('02.'+request.status);
+	// 成功完成
+	if (request.readyState==4){
+		// 调用成功
+		if (request.status==200){
+			console.log('04.'+request.responseText);
+		// 调用失败
+		}else{
+			console.log('05.'+request.status);
+		}
+	}else{
+		console.log('03.'+request.responseText);
+		console.log('00.HTTP请求还在继续...');
+	}
+
+};
+
+// XMLHttpRequest对象的open()方法有3个参数，第一个参数指定是GET还是POST，第二个参数指定URL地址，第三个参数指定是否使用异步，默认是true，所以不用写。
+// 注意，千万不要把第三个参数指定为false，否则浏览器将停止响应，直到AJAX请求完成。如果这个请求耗时10秒，那么10秒内你会发现浏览器处于“假死”状态。
+request.open('GET','/ecstore/index.php/api');
+
+// 不能跨域访问
+// 跨域只能使用JSONP来实现，或者通过服务器端获取
+// request.open('GET','https://api.douban.com//v2/movie/top250')
+
+// 最后调用send()方法才真正发送请求。GET请求不需要参数，POST请求需要把body部分以字符串或者FormData对象传进去。
+request.send();
+
+// ----------------------------------------------------------------------
+// JSONP回调函数
+function getMovieData(data){
+	console.log('06.'+data['subjects'][0].title);
+}
+// JSONP调用方式
+var js=document.createElement('script');
+js.src="https://api.douban.com/v2/movie/top250?callback=getMovieData";
+var head=document.getElementsByTagName('head')[0];
+head.appendChild(js);
+
+// ----------------------------------------------------------------------
+// HTML5 新的跨域策略：CORS
+// 跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的Access-Control-Allow-Origin，决定权始终在对方手中
+// 上面这种跨域请求，称之为“简单请求”。简单请求包括GET、HEAD和POST（POST的Content-Type类型 仅限application/x-www-form-urlencoded、multipart/form-data和text/plain），并且不能出现任何自定义头（例如，X-Custom: 12345），通常能满足90%的需求。
+// 需要深入了解CORS的童鞋请移步W3C文档。
+
+
+</script>
+
+<!-- JSONP，它有个限制，只能用GET请求，并且要求返回JavaScript -->
+<!-- JSONP通常以函数调用的形式返回 -->
+<!--
+<script src='https://api.douban.com/v2/movie/top250?callback=getMovieData'>
+</script>
+-->
+
+</head>
+
+<body>
+</body>
+</html>

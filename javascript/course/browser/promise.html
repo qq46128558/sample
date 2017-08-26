@@ -1,0 +1,82 @@
+<html>
+<!DOCTYPE>
+<head>
+<script type="text/javascript">
+// 在JavaScript的世界中，所有代码都是单线程执行的。
+// 由于这个“缺陷”，导致JavaScript的所有网络操作，浏览器事件，都必须是异步执行。异步执行可以用回调函数实现
+// 把回调函数success(request.responseText)和fail(request.status)写到一个AJAX操作里很正常，但是不好看，而且不利于代码复用。
+// 链式写法的好处在于，先统一执行AJAX逻辑，不关心如何处理结果，然后，根据结果是成功还是失败，在将来的某个时候调用success函数或fail函数。
+// 这种“承诺将来会执行”的对象在JavaScript中称为Promise对象
+// Promise最大的好处是在异步执行的流程中，把执行代码和处理结果的代码清晰地分离了
+
+// 测试一下你的浏览器是否支持Promise
+new Promise(function(){});
+
+/*
+// Promise.then执行f1, .catch执行f2
+new Promise(function(f1,f2){
+	var timeOut=Math.random()*2;
+	setTimeout(function(){
+		if (timeOut<1){
+			f1('200 OK');
+		}
+		else{
+			f2('timeout in '+timeOut+'s');
+		}
+	},timeOut*1000);
+}).then(function(r){
+	console.log('01.Execute f1:'+r);
+}).catch(function(r){
+	console.log('02.Execute f2:'+r);
+})
+*/
+
+
+// Promise最大的好处是在异步执行的流程中，把执行代码和处理结果的代码清晰地分离了
+// 有若干个异步任务，需要先做任务1，如果成功后再做任务2，任何任务失败则不再继续并执行错误处理函数
+// job1.then(job2).then(job3).catch(handleError);
+// 其中，job1、job2和job3都是Promise对象。
+
+
+// 用Promise如何简化异步处理
+function ajax(method,url,data){
+	var request=new XMLHttpRequest();
+	return new Promise(function(resolve,reject){
+		request.onreadystatechange=function(){
+			if (request.readyState==4){
+				if (request.status==200){
+					resolve(request.responseText);
+				}else{
+					reject(request.status);
+				}
+			}
+		};
+		request.open(method,url);
+		request.send(data);
+	});
+}
+
+var p=ajax('GET','/ecstore/index.php/api');
+p.then(function(v){
+	console.log('01.调用成功返回:'+v);
+}).catch(function(c){
+	console.log('02.调用失败返回:'+c);
+});
+
+
+// Promise还可以并行执行异步任务
+var p2=ajax('GET','/b2b2c/public/index.php/api');
+Promise.all([p,p2]).then(function(r){
+	console.log('03.并行执行返回类型:'+(typeof r)+" 内容:"+r);
+});
+
+// 有些时候，多个异步任务是为了容错
+// 只需要获得先返回的结果即可。这种情况下，用Promise.race()
+Promise.race([p,p2]).then(function(r){
+	console.log('04.'+r);
+});
+
+</script>
+</head>
+<body></body>
+</html>
