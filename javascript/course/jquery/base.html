@@ -101,6 +101,50 @@ $(document).ready(function(){
 	console.log($('div:hidden'));
 	// $('div:visible'); // 所有可见的div
 
+	// 查找
+	// 最常见的查找是在某个节点的所有子节点中查找，使用find()方法
+	console.log('24.');
+	console.log($('ul').find('.lang-php'));
+	// 如果要从当前节点开始向上查找，使用parent()方法：
+	console.log('25.');
+	console.log($('#c').parent());
+	// 从父节点开始向上查找，直到找到某个符合条件的节点并返回(注意是向上查,并且不会跳级查)
+	console.log('26.');
+	console.log($('#c').parent().parent('[name=lang]'));
+	// 对于位于同一层级的节点，可以通过next()和prev()方法
+	console.log('27.');
+	console.log($('#c').next());
+	console.log('28.');
+	console.log($('#c').prev());
+	console.log('29.');
+	console.log($('#c').prev('*')); // 暂不知为什么向上找不到'.lang-swift'
+
+	// 过滤
+	// filter()方法可以过滤掉不符合选择器条件的节点
+	console.log('30.');
+	console.log($('li').filter('.lang-javascript'));
+	// 或者传入一个函数，要特别注意函数内部的this被绑定为DOM对象，不是jQuery对象：
+	console.log('31.');
+	console.log($('li').filter(function(){
+		// 返回P开头的节点
+		return this.innerHTML.indexOf('P')===0;
+	}
+	));
+	// map()方法把一个jQuery对象包含的若干DOM节点转化为其他对象
+	// 用get()拿到包含string的Array(jquery的get方法)
+	console.log('32.');
+	console.log($('li').map(function(){
+		return this.innerHTML;
+	}
+	).get());
+	// 一个jQuery对象如果包含了不止一个DOM节点，first()、last()和slice()方法可以返回一个新的jQuery对象，把不需要的DOM节点去掉
+	// 同等于过滤器的功能
+	console.log('33.');
+	console.log($('ol li').first());
+	console.log('34.');
+	从索引0开始, 到索引2(但不包括索引2)
+	console.log($('ol li').slice(0,2));
+	
 })
 
 // 表单相关
@@ -127,7 +171,7 @@ $(document).ready(function(){
 	<ol class="test-lang">
 	<li class="lang-swift">Swift</li>
 	<li class="lang-java">Java</li>
-	<li class="lang-c">C</li>
+	<li class="lang-c" id="c">C</li>
 	<li class="lang-php db-mysql">Php</li>
 	</ol>
 </div>
