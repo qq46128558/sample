@@ -1,0 +1,104 @@
+<html>
+<!DOCTYPE>
+<head>
+<script src="/b2b2c/public/app/site/statics/scripts/lib/jquery.js"></script>
+<!-- 不知为什么src写在下面这句里面无效果 -->
+<script type="text/javascript">
+'use strict';
+
+$(document).ready(function(){
+	// jQuery对象的text()和html()方法分别获取节点的文本和原始HTML文本
+	console.log('01.'+$('#test>ul>li.lang-php').text());
+	console.log('02.'+$('div:hidden').html());
+	// 无参数调用text()是获取文本，传入参数就变成设置文本
+	// 一个jQuery对象可以包含0个或任意个DOM对象，它的方法实际上会作用在对应的每个DOM节点上
+	console.log('03.'+$('#test>ol>li').text("PHP").map(function(){return this.innerText;}).get());
+	
+	// 选择器没有返回任何DOM节点，调用jQuery对象的方法仍然不会报错
+	// 调用jQuery对象的css('name', 'value')方法
+	// jQuery对象的所有方法都返回一个jQuery对象（可能是新的也可能是自身），这样我们可以进行链式调用
+	console.log('04.');
+	console.log($('#test>ol>li').css('background-color','#ffd351').css('color','red'));
+	
+	// css()方法将作用于DOM节点的style属性，具有最高优先级
+	// class属性
+	console.log('05.'+$('#test').hasClass('test-selector'));
+	console.log('06.'+$('#test').addClass('mydiv').hasClass('mydiv'));
+	console.log('07.'+$('#test').removeClass('mydiv').hasClass('mydiv'));
+	
+	// 考虑到显示和隐藏DOM元素使用非常普遍，jQuery直接提供show()和hide()方法
+	console.log('08.'+$('#test').hide().get());
+	console.log('09.'+$('#test').show().get());
+	
+	// 利用jQuery对象的若干方法，我们直接可以获取DOM的高宽等信息
+	console.log('10.'+$(window).width()+" x "+$(window).height());
+	console.log('11.'+$(document).width()+ " x "+$(document).height());
+	console.log('12.'+$('#test').width()+ " x "+$('#test').height());
+
+	// attr()和removeAttr()方法用于操作DOM节点的属性
+	console.log('13.'+$('div>ul>li.lang-python').attr('data'));
+	console.log('14.'+$('div>ul>li.lang-python').attr('item'));
+	console.log('15.'+$('.lang-python').removeAttr('item').attr('item'));
+	console.log('16.'+$('.lang-python').attr('item','abc').attr('item'));
+
+	// prop()方法和attr()类似
+	// 对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
+	// 对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
+	console.log('17.'+$('.lang-python').prop('item'));
+	console.log('18.'+$('.lang-python').prop('class'));
+	console.log('19.'+$('.lang-python').attr('class'));
+
+	// 属性checked,selected，处理时最好用is(':selected'), is(':checked')
+	console.log('20.'+$('.lang-python').is(':checked'));
+
+	// 对于表单元素，jQuery对象统一提供val()方法获取和设置对应的value属性：
+	// 一个val()就统一了各种输入框的取值和赋值的问题
+	console.log('21.'+$('#email').val());
+	console.log('22.'+$('#email').val('yndgw@flyrise.cn').val());
+
+	// 修改DOM结构
+	// append()还可以传入原始的DOM对象，jQuery对象和函数对象
+	console.log('23.'+$('ol').append('<li><span>Haskell</span></li>').get());
+	var li=document.createElement('li')
+	li.innerHTML="<span>Pascal</span>";
+	console.log('24.'+$('ol').append(li).get());
+	// 如果要添加的DOM节点已经存在于HTML文档中，它会首先从文档移除，然后再添加，也就是说，用append()，你可以移动一个DOM节点
+	console.log('25.'+$('ol').append($('ul>li:first-child')).get());
+	console.log('26.'+
+	$('ol').append(function(value){return '<li><span>Language:'+value+'</span></li>';}('Node.Js')).get()
+	);
+	// append()把DOM添加到最后，prepend()则把DOM添加到最前
+
+	// 如果要把新节点插入到指定位置, 可以先定位到节点，然后用after()方法
+	// 也就是说，同级节点可以用after()或者before()方法
+	console.log('27.'+$('ul>li:first-child').before('<li>JavaScript</li>').get()[0].innerText);
+
+	// 要删除DOM节点，拿到jQuery对象后直接调用remove()方法就可以了
+	// 如果jQuery对象包含若干DOM节点，实际上可以一次删除多个DOM节点
+	console.log('28.'+$('.lang-lua').remove().get()[0].innerText);
+
+
+
+});
+
+</script>
+</head>
+<body>
+<div id="test" class="test-selector" name="lang">
+	<ul class="test-lang">
+	<li class="lang-javascript" name="lang">JavaScript</li>
+	<li class="special_Endwith_t lang-python" item="unknow">Python</li>
+	<li class="lang-lua">Lua</li>
+	<li class="lang-php">Php</li>
+	</ul>
+	<ol class="test-lang">
+	<li class="lang-swift">Swift</li>
+	<li class="lang-java">Java</li>
+	<li class="lang-c" id="c">C</li>
+	<li class="lang-php db-mysql">Php</li>
+	</ol>
+	<input id='email' name="email" value="dgw@yn-ce.com"/>
+</div>
+<div style="display:none"><p>ABC</p></div>
+</body>
+</html>
