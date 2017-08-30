@@ -4,9 +4,53 @@
 <script src="/sample/jquery/lib/jquery.js"></script>
 <script type="text/javascript">
 // jQuery内置的几种动画样式
+// 直接以无参数形式调用show()和hide()，会显示和隐藏DOM元素。但是，只要传递一个时间参数进去(但也可以是'slow'，'fast'这些字符串)，就变成了动画
+$(function(){
+	// // toggle()方法则根据当前状态决定是show()还是hide()
+	// show()和hide()是从左上角逐渐展开或收缩的，而slideUp()和slideDown()则是在垂直方向逐渐展开或收缩的。
+	// slideToggle()则根据元素是否可见来决定下一步动作
+	// fadeIn()和fadeOut()的动画效果是淡入淡出
+	// fadeToggle()则根据元素是否可见来决定下一步动作
+	// jQuery的动画效果还可以串行执行，通过delay()方法还可以实现暂停
+	// 自定义动画, animate()还可以再传入一个函数，当动画结束时，该函数将被调用：
+	$('#img1').fadeToggle(1000,()=>console.log("01.fadeToggle."))
+	.toggle(1000,()=>console.log("02.toggle."))
+	.slideToggle(1000,()=>console.log("03.slideToggle."))
+	.fadeToggle(1000,()=>console.log("04.fadeToggle."))
+	.animate({
+		opacity:0.25,width:"300px",height:"500px",
+		// 在1秒内CSS过渡到设定值
+	},1000,function(){
+		console.log('05.Animation end.');
+		// 恢复原始状态
+		// 这一句无效果
+		// $(this).animate({opacity:1.0,width:"666px",height:"1000px"},1000);
+		// 这一句可以
+		// $(this).css('opacity','1.0').css('width','666px').css('height','1000px');
+		// 这一句也不行
+		// $('#img1').animate({opacity:1.0,width:"666px",height:"1000px"},1000);
+	})
+	.animate({
+		opacity:1.0,width:"666px",height:"1000px",
+	},1000,function(){
+		console.log('06.Animation recover.')
+	})
+	.delay(1000) // delay加了回调函数后面的链式不执行,原因未知,()=>console.log("07.delay.")
+	.fadeToggle(1000,()=>console.log("08.fadeToggle."));
+
+	// 简单地把动画封装在函数中是不够的。
+	// 有的动画如slideUp()根本没有效果。这是因为jQuery动画的原理是逐渐改变CSS的值，如height从100px逐渐变为0。但是很多不是block性质的DOM元素，对它们设置height根本就不起作用，所以动画也就没有效果。
+	// jQuery也没有实现对background-color的动画效果，用animate()设置background-color也没有效果。这种情况下可以使用CSS3的transition实现动画效果。
+
+	// 在执行删除操作时，给用户显示一个动画比直接调用remove()要更好
+	// tr.fadeOut('slow',()=>tr.remove());
+
+
+});
 
 </script>
 </head>
 <body>
+<img id="img1" src="/sample/1353022505371.jpg" style="width:666px;height:1000px;"></img>
 </body>
 </html>
