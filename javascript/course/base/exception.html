@@ -1,0 +1,65 @@
+<html>
+<!DOCTYPE>
+<head>
+<script type="text/javascript">
+'use strict';
+
+// - 先执行try { ... }的代码；
+// - 执行到出错的语句时，后续语句不再继续执行，转而执行catch (e) { ... }代码；
+// - 最后执行finally { ... }代码。
+try{
+	var s=null;
+	console.log('01.in try');
+	alert(s.length);
+}catch(e){
+	console.log('02.in catch:'+e);
+	console.log('02.1.in catch:'+e.message);
+}finally{
+	console.log('03.in finally.')
+}
+
+// 程序也可以主动抛出一个错误，让执行流程直接跳转到catch块。抛出错误使用throw语句。
+// 实际上，JavaScript允许抛出任意对象，包括数字、字符串。但是，最好还是抛出一个Error对象。
+try{
+	throw new Error('输入错误');
+}
+catch(e){
+	console.log('04.'+e);
+}
+// 最后，当我们用catch捕获错误时，一定要编写错误处理语句：
+// 哪怕仅仅把错误打印出来，也不要什么也不干：
+// 因为catch到错误却什么都不执行，就不知道程序执行过程中到底有没有发生错误。
+// 处理错误时，请不要简单粗暴地用alert()把错误显示给用户。教程的代码使用alert()是为了便于演示。
+
+// 如果在一个函数内部发生了错误，它自身没有捕获，错误就会被抛到外层调用函数，如果外层函数也没有捕获，该错误会一直沿着函数调用链向上抛出，直到被JavaScript引擎捕获，代码终止执行。
+// 所以，我们不必在每一个函数内部捕获错误，只需要在合适的地方来个统一捕获，一网打尽：
+
+
+// 异步错误处理
+// JavaScript引擎是一个事件驱动的执行引擎，代码总是以单线程执行，而回调函数的执行需要等到下一个满足条件的事件出现后，才会被执行
+// 所以，涉及到异步代码，无法在调用时捕获，原因就是在捕获的当时，回调函数并未执行。
+// 类似的，当我们处理一个事件时，在绑定事件的代码处，无法捕获事件处理函数的错误。
+// 所以需要将try{}catch{}代码改为放在回调函数function内
+function callback(){
+	try{
+		throw new Error('status:500.')
+	}catch(e){
+		console.log('05.'+e);
+	}
+}
+
+try{
+	setTimeout(callback,1000);
+	console.log('06.setTimeout runing and 07 will not run.');
+}catch(e){
+	console.log('07.'+e);
+}
+
+// 第三方库就是underscore
+// underscore则提供了一套完善的函数式编程的接口，让我们更方便地在JavaScript中实现函数式编程
+
+</script>
+</head>
+<body>
+</body>
+</html>
