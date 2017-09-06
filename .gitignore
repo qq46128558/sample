@@ -1,1 +1,4 @@
 node/course/module/output.txt
+node/course/web/hello-koa/node_modules
+node/course/web/hello-koa/package-lock.json
+node/course/web/hello-koa/package.json
