@@ -27,16 +27,23 @@ fs.readFile('d:/projects/www/sample/1353022505371.jpg',function(err,data){
     }
 })
 
-// 写文件writeFile,追加用appendFile(无换行)
+// 写文件writeFile,追加用appendFile
 var now=new Date();
-fs.writeFile('output.txt','写资料入文件:'+now.getTime(),function(err){
+/* fs.writeFile('output.txt','写资料入文件:'+now.getTime(),function(err){
     if (err){
         console.log(err);
     }else{
         console.log('05.write file done.');
     }
 })
-
+ */
+fs.appendFile('output.txt','写资料入文件:'+now.getTime()+"\n",function(err){
+    if (err){
+        console.log(err);
+    }else{
+        console.log('05.write file done.');
+    }
+})
 // 获取文件或目录的详细信息
 fs.stat('hello.js',function(err,stats){
     if (err){
