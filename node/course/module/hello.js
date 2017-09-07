@@ -1,3 +1,10 @@
+
+// 一个模块想要对外暴露变量（函数也是变量），可以用module.exports = variable;
+
+// 变量module是Node在加载js文件前准备的一个变量，并将其传入加载函数，我们在hello.js中可以直接使用变量module原因就在于它实际上是函数的一个参数
+// 通过把参数module传递给load()函数，hello.js就顺利地把一个变量传递给了Node执行环境，Node会把module变量保存到某个地方。
+// 由于Node保存了所有导入的module，当我们用require()获取module时，Node找到对应的module，把这个module的exports变量返回，这样，另一个模块就顺利拿到了模块的输出
+
 'use strict';
 var s="Hello";
 function greet(name){

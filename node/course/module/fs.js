@@ -1,4 +1,8 @@
 'use strict';
+
+// 同步读文件, 原异步调用的回调函数的data被函数直接返回，函数名需要改为readFileSync，其它参数不变。
+// 如果同步读取文件发生错误，则需要用try...catch捕获该错误：
+
 // 异步读文件
 var fs=require('fs');
 fs.readFile('hello.js','utf-8',function(err,data){
@@ -45,6 +49,7 @@ fs.appendFile('output.txt','写资料入文件:'+now.getTime()+"\n",function(err
     }
 })
 // 获取文件或目录的详细信息
+// 如果我们要获取文件大小，创建时间等信息，可以使用fs.stat()，它返回一个Stat对象，能告诉我们文件或目录的详细信息：
 fs.stat('hello.js',function(err,stats){
     if (err){
         console.log(err);

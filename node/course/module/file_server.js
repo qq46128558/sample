@@ -36,7 +36,7 @@ var server=http.createServer(function(request,response){
         console.log('200'+request.url);
         // 发送200响应:
         response.writeHead(200);
-        // 将文件流导向response:
+        // 将文件流导向response: 没有必要手动读取文件内容。由于response对象本身是一个Writable Stream，直接用pipe()方法就实现了自动读取文件内容并输出到HTTP响应。
         fs.createReadStream(filepath).pipe(response);
     }
     var show404=function(){
