@@ -20,6 +20,7 @@ var fn_signin=async(ctx,next)=>{
     }
 }
 
+// 通过module.exports把两个URL处理函数暴露出来。
 module.exports={
     'GET /':fn_index,
     'POST /signin':fn_signin

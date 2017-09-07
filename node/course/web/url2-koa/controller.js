@@ -1,3 +1,4 @@
+// 我们把扫描controllers目录和创建router的代码从app.js中提取出来，作为一个简单的middleware使用，命名为controller.js
 // 先导入fs模块，然后用readdirSync列出文件
 const fs=require('fs');
 

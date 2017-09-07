@@ -1,3 +1,4 @@
+// 经过重新整理后的工程url2-koa目前具备非常好的模块化，所有处理URL的函数按功能组存放在controllers目录，今后我们也只需要不断往这个目录下加东西就可以了，app.js保持不变。
 // 导入controller middleware:
 const controller=require('./controller');
 
