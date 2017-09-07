@@ -48,6 +48,9 @@ router.post('/signin',async(ctx,next)=>{
 
 // 由于middleware的顺序很重要，这个koa-bodyparser必须在router之前被注册到app对象上。
 // 此外，如果一个middleware没有调用await next()，会怎么办？答案是后续的middleware将不再执行了。这种情况也很常见，例如，一个检测用户权限的middleware可以决定是否继续处理请求，还是直接返回403错误：
+// 用post请求处理URL时，我们会遇到一个问题：post请求通常会发送一个表单，或者JSON，它作为request的body发送，但无论是Node.js提供的原始request对象，还是koa提供的request对象，都不提供解析request的body的功能！
+// 所以，我们又需要引入另一个middleware来解析原始request请求，然后，把解析后的参数，绑定到ctx.request.body中。
+// koa-bodyparser就是用来干这个活的。
 app.use(bodyParser());
 // add router middleware:
 app.use(router.routes());
