@@ -9,7 +9,7 @@ function addControllers(router,dir){
     var js_files=files.filter((f)=>{
         return f.endsWith('.js');
     })
-
+    // 这里用of
     for (var f of js_files){
         console.log(`Process controller: ${f}...`);
         let mapping=require(__dirname+'/'+dir+'/'+f);
@@ -19,7 +19,8 @@ function addControllers(router,dir){
 }
 
 function addMapping(router,mapping){
-    for (var url of mapping){
+    // 这里用in
+    for (var url in mapping){
         if (url.startsWith('GET ')){
             var path=url.substring(4);
             router.get(path,mapping[url]);
