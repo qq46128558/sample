@@ -5,3 +5,5 @@ node/course/web/url-koa/node_modules
 node/course/web/url-koa/package-lock.json
 node/course/web/url2-koa/node_modules
 node/course/web/url2-koa/package-lock.json
+node/course/web/use-nunjucks/node_modules
+node/course/web/use-nunjucks/package-lock.json

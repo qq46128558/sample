@@ -41,6 +41,22 @@ p1.innerText+="\narr.shift():"+arr;
 //sort()可以对当前Array进行排序，它会直接修改当前Array的元素位置
 arr.sort();
 p1.innerText+="\narr.sort():"+arr;
+/* 数组排序
+var arr = [10, 20, 1, 2];
+arr.sort(function (x, y) {
+    if (x < y) {
+        return -1;
+    }
+    if (x > y) {
+        return 1;
+    }
+    return 0;
+}); // [1, 2, 10, 20] */
+
+/* v.sort(function(a, b){
+    return b['sortTime']-a['sortTime'];
+}); */
+
 // reverse()把整个Array的元素给掉个个，也就是反转
 arr.reverse();
 p1.innerText+="\narr.reverse():"+arr;

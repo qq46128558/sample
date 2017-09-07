@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <h1>Welcome back,{{name}}.</h1>
+    </head>
+    <body>
+        <!-- 可以使用Nunjucks提供的功能强大的tag，编写条件判断、循环等功能，例如 -->
+        <h3>Fruits list</h3>
+        {% for f in fruits %}
+        <p>{{f}}</p>
+        {% endfor %}
+    </body>
+
+</html>
