@@ -10,4 +10,5 @@ node/course/web/use-nunjucks/package-lock.json
 node/course/web/view-koa/node_modules
 node/course/web/view-koa/package-lock.json
 node/course/web/view-koa/static
+node/course/web/view-koa/bower_components
 

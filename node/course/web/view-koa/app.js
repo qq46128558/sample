@@ -7,15 +7,18 @@ const isProduction=process.env.NODE_ENV==='production';
 const Koa=require('koa');
 const app=new Koa();
 const bodyParser=require('koa-bodyparser');
+const templating=require('./templating');
+const controller=require('./controller');
 
 // 第一个middleware是记录URL以及页面执行时间：
 app.use(async(ctx,next)=>{
-    console.log('Process ${ctx.request.method} ${ctx.request.url}...');
+    console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     var
-        start=new Date().getTime();
+        start=new Date().getTime(),
         execTime;
     await next();
     execTime=new Date().getTime()-start;
+    // 可通过chrome>>network>>headers>>response headers查看
     ctx.response.set('X-Response-Time',`${execTime}ms`);
 })
 
@@ -31,14 +34,13 @@ if (!isProduction){
 app.use(bodyParser());
 
 // 第四个middleware负责给ctx加上render()来使用Nunjucks：
-let templating=require('./templating');
 app.use(templating('views',{
     noCache:!isProduction,
     watch:!isProduction,
 }))
 
 // 最后一个middleware处理URL路由：
-
+app.use(controller());
 
 app.listen(3000);
 console.log("app started at port 3000...");
