@@ -37,9 +37,12 @@ function addControllers(router,dir){
 }
 
 module.exports=function(dir){
+    console.log('entry controller...');
     let 
         controllers_dir=dir||'controllers',
         router=require('koa-router')();
+        console.log('add controller...');
     addControllers(router,controllers_dir);
+    console.log('return router.routes...');
     return router.routes();
 }

@@ -27,6 +27,7 @@ function templating(path,opts){
     // 创建Nunjucks的env对象:
     var env=createEnv(path,opts);
     return async(ctx,next)=>{
+        console.log('entry templating...');
         // 给ctx绑定render函数:
         ctx.render=function (view, model){
             // 注意到ctx.render内部渲染模板时，Model对象并不是传入的model变量
@@ -37,6 +38,7 @@ function templating(path,opts){
             // 设置Content-Type:
             ctx.response.type="text/html";
         }
+        console.log('templating await next...');
         // 继续处理请求
         await next();
     }

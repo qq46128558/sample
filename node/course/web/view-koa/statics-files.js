@@ -11,6 +11,7 @@ const fs=require('mz/fs');
 // dir: 类似 __dirname + '/static'
 function staticFiles(url,dir){
     return async(ctx,next)=>{
+        console.log('entry staticFiles...');
         let rpath=ctx.request.path;
         // 判断是否以指定的url开头:
         if (rpath.startsWith(url)){
@@ -27,6 +28,7 @@ function staticFiles(url,dir){
                 ctx.response.status=404;
             }
         }else{
+            console.log('staticFiles await next...');
             // 不是指定前缀的URL，继续处理下一个middleware:
             await next();
         }
