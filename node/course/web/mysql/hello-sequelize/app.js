@@ -20,6 +20,8 @@ var Pet = sequelize.define('pet', {
     id: {
         type: Sequelize.STRING(50),
         primaryKey: true
+        // type: Sequelize.INTEGER,
+        // autoIncrement: true,
     },
     name: Sequelize.STRING(100),
     gender: Sequelize.BOOLEAN,
@@ -29,7 +31,9 @@ var Pet = sequelize.define('pet', {
     version: Sequelize.BIGINT,
 }, {
         timestamps: false
+        // tableName: 't_pet'
     })
+
 
 // 接下来，我们就可以往数据库中塞一些数据了。我们可以用Promise的方式写
 var now = Date.now();
