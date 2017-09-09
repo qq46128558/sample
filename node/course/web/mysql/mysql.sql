@@ -1,8 +1,9 @@
 -- 检查编码
 show variables like '%char%';
 
--- 显示数据库
+-- 显示数据库,显示表
 show databases;
+show tables;
 
 -- 时间戳(10位)转时间
 select from_unixtime(1111111111);
