@@ -1,0 +1,28 @@
+{
+    "name": "model-sequelize",
+    "version": "1.0.0",
+    "description": "Sequelize best pratice example with async",
+    "main": "app.js",
+    "scripts": {
+        "start": "node --use_strict app.js"
+    },
+    "keywords": [
+        "sequlize",
+        "async"
+    ],
+    "author": {
+        "name": "Michael Liao"
+    },
+    "license": "Apache 2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelliao/learn-javascript.git"
+    },
+    "dependencies": {
+        "mysql": "2.11.1",
+        "sequelize": "3.24.1"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.0"
+    }
+}

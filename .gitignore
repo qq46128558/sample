@@ -13,5 +13,9 @@ node/course/web/view-koa/static
 node/course/web/view-koa/bower_components
 node/course/web/mysql/hello-sequelize/node_modules
 node/course/web/mysql/hello-sequelize/package-lock.json
+node/course/web/mysql/model-sequelize/node_modules
+node/course/web/mysql/model-sequelize/package-lock.json
+node/course/mocha/hello-test/node_modules
+node/course/mocha/hello-test/package-lock.json
 
 

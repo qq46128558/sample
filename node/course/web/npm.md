@@ -9,3 +9,6 @@ npm install -g bower
 
 bower install bootstrap#3.3.7
 <!-- bower是一个css/js/fonts这些东西的包管理器 -->
+
+<!-- 注意，很多文章会让你用命令npm install -g mocha把mocha安装到全局module中。这是不需要的。尽量不要安装全局模块，因为全局模块会影响到所有Node.js的工程。 -->
+npm install -g mocha

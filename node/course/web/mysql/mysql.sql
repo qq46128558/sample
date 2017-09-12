@@ -27,3 +27,7 @@ create table pets (
     version bigint not null,
     primary key (id)
 ) engine=innodb;
+
+-- 创建数据库并授权
+create database nodejs;
+grant all privileges on nodejs.* to 'www'@'%' identified by 'www';

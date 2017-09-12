@@ -20,6 +20,7 @@ var Pet = sequelize.define('pet', {
     id: {
         type: Sequelize.STRING(50),
         primaryKey: true
+        // 主键自增
         // type: Sequelize.INTEGER,
         // autoIncrement: true,
     },
@@ -31,6 +32,7 @@ var Pet = sequelize.define('pet', {
     version: Sequelize.BIGINT,
 }, {
         timestamps: false
+        // 自定义表名
         // tableName: 't_pet'
     })
 
