@@ -3,6 +3,21 @@ const assert=require('assert');
 const sum=require('../hello.js');
 describe('#hello.js',()=>{
     describe('#sum()',()=>{
+        // 在测试前初始化资源，测试后释放资源是非常常见的。mocha提供了before、after、beforeEach和afterEach来实现这些功能。
+        before(function(){
+            console.log('Before...');
+        });
+        after(function(){
+            console.log('After...');
+        });
+        beforeEach(function(){
+            console.log("   Beforeeach...");
+        });
+        afterEach(function(){
+            console.log("   Aftereach...");
+        });
+
+        
         it('sum() should return 0',()=>{
             assert.strictEqual(sum(),0);
         });
