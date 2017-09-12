@@ -1,0 +1,17 @@
+{
+    "name": "async-test",
+    "version": "1.0.0",
+    "description": "mocha test",
+    "author": {
+        "name": "Micheal Liao"
+    },
+    "dependencies": {
+        "mz": "2.4.0"
+    },
+    "devDependencies": {
+        "mocha": "3.0.2"
+    },
+    "scripts": {
+        "test": "mocha"
+    }
+}
