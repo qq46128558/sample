@@ -19,5 +19,7 @@ node/course/mocha/hello-test/node_modules
 node/course/mocha/hello-test/package-lock.json
 node/course/mocha/async-test/node_modules
 node/course/mocha/async-test/package-lock.json
+node/course/mocha/koa-test/node_modules
+node/course/mocha/koa-test/package-lock.json
 
 
