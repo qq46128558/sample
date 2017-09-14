@@ -1,7 +1,6 @@
 node_modules
 package-lock.json
 node/course/module/output.txt
-node/course/web/view-koa/static
 node/course/web/view-koa/bower_components
 
 
