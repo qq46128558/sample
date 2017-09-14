@@ -32,6 +32,7 @@ function addMessage(list, msg) {
     }, 1000);
 }
 
+// 为了简化状态管理，用Vue控制左右两个列表：会话列表和用户列表初始化为空数组。
 $(function () {
     var vmMessageList = new Vue({
         el: '#message-list',
@@ -46,6 +47,7 @@ $(function () {
         }
     });
 
+    // 创建WebSocket连接，响应服务器消息，并且更新会话列表和用户列表：
     var ws = new WebSocket('ws://localhost:3000/ws/chat');
 
     ws.onmessage = function(event) {
@@ -141,6 +143,7 @@ $(function () {
                 </div>
                 <div class="panel-body">
                     <div style="height:434px; overflow-x:hidden; overflow-y:scroll;">
+                        <!-- JavaScript负责更新状态，Vue负责根据状态刷新DOM。以用户列表为例，HTML代码如下： -->
                         <div id="user-list">
                             <div class="media" v-for="user in users">
                                 <div class="media-left">
