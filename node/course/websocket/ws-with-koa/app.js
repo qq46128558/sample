@@ -1,3 +1,5 @@
+// 基于WebSocket创建一个在线聊天室。
+
 const url = require('url');
 const ws = require('ws');
 const Cookies = require('cookies');
@@ -6,6 +8,7 @@ const bodyParser = require('koa-bodyparser');
 const controller = require('./controller');
 const templating = require('./templating');
 const WebSocketServer = ws.Server;
+// 首先得到了一个标准的基于MVC的koa2应用。该应用的核心是一个代表koa应用的app变量
 const app = new Koa();
 
 // log request URL:
@@ -36,6 +39,10 @@ app.use(templating('views', {
 // add controller middleware:
 app.use(controller());
 
+// 实际应用中，HTTP和WebSocket都使用标准的80和443端口，不需要暴露新的端口，也不需要修改防火墙规则。
+// 实际上，3000端口并非由koa监听，而是koa调用Node标准的http模块创建的http.Server监听的。koa只是把响应函数注册到该http.Server中了。类似的，WebSocketServer也可以把自己的响应函数注册到http.Server中，这样，同一个端口，根据协议，可以分别由koa和ws处理：
+
+// koa app的listen()方法返回http.Server:
 let server = app.listen(3000);
 
 function parseUser(obj) {
