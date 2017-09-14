@@ -1,0 +1,13 @@
+{
+    "name": "rest-koa",
+    "description": "代表状态转换REST KOA示例",
+    "license": "Apache 2.0",
+    "dependencies": {
+        "koa": "2.0.0",
+        "koa-bodyparser": "3.2.0",
+        "koa-router": "7.0.0",
+        "nunjucks": "2.4.2",
+        "mime": "1.3.4",
+        "mz": "2.4.0"
+    }
+}
