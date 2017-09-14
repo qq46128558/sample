@@ -1,0 +1,10 @@
+{
+    "name": "rest-hello",
+    "version": "1.0.0",
+    "license": "Apache 2.0",
+    "dependencies": {
+        "koa": "2.0.0",
+        "koa-bodyparser": "3.2.0",
+        "koa-router": "7.0.0"
+    }
+}
