@@ -1,0 +1,40 @@
+<!-- 这里需要注意，vue.js是未压缩的用于开发的版本，它会在浏览器console中输出很多有用的信息，帮助我们调试代码。当开发完毕，需要真正发布到服务器时，应该使用压缩过的vue.min.js，它会移除所有调试信息，并且文件体积更小。-->
+<html>
+
+<head>
+    <!-- 引用vue -->
+    <script src="/static/js/vue.js"></script>
+    <!-- 引用jquery -->
+    <script src="/static/js/jquery.min.js"></script>
+    <!-- 最后一步是用Vue把两者关联起来。要特别注意的是，在<head>内部编写的JavaScript代码，需要用jQuery把MVVM的初始化代码推迟到页面加载完毕后执行，否则，直接在<head>内执行MVVM代码时，DOM节点尚未被浏览器加载，初始化将失败。 -->
+    <script>
+        $(function () {
+            // 一个VM的核心代码如下
+            var vm = new Vue({
+                // el指定了要把Model绑定到哪个DOM根节点上，语法和jQuery类似,这里的'#vm'对应ID为vm的一个<div>节点
+                // 在该节点以及该节点内部，就是Vue可以操作的View。
+                el: '#vm',
+                // data属性指定了Model，我们初始化了Model的两个属性name和age，在View内部的<p>节点上，可以直接用{{ name }}引用Model的某个属性。
+                data: {
+                    name: 'Robot',
+                    age: 15
+                }
+            });
+            // 如果打开浏览器console，因为我们用代码window.vm = vm，把VM变量绑定到了window对象上，所以，可以直接修改VM的Model：
+            // Vue作为MVVM框架会自动监听Model的任何变化，在Model数据变化时，更新View的显示。这种Model到View的绑定我们称为单向绑定。
+            window.vm = vm;
+        })
+    </script>
+</head>
+
+<body>
+    <div id="vm">
+        <!-- 在Vue中，可以直接写{{ name }}绑定某个属性。如果属性关联的是对象，还可以用多个.引用，例如，{{ address.zipcode }}。 -->
+        <p>Welcome,{{name}}!</p>
+        <p>You are {{age}} years old!</p>
+        <!-- 另一种单向绑定的方法是使用Vue的指令v-text，写法如下： -->
+        <p>by <span v-text="name"></span>.</p>
+    </div>
+</body>
+
+</html>
