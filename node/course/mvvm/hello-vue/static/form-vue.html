@@ -15,8 +15,8 @@
                     city: '',
                 },
                 // 因为我们指定了事件处理函数是register，所以需要在创建VM时添加一个register函数：
-                methods:{
-                    register:function(){
+                methods: {
+                    register: function () {
                         // 显示JSON格式的Model
                         alert(JSON.stringify(this.$data));
                         // TODO: AJAX POST...
@@ -33,6 +33,9 @@
     <!-- 编写一个HTML FORM表单，并用v-model指令把某个<input>和Model的某个属性作双向绑定： -->
     <!-- 我们可以在表单中输入内容，然后在浏览器console中用window.vm.$data查看Model的内容，也可以用window.vm.name查看Model的name属性，它的值和FORM表单对应的<input>是一致的。 -->
     <!-- 响应onsubmit事件也可以放到VM中。我们在<form>元素上使用指令： -->
+    <!-- 1、prevent是preventDefault,阻止标签默认行为，有些标签有默认行为，例如a标签的跳转链接属性href等。 
+        2、submit点击默认行为是提交表单，这里并不需要它提交，只需要执行register方法，故阻止为妙。 
+        3、stop是stopPropagation，阻止事件冒泡，点击哪个元素，就只响应这个元素，父级就不会响应了 -->
     <form id="vm" v-on:submit.prevent="register" action="#">
         <p><input v-model="email"></p>
         <p><input v-model="name"></p>
