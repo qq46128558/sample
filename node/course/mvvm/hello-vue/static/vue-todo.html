@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <script>
+        $(function () {
+            var vm = new Vue({
+                el: '#vm',
+                data: {
+                    title: 'TODO List',
+                    todos: [
+                        {
+                            name: "Learn Git",
+                            description: "Learn how to use git as distrubuted version control"
+                        },
+                        {
+                            name:"Learn Javascript",
+                            description:"Learn javascript,node.js,npm and other libraries"
+                        }
+                    ]
+                }
+            })
+            window.vm = vm;
+        })
+    </script>
+    <!-- 需要注意的是，Vue之所以能够监听Model状态的变化，是因为JavaScript语言本身提供了Proxy或者Object.observe()机制来监听对象状态的变化。但是，对于数组元素的赋值，却没有办法直接监听，因此，如果我们直接对数组元素赋值：
+
+vm.todos[0] = {
+    name: 'New name',
+    description: 'New description'
+};
+会导致Vue无法更新View。
+
+正确的方法是不要对数组元素赋值，而是更新：
+
+vm.todos[0].name = 'New name';
+vm.todos[0].description = 'New description';
+或者，通过splice()方法，删除某个元素后，再添加一个元素，达到“赋值”的效果：
+var index = 0;
+var newElement = {...};
+vm.todos.splice(index, 1, newElement);
+Vue可以监听数组的splice、push、unshift等方法调用，所以，上述代码可以正确更新View。 -->
+</head>
+
+<body>
+    <ol id="vm">
+        <li v-for="t in todos">
+            <dl>
+                <dt>{{t.name}}</dt>
+                <dd>{{t.description}}</dd>
+            </dl>
+        </li>
+    </ol>
+</body>
+
+</html>
