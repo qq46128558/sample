@@ -7,3 +7,16 @@
 第一个缺点就是运行速度慢，和C程序相比非常慢，因为Python是解释型语言，你的代码在执行时会一行一行地翻译成CPU能理解的机器码，这个翻译过程非常耗时，所以很慢。而C程序是运行前直接编译成CPU能执行的机器码，所以非常快。
 
 例如开发一个下载MP3的网络应用程序，C程序的运行时间需要0.001秒，而Python程序的运行时间需要0.1秒，慢了100倍，但由于网络更慢，需要等待1秒，你想，用户能感觉到1.001秒和1.1秒的区别吗？这就好比F1赛车和普通的出租车在北京三环路上行驶的道理一样，虽然F1赛车理论时速高达400公里，但由于三环路堵车的时速只有20公里，因此，作为乘客，你感觉的时速永远是20公里。
+
+官网
+https://www.python.org/
+
+Python有两个版本，一个是2.x版，一个是3.x版，这两个版本是不兼容的
+
+环境变量指向python目录
+/c/Users/Peter/AppData/Local/Programs/Python/Python35/Scripts
+/c/Users/Peter/AppData/Local/Programs/Python/Python35
+
+在命令行下运行python就是启动CPython解释器。
+
+Python的解释器很多，但使用最广泛的还是CPython。如果要和Java或.Net平台交互，最好的办法不是用Jython或IronPython，而是通过网络调用来交互，确保各程序之间的独立性。
