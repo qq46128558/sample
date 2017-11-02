@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-'分布式进程'
+'分布式进程(运行失败) 怀疑是: celery 4.0不支持windows系统：OSError: [WinError 87] 参数错误'
+
 # 在Thread和Process中，应当优选Process，因为Process更稳定，而且，Process可以分布到多台机器上，而Thread最多只能分布到同一台机器的多个CPU上。
 # Python的multiprocessing模块不但支持多进程，其中managers子模块还支持把多进程分布到多台机器上。一个服务进程可以作为调度者，将任务分布到其他多个进程中，依靠网络通信。由于managers模块封装很好，不必了解网络通信的细节，就可以很容易地编写分布式多进程程序。
 # 举个例子：如果我们已经有一个通过Queue通信的多进程程序在同一台机器上运行，现在，由于处理任务的进程任务繁重，希望把发送任务的进程和处理任务的进程分布到两台机器上。怎么用分布式进程实现？
@@ -19,6 +20,7 @@ class QueueManager(BaseManager):
     pass
 
 # 把两个Queue都注册到网络上, callable参数关联了Queue对象:
+# 报错:　OSError: [WinError 87] 参数错误。
 QueueManager.register('get_task_queue',callable=lambda:task_queue)
 QueueManager.register('get_result_queue',callable=lambda:result_queue)
 # 绑定端口5000, 设置验证码'abc':
