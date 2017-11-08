@@ -26,7 +26,7 @@ def fib(max):
         a,b=b,a+b
     return 'Done'
 print('04.',fib(6))
-''' 赋值语句
+''' 赋值语句 (a,b交换变量)
 a, b = b, a + b
 相当于：
 t = (b, a + b) # t是一个tuple
