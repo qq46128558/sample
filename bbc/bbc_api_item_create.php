@@ -65,6 +65,9 @@ $params = array(
   'price'=>4499,
   'dlytmpl_id'=>12,
   'nospec'=>1,
+  'store'=>'99', 
+  'approve_status'=>'onsale', //上架
+  // 'list_time'=>1510119694,
   'sku'=>'{"store":99,}',
 );
 $token='';
