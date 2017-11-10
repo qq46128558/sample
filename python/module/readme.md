@@ -23,7 +23,7 @@ You should consider upgrading via the 'python -m pip install --upgrade pip' comm
 当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错
 默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在sys模块的path变量中：
 >>>import sys
->>>sys.paht
+>>>sys.path
 ['', 'C:\\Users\\Peter\\AppData\\Local\\Programs\\Python\\Python35\\python35.zip', 'C:\\Users\\Pe
 ter\\AppData\\Local\\Programs\\Python\\Python35\\DLLs', 'C:\\Users\\Peter\\AppData\\Local\\Progra
 ms\\Python\\Python35\\lib', 'C:\\Users\\Peter\\AppData\\Local\\Programs\\Python\\Python35', 'C:\\
