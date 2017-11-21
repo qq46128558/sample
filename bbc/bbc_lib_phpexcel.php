@@ -16,14 +16,28 @@ function sample(){
 	return $file;
 }
 
-//序号转Excel列名
-function toColName($col){
+// 序号转Excel列名(有bug,弃用) edit by peter 2017-11-21 11:13
+/* function toColName($col){
         $alpha=intval($col/27);
         $remainder=$col-($alpha*26);
         if ($alpha>0) $value=chr($alpha+64);
         if ($remainder>0) $value.=chr($remainder+64);
         return $value; 
+} */
+
+// 序号转Excel列名
+function toColName($col){
+        if (($col % 26)==0){
+            $alpha=intval(($col-1)/26);
+        }else{
+            $alpha=intval($col/26);
+        }   
+        $remainder=$col-($alpha*26);
+        if ($alpha>0) $value=chr($alpha+64);
+        if ($remainder>0) $value.=chr($remainder+64);
+        return $value; 
 }
+    
 
 //$rows 传入查询数据
 //$title sheet标题
