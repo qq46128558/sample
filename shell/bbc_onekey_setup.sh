@@ -65,7 +65,7 @@ printf '安装epel扩展源......'
 yum install epel-release -y >>setup_log 2>&1
 check
 printf '安装PHP......'
-yum install php-fpm56 Zend56 -y >>setup_log 2>&1
+yum install php-fpm56 Zend56 php-memcached56 memcached -y >>setup_log 2>&1
 check
 printf '安装Nginx......'
 yum install ngx_openresty -y >>setup_log 2>&1
@@ -369,3 +369,8 @@ echo 'Mysql 密  码: ec_admin@123'
 echo 'FTP   用户名: ec_ftp'
 echo 'FTP   密  码: ec_ftp@123'
 rm -f setup_log
+
+# 配置host
+# /etc/hosts
+# 127.0.0.1 %CONNECTIONS.DEFAULT.HOST%
+# 重启nginx
