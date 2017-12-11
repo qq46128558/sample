@@ -6,8 +6,8 @@ __author__='peter'
 
 import re
 
-def calc():
-    value=input('Please input IP/N:')
+def calc(value=None):
+    value=input('Please input IP/N:') if value==None else value
     # value="192.168.9.10/21"
     # 250~255|200~249|100~199|10~99|0~9
     re_ip=r'(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])'
@@ -44,14 +44,14 @@ def calc():
 
     # 31/32掩码特殊处理
     if int(mark)==31:
-        list_first=list_ip[:]
+        list_first=[int(x) for x in list_ip]
         list_last=list_first[:]
         list_last[-1]=int(list_last[-1])+1
         quantity='two hosts'
         list_net=[]
         list_board=[]
     elif int(mark)==32:
-        list_first=list_ip[:]
+        list_first=[int(x) for x in list_ip]
         list_last=[]
         quantity='one host'
         list_net=[]
@@ -90,12 +90,14 @@ def calc():
         quantity=(int(list_last[0])-int(list_first[0])+1)*(int(list_last[1])-int(list_first[1])+1)*(int(list_last[2])-int(list_first[2])+1)
         quantity=((int(list_last[-1])-int(list_first[-1])+1)) if quantity==1 else quantity*256-2
 
-    print('可用地址',quantity)
-    print('掩码','.'.join(str(x) for x in list_mark))
-    print('网络','.'.join(str(x) for x in list_net))
-    print('第一个可用','.'.join(str(x) for x in list_first))
-    print('最后可用','.'.join(str(x) for x in list_last))
-    print('广播','.'.join(str(x) for x in list_board))
+    if __name__=='__main__':
+        print('可用地址',quantity)
+        print('掩码','.'.join(str(x) for x in list_mark))
+        print('网络','.'.join(str(x) for x in list_net))
+        print('第一个可用','.'.join(str(x) for x in list_first))
+        print('最后可用','.'.join(str(x) for x in list_last))
+        print('广播','.'.join(str(x) for x in list_board))
+    return (ip,mark,quantity,list_mark,list_net,list_first,list_last,list_board)
 
 if __name__=='__main__':
     calc()
