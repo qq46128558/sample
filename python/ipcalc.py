@@ -37,35 +37,59 @@ def calc():
         else:
             list_mark2[x]='1'*n1+'0'*(8-n1)
         n1=n1-8
+        # 转换成1结束,退出循环
+        if n1<=0:
+            break
     list_mark=[int(x,2) for x in list_mark2]
 
-    # IP与掩码的二制进行与运算,得到网络地址
-    list_net2=['']*4
-    for x in range(4):
-        n1=0
-        while n1<8:
-            if list_ip2[x][n1:n1+1]==list_mark2[x][n1:n1+1]=='1':
-                list_net2[x]+='1'
-            else:
-                list_net2[x]+='0'
-            n1+=1
-    list_net=[int(x,2) for x in list_net2]
+    # 31/32掩码特殊处理
+    if int(mark)==31:
+        list_first=list_ip[:]
+        list_last=list_first[:]
+        list_last[-1]=int(list_last[-1])+1
+        quantity='two hosts'
+        list_net=[]
+        list_board=[]
+    elif int(mark)==32:
+        list_first=list_ip[:]
+        list_last=[]
+        quantity='one host'
+        list_net=[]
+        list_board=[]
+    # 其他掩码
+    else:
+        # IP与掩码的二制进行与运算,得到网络地址
+        list_net2=['']*4
+        for x in range(4):
+            n1=0
+            while n1<8:
+                if list_ip2[x][n1:n1+1]==list_mark2[x][n1:n1+1]=='1':
+                    list_net2[x]+='1'
+                else:
+                    list_net2[x]+='0'
+                n1+=1
+        list_net=[int(x,2) for x in list_net2]
 
-    #网络地址主机位全为1(32-掩码位)为广播地址
-    s1=''.join(str(x) for x in list_net2)
-    s1=s1[0:int(mark)]+'1'*(32-int(mark))
-    list_board2=re.split(r'(\d{8})',s1)
-    while '' in list_board2:
-        list_board2.remove('')
-    list_board=[int(x,2) for x in list_board2]
+        #网络地址主机位全为1(32-掩码位)为广播地址
+        s1=''.join(str(x) for x in list_net2)
+        s1=s1[0:int(mark)]+'1'*(32-int(mark))
+        list_board2=re.split(r'(\d{8})',s1)
+        while '' in list_board2:
+            list_board2.remove('')
+        list_board=[int(x,2) for x in list_board2]
 
-    list_first=list_net[:]
-    list_last=list_board[:]
-    list_first[-1]='1'
-    list_last[-1]='254'
+        # 第一个可用与最后可用
+        list_first=list_net[:]
+        list_last=list_board[:]
+        # 网络地址最后位+1
+        list_first[-1]=int(list_net[-1])+1
+        # 广播地址最后位-1
+        list_last[-1]=int(list_board[-1])-1
 
-    # 计算可用地址
-    quantity=(int(list_last[0])-int(list_first[0])+1)*(int(list_last[1])-int(list_first[1])+1)*(int(list_last[2])-int(list_first[2])+1)*256-2
+        # 计算可用地址
+        quantity=(int(list_last[0])-int(list_first[0])+1)*(int(list_last[1])-int(list_first[1])+1)*(int(list_last[2])-int(list_first[2])+1)
+        quantity=((int(list_last[-1])-int(list_first[-1])+1)) if quantity==1 else quantity*256-2
+
     print('可用地址',quantity)
     print('掩码','.'.join(str(x) for x in list_mark))
     print('网络','.'.join(str(x) for x in list_net))
