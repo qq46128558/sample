@@ -363,6 +363,11 @@ printf '修改bbc目录权限......'
 chown -R www:www /data/httpd
 check
 
+printf '配置本地映射环境......'
+hostsfile='/etc/hosts'
+sed -i '/127.0.0.1   %CONNECTIONS.DEFAULT.HOST%/d' ${hostsfile} >setup_log 2>&1
+sed -i '$a\127.0.0.1   %CONNECTIONS.DEFAULT.HOST%' ${hostsfile} >>setup_log 2>&1
+check
 
 echo 'Mysql 用户名: ec_admin'
 echo 'Mysql 密  码: ec_admin@123'
