@@ -80,20 +80,32 @@
                         }
                     }
                 }
-                // 循环组装各个多音字拼音[['xie','ye'],'wen']=>['xiewen','yewen']
-                this._arr1 = [];
+                // 循环组装各个多音字拼音[['xie','ye'],['wen']]=>['xiewen','yewen']
+                this._multiArrPY = [];
                 this.pyConcat(arrPY, 0, '');
-
-                return [this._arr1.join(''), arrPYS.join(''), str];
-                return '';
+                arrPY=this._multiArrPY.slice(0);
+                // 循环组装各个首字母
+                this._multiArrPY = [];
+                this.pyConcat(arrPYS, 0, '');
+                arrPYS=this._multiArrPY.slice(0);
+                // 返回结果
+                return [arrPY.join(','), arrPYS.join(','), str];
             },
-            _arr1: [],
+            _multiArrPY: [],
+            // 组合关系实现函数
             pyConcat: function (originArr, i, str) {
+                // 如果超出传入数组范围,则返回拼接的字符串
                 if (i >= originArr.length) return str;
+                // 循环传入的第i个数组
                 for (var n = 0; n < originArr[i].length; n++) {
-                    str1 = this._arr1.push(this.pyConcat(originArr, i + 1, str.concat(originArr[i][n])));
+                    // 递归调用,并拼接字符串
+                    str1 = this.pyConcat(originArr, i + 1, str.concat(originArr[i][n]));
+                    // 循环结束的返回值判断
+                    if (str1 != '') this._multiArrPY.push(str1);
                     console.log(str1);
                 }
+                // 没有超出传入数组范围时,循环结束的返回
+                return '';
             },
 
             isMatch: function (searchStr, pinyinArr) {
@@ -114,7 +126,7 @@
         }
 
         // 针对多音字的话，可能会麻烦一些，不过也可以解决（在下面的例子之上再进行扩展即可），一般场景下单音只能解决90%以上的问题
-        // 比如多音字,叶,叶问 (未解决)
+        // 比如多音字,叶,叶问 (已解决)
         String.prototype.trim = function () { return this.replace(/(^\s*)|(\s*$)/g, ""); }
 
         function getEl(id) {
@@ -142,7 +154,7 @@
 <body>
     <div class='wrapper'>
         <div>
-            <span>请输入中文字符串:(多音字问题未解决)</span>
+            <span>请输入中文字符串:(解决多音字问题)</span>
             <input type="text" id="txtChinese" size="30" value="叶问">
             <input type="button" onclick="query()" value="查看拼音">
         </div>
