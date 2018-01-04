@@ -1,6 +1,7 @@
 # coding: UTF-8
 
 '第一个python爬虫实例'
+# http://blog.csdn.net/fu_shuwu/article/details/53106435
 
 # 用来抓取网页的html源代码
 import requests
