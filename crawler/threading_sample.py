@@ -31,7 +31,9 @@ class Mythread(threading.Thread):
         threading.Thread.__init__(self)
         self.threadName = threadName
 
-    # run是关键字?
+    # run()方法
+    # 代表了线程活动的方法。
+    # 你可以在子类中重写此方法。标准run()方法调用了传递给对象的构造函数的可调对象作为目标参数，如果有这样的参数的话，顺序和关键字参数分别从args和kargs取得。
     def run(self):
         do_something(self.threadName)
 
