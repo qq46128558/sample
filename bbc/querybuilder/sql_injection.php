@@ -10,3 +10,6 @@ $qb->select('app_id','app_name')
     ->setParameter(0,$email);
 $result=$qb->execute()->fetchAll();
 var_dump($result);
+
+// add by peter 2018-01-05
+// 如果是数值字段,变量传入字符值,发现会查询全部
