@@ -53,9 +53,8 @@ def get_xsrf():
     index_page = session.get(index_url, headers=headers)
     html = index_page.text
 
-    # edit by peter 2018-01-04 ?的作用是什么呢
-    # pattern = r'name="_xsrf" value="(.*?)"'
-    pattern = r'name="_xsrf" value="(.*)"'
+    # edit by peter 2018-01-04 ?的作用是采用非贪婪匹配
+    pattern = r'name="_xsrf" value="(.*?)"'
 
     # 这里的_xsrf 返回的是一个list
     _xsrf = re.findall(pattern, html)
@@ -163,5 +162,5 @@ if __name__ == '__main__':
         # account = input('请输入你的用户名\n>  ')
         account='46128558@qq.com'
         # secret = input("请输入你的密码\n>  ")
-        secret='123457'
+        secret='******'
         login(secret, account)
