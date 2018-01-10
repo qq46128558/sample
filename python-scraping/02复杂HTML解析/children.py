@@ -18,7 +18,7 @@ def getChilds(url):
     return childs
 
 if __name__=='__main__':
-    print(getChilds("http://www.pythonscraping.com/pages/page3.html"))
+    [print(x) for x in getChilds("http://www.pythonscraping.com/pages/page3.html")]
 
 # .children 子标签
 # descendants 后代标签
