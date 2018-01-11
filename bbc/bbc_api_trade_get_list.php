@@ -67,3 +67,10 @@ $params['sign'] = strtoupper(md5(strtoupper(md5(assemble($params))).$token));
 $url = "192.168.239.138/index.php/api";
 $output = curl($url,$params);
 echo unicode_decode($output);
+
+// 签名错误的问题集:
+// token不正确
+// 有值为null
+// 有值为数组
+// 没有传入 sign_type
+
