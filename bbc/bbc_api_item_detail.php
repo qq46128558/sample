@@ -66,4 +66,4 @@ $url = "192.168.239.138/index.php/topapi";
 $output = curl($url,$params);
 echo unicode_decode($output);
 
-
+// topapi结尾的接口,不报签名错误的问题
