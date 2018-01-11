@@ -9,8 +9,9 @@ $qb=app::get('base')->database()->createQueryBuilder();
 $qb->select('*')
         ->from('base_apps')
         ->where($qb->expr()->orX(
-            $qb->expr()->like('app_name','?'),
-            $qb->expr()->like('description','?')
+            // 注意null值的like,会查不出内容,所以加个ifnull
+            $qb->expr()->like("ifnull(app_name,'')",'?'),
+            $qb->expr()->like("ifnull(description,'')",'?')
         ))
         ->setParameter(0,$parameter)
         ->setParameter(1,$parameter);
