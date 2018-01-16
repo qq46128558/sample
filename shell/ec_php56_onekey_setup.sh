@@ -17,7 +17,7 @@ ec_setuplog='ec_setup.log'
 echo -e "\033[33;1m注意: 一键安装需要切换到root用户进行.\033[0m"
 
 #查找本地包
-gz=`ls onex_ecstore*.gz`
+gz=`ls *.tar.gz`
 for gzfile in $gz
 do
 if [ -f $gzfile ]; then 
@@ -129,9 +129,9 @@ sudo tar -zxf ${package} -C /data/httpd >${ec_setuplog} 2>&1
 CheckStatus
 unset package
 printf '配置Zend解密文件......'
-if [ -f /usr/local/php53/etc/php.d/Zend.ini ]; then
-zendfile='/usr/local/php53/etc/php.d/Zend.ini'
-phpfile='/usr/local/php53/bin/php'
+if [ -f /usr/local/php56/etc/php.d/Zend.ini ]; then
+zendfile='/usr/local/php56/etc/php.d/Zend.ini'
+phpfile='/usr/local/php56/bin/php'
 elif [ -f /usr/local/php/etc/php.d/Zend.ini ]; then
 zendfile='/usr/local/php/etc/php.d/Zend.ini'
 phpfile='/usr/local/php/bin/php'
@@ -164,10 +164,10 @@ exit
 fi
 unset nginxconf
 printf '重启PHP服务......'
-if [ -f /etc/init.d/php-fpm53 ]; then
-sudo service php-fpm53 restart >${ec_setuplog} 2>&1
+if [ -f /etc/init.d/php-fpm56 ]; then
+sudo service php-fpm56 restart >${ec_setuplog} 2>&1
 CheckStatus
-phpservice="php-fpm53"
+phpservice="php-fpm56"
 elif [ -f /etc/init.d/php-fpm ]; then
 sudo service php-fpm restart >${ec_setuplog} 2>&1
 CheckStatus
