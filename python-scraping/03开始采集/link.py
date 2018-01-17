@@ -15,6 +15,8 @@ def getLinks(articleUrl):
     #         if 'href' in link.attrs:
     #             f.write(link['href'])
 
+    # 正则,?!,不包含.表示字符不能出现在目标字符串里.如果要在整个字符串中全部排除某个字符,就加上^和$符号
+    ''' ^((?![A-Z]).)*$ 不包含大写字母 '''
     # 分析词条键接与其他键接的差异,调整代码
     # id在bodyContent的div标签内
     # url链接不包含冒号
@@ -30,3 +32,5 @@ while len(links)>0:
     newArticle=links[random.randint(0,len(links)-1)].attrs["href"]
     print(newArticle)
     links=getLinks(newArticle)
+
+# 维基百科六度分隔理论
