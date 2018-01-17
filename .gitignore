@@ -4,4 +4,4 @@ node/course/module/output.txt
 node/course/web/view-koa/bower_components
 __pycache__
 python/virtualenv/venv
-
+.idea
