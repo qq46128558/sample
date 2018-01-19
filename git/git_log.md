@@ -1,4 +1,10 @@
 
+#以一行的形式显示日志
+git log --oneline
+
+#查看某用户提交的文件及文件状态
+git log --name-status --author=peter
+
 #查看日志带显示commit对应文件
 git log --name-only
 

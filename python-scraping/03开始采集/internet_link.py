@@ -13,7 +13,7 @@ def getInternalLinks(bsObj,includeUrl):
     # 找出所有以/开头的链接
     for link in bsObj.findAll("a",href=re.compile("^(/|.*"+includeUrl+")")):
         if link.attrs['href'] is not None:
-            if links.attrs['href'] not in internalLinks:
+            if link.attrs['href'] not in internalLinks:
                 internalLinks.append(link.attrs['href'])
     return internalLinks
 
@@ -34,6 +34,8 @@ def splitAddress(address):
 def getRandomExternalLink(startingPage):
     html=urlopen(startingPage)
     bsObj=BeautifulSoup(html,'html.parser')
+    # print(splitAddress(startingPage)[0])
+    # [0]取host name
     externalLinks=getExternalLinks(bsObj,splitAddress(startingPage)[0])
     if len(externalLinks)==0:
         internalLinks=getInternalLinks(startingPage)
@@ -49,4 +51,27 @@ def followExtenalOnly(startingSite):
     print("随机外链是:"+externalLink)
     followExtenalOnly(externalLink)
 
-followExtenalOnly("http://oreilly.com")
+# 收集网站上发现的所有外链列表
+allExtLinks=set()
+allIntLinks=set()
+def getAllExternalLinks(siteUrl):
+    html=urlopen(siteUrl)
+    bsObj=BeautifulSoup(html,'html.parser')
+    internalLinks=getInternalLinks(bsObj,splitAddress(siteUrl)[0])
+    externalLinks=getExternalLinks(bsObj,splitAddress(siteUrl)[0])
+    for link in externalLinks:
+        if link not in allExtLinks:
+            allExtLinks.add(link)
+            print(link)
+    for link in internalLinks:
+        if link not in allIntLinks:
+            print("即将获取链接的URL是:"+link)
+            allIntLinks.add(link)
+            getAllExternalLinks(link)
+
+
+# 从互联网上不同的网站采集外链
+# followExtenalOnly("http://oreilly.com")
+
+# 收集内链和外链
+getAllExternalLinks("http://oreilly.com")
