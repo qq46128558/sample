@@ -9,21 +9,52 @@
 
 from urllib.request import Request
 from urllib.request import urlopen
-from datetime import datetime
 
+from datetime import datetime
+import hashlib
+import requests
+
+def assemble(headers={}):
+    # dictionary数据类型是无序的 (dictionary keys 排序方法)
+    items=[(k,headers[k]) for k in sorted(headers.keys())] 
+    sign=""
+    for t in items:
+        if (t[1]==None):
+            continue
+        if (type(t[1])==bool):
+            t[1]='1' if t[1] else '0'
+        sign+=t[0]+str(t[1])
+    return sign
 
 headers={
     "method":"trade.get.list",
-    "timestamp":int(datetime.now().timestamp()),
+    "timestamp": int(datetime.now().timestamp()),
     "format":"json",
     "v":"v1",
     "sign_type":"MD5",
     "fields":"*",
 }
 token=''
-# UnicodeEncodeError: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256) 中文错误?
-headers["sign"]="利用token计算签名"
+# 有中文值时报错(未解决): UnicodeEncodeError: 'latin-1' codec can't encode characters in position 0-1: ordinal not in range(256)
 
-webRequest=Request("http://192.168.239.138/index.php/api",headers=headers)
-html=urlopen(webRequest)
-print(html.read())
+# headers["sign"]=hashlib.md5((hashlib.md5(assemble(headers).encode('utf-8')).hexdigest().upper()+token).encode('utf-8')).hexdigest().upper()
+sign=assemble(headers)
+# MD5加密
+sign=hashlib.md5(sign.encode('utf-8')).hexdigest()
+# 转大写
+sign=sign.upper()+token
+sign=sign.encode('utf-8')
+sign=hashlib.md5(sign).hexdigest().upper()
+headers["sign"]=sign
+# print(sign)
+
+url="http://192.168.239.138/index.php/api"
+
+# 用此方法返回签名错误(urllib.request.Request)
+# webRequest=Request(url,headers=headers,method="POST")
+# html=urlopen(webRequest)
+# print(html.read())
+
+# 用此方法调用成功(requests)
+html=requests.post(url,params=headers)
+print(html.json())
