@@ -6,14 +6,16 @@ ps -eo 'rsz,cmd' |grep `"processname"`|grep -v "grep"
 - rsz,rss 内存
 - cmd,command 进程命令
 - user 用户
+- uid 
 - pid 进程id
-- %cpu cpu使用率
+- %cpu,pcpu cpu使用率
 - %mem 内存使用率
 - vsz 虚拟内存
 - tty 连接终端
 - stat 状态
-- start 启动时间?
+- start,stime 启动时间?
 - time 运行时间?
+- args
 
 ####查看php-fpm进程数
 ps aux|grep "php-fpm"|grep -v "grep"|wc -l

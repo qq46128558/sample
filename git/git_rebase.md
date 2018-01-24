@@ -1,5 +1,7 @@
-???
-####git rebase -i HEAD~`numberofcommit`
+<!-- ####git rebase -i HEAD~`numberofcommit`
+-i 是交互模式 -->
+
+##
 
 将`branch`分支的所有改变添加到当前分支(类似git merge)
 
