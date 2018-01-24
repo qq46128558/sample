@@ -14,3 +14,6 @@ ps -eo 'rsz,cmd' |grep `"processname"`|grep -v "grep"
 - stat 状态
 - start 启动时间?
 - time 运行时间?
+
+####查看php-fpm进程数
+ps aux|grep "php-fpm"|grep -v "grep"|wc -l
