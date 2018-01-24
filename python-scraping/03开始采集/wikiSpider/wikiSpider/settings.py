@@ -88,3 +88,16 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+# Scrapy 生成的调试信息非常有用，但是通常太罗嗦。你可以在 Scrapy 项目中的 setting.py 文件中设置日志显示层级：
+LOG_LEVEL='ERROR'
+# Scrapy 日志有五种层级，按照范围递增顺序排列如下：
+# • CRITICAL
+# • ERROR
+# • WARNING
+# • DEBUG
+# • INFO
+
+# 日志不仅可以显示在终端，也可以通过下面命令输出到一个独立的文件中：
+# $ scrapy crawl article -s LOG_FILE=wiki.log
