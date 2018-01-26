@@ -37,7 +37,7 @@ var xhr=$.post('http://192.168.239.139/index.php/api',{
 	data:$data,
 }).done(function(data){
 	console.log('Request done.');
-	console.log('data');
+	console.log(data);
 }).fail(function(xhr,status){
 	console.log('Request fail.');
 	console.log(xhr.status+":"+status);

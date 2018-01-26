@@ -1,0 +1,68 @@
+<html>
+<!DOCTYPE>
+<title>需开启支持跨域调用,调用成功</title>
+<!-- 修改ecstore的app/base/lib/rpc/service.php 代码, 开启支持跨域
+public function process($path){
+header('Access-Control-Allow-Origin:'.'*');
+header('Access-Control-Allow-Methods:POST,GET');
+header('Access-Control-Allow-Headers:x-requested-with,content-type'); -->
+
+<head>
+<script src="/sample/jquery/lib/jquery.js"></script>
+<script src="/sample/jquery/lib/md5.js"></script>
+
+<script type="text/javascript">
+'use strict';
+
+var $data={
+	'method':'b2c.order.search',
+	'start_time':'2016-01-01',
+	'end_time':'2018-01-01',
+	// 'sign':'C8A19CDAEC83D38B6305C66EEF0E17CA ',
+};
+function assemble(data){
+	var sortKey=Object.keys(data).sort();
+	var value="",sign="";
+	for (var index in sortKey){
+		var key=sortKey[index];
+		if (typeof(data[key])=="boolean"){
+			value=data[key]?"1":"0";
+		}
+		sign+=key+data[key];
+	}
+	return sign;
+}
+var token='';
+$data['sign']=$.md5($.md5(assemble($data)).toUpperCase()+token).toUpperCase();
+// console.log($data['sign']);
+
+// 此调用方式始终返回{"rsp":"fail","res":"4003","data":"sign error"},第二个参数传入格式不对,应是ajax的才这样用
+// var xhr=$.post('http://192.168.239.139/index.php/api',{
+// 	dataType:'json',
+// 	data:$data,
+// }).done(function(data){
+// 	console.log('Request done.');
+// 	console.log(data);
+// }).fail(function(xhr,status){
+// 	console.log('Request fail.');
+// 	console.log(xhr.status+":"+status);
+// }).always(function(){
+// 	console.log('Request complete.')
+// });
+// console.log(xhr);
+
+// 修改调用方式,第二个参数就是post过去的data
+var xhr=$.post('http://192.168.239.139/index.php/api',$data).done(function(data){
+	console.log('Request done.');
+	console.log(data);
+}).fail(function(xhr,status){
+	console.log('Request fail.');
+	console.log(xhr.status+":"+status);
+}).always(function(){
+	console.log('Request complete.')
+});
+</script>
+</head>
+<body>
+</body>
+</html>
