@@ -52,6 +52,7 @@ $data['sign']=$.md5($.md5(assemble($data)).toUpperCase()+token).toUpperCase();
 // console.log(xhr);
 
 // 修改调用方式,第二个参数就是post过去的data
+// (开启跨域支持,用$.ajax也失败[传入sign返回fail,不传sign则签名错误],只能用$.post)
 var xhr=$.post('http://192.168.239.139/index.php/api',$data).done(function(data){
 	console.log('Request done.');
 	console.log(data);
