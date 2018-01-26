@@ -1,0 +1,49 @@
+<html>
+<!DOCTYPE>
+<head>
+<script src="/sample/jquery/lib/jquery.js"></script>
+<script type="text/javascript">
+'use strict';
+
+var $data={
+	'method':'b2c.order.search',
+	'start_time':'2016-01-01',
+	'end_time':'2018-01-01',
+	'sign':'C8A19CDAEC83D38B6305C66EEF0E17CA ',
+};
+
+//调用失败
+// JSONP跨域请求数据报错 “Unexpected token :”的解决办法: 需要修改服务端代码
+// jsonp的返回数据格式应该是: “客户端传递的回调方法名称(json数据)”
+// $arr = array ('username'=>'jack','age'=>21,'gender'=>'male');   
+// echo $_GET['callback']."(".json_encode($arr).")";  
+
+$.ajax('http://192.168.239.139/index.php/api',{
+    method:'post',
+	dataType:'jsonp',
+    jsonp:'callbakc',
+    jsonpCallback:'getValue',
+	data:$data,
+    success:function(data){
+        console.log('Request success.');
+        console.log(data);
+    }
+}).done(function(data){
+	console.log('Request done.');
+	console.log('data');
+}).fail(function(xhr,status){
+	console.log('Request fail.');
+	console.log(xhr.status+":"+status);
+}).always(function(){
+	console.log('Request complete.')
+});
+function getValue(data){
+    console.log('Request callback.');
+    console.log(data);
+}
+
+</script>
+</head>
+<body>
+</body>
+</html>
