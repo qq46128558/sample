@@ -1,7 +1,10 @@
 <html>
 <!DOCTYPE>
+<title>调用失败 Unexpected token 问题</title>
 <head>
 <script src="/sample/jquery/lib/jquery.js"></script>
+<script src="/sample/jquery/lib/md5.js"></script>
+
 <script type="text/javascript">
 'use strict';
 
@@ -9,8 +12,24 @@ var $data={
 	'method':'b2c.order.search',
 	'start_time':'2016-01-01',
 	'end_time':'2018-01-01',
-	'sign':'C8A19CDAEC83D38B6305C66EEF0E17CA ',
+	// 'sign':'C8A19CDAEC83D38B6305C66EEF0E17CA ',
 };
+
+function assemble(data){
+	var sortKey=Object.keys(data).sort();
+	var value="",sign="";
+	for (var index in sortKey){
+		var key=sortKey[index];
+		if (typeof(data[key])=="boolean"){
+			value=data[key]?"1":"0";
+		}
+		sign+=key+data[key];
+	}
+	return sign;
+}
+var token='';
+$data['sign']=$.md5($.md5(assemble($data)).toUpperCase()+token).toUpperCase();
+console.log($data['sign']);
 
 //调用失败
 // JSONP跨域请求数据报错 “Unexpected token :”的解决办法: 需要修改服务端代码

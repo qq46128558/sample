@@ -1,0 +1,27 @@
+<html>
+<!DOCTYPE>
+<head>
+<script src="app/serveradm/vendor/xhprof_html/jquery/jquery-1.2.6.js"></script>
+<script type="text/javascript">
+'use strict';
+
+// 成功调用: 放在ecstore目录下, 同域调用(不能转JSON.stringify,同时post按以下方式)
+var $data={
+        'method':'b2c.order.search',
+        'start_time':'2016-01-01',
+        'end_time':'2018-01-01',
+        'sign':'C8A19CDAEC83D38B6305C66EEF0E17CA',
+};
+// $data=JSON.stringify($data);
+console.log($data);
+$.post("http://192.168.239.139/index.php/api",$data,
+        function(data){
+                data=JSON.parse(data);
+                console.log(data);
+        },
+);
+</script>
+</head>
+<body>
+</body>
+</html>
