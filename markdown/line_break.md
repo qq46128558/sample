@@ -1,5 +1,5 @@
-line1<br/>
-line2
-line3: line2 no space  
-line4: line3 has two or more space
+line1 会换行<br/>
+line2 不换行
+line3: 会换行, 因为后面有两个以上空格  
+line4
 
