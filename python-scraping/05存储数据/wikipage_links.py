@@ -41,6 +41,7 @@ def getLinks(pageUrl,recursionLevel):
     pageId=insertPageIfNotExists(pageUrl)
     html=urlopen("http://en.wikipedia.org"+pageUrl)
     bsObj=BeautifulSoup(html,'html.parser')
+    # compile处用单引号报错:AttributeError: 'NavigableString' object has no attribute 'attrs'
     for link in bsObj.findAll('a',href=re.compile("^(/wiki/)((?!:).)*$")):
         insertLink(pageId,insertPageIfNotExists(link.attrs['href']))
         if link.attrs['href'] not in pages:
