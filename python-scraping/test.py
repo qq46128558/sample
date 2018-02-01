@@ -6,3 +6,5 @@ try:
     bsObj=BeautifulSoup(html)
 except Exception as e:
     print(e)
+
+
