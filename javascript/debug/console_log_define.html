@@ -1,0 +1,15 @@
+<script>
+    // console.log, console.debug, console.warn, console.info, console.error
+    // 可以自己美化调试信息了。在调试JavaScript时，可以使用CSS并自定义控制台信息：
+    // 在console.log()中， 可以用%s设置字符串，%i设置数字，%c设置自定义样式等等，还有很多更好的console.log()使用方法。 
+    console.todo=function(msg){
+        console.log('%c%s%s%s','color:yellow;background-color:black;','-',msg,'-');
+    }
+    console.important=function(msg){
+        console.log('%c%s%s%s','color:brown;font-weight:bold;text-decoration:underline;','-',msg,'-');
+    }
+    
+    console.todo("This is something that’ s need to be fixed");
+    console.important("This is an important message");
+
+</script>

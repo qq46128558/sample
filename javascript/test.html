@@ -1,0 +1,17 @@
+<script>
+    var func1 = function() {
+  func2();
+};
+
+var Car = function() {
+  this.funcX = function() {
+    this.funcY();
+  }
+
+  this.funcY = function() {
+    this.funcZ();
+  }
+}
+
+var car = new Car();
+</script>
