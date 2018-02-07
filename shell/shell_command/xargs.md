@@ -34,4 +34,28 @@ xargs 可以 **读入 stdin(标准输入) 的资料，并且以空白字元或�
 #### -t 先打印命令然后再执行
 	xargs -a test.php -t echo -e "\033[33;1m"&& echo -e '\033[0m'
 
+#### -i 将xargs的每项名称一行行赋值给{}用{}代替
+	ls test.txt|xargs -t -i mv {} {}.bak
 
+#### -r 当xargs的输入为空的时候则停止xargs
+	echo ""|xargs -t mv
+	echo ""|xargs -t -r mv
+
+#### -x exit的意思主要配合-s使用
+	略
+
+#### -s num xargs后面那个命令的最大命令行字符数
+超出则无法显示  
+xargs: argument list too long
+
+	ls -d */|xargs -t -i -x -s 33  echo -e "\033[33;1m{}\033[0m"
+
+#### -d delim 修改xargs的分隔符
+	ls -d */|xargs -t -d "_" -i echo -e "\033[33;1m{}\033[0m"
+
+---
+#### -P 修改最大的进程数,默认是1,为0时候为as many as it can
+	(未研究)
+
+#### -L或-l num Use at most max-lines nonblank input lines per command line
+	(未研究)
