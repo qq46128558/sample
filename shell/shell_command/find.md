@@ -13,7 +13,7 @@ find . -group `groupname`
 #### 查找15天以前修改过的文件
     find . -mtime +15
 
-#### 查找文件类型
+#### 按文件类型查找
 - 查找块设备
 	~~~
 	find . -type b
@@ -44,4 +44,27 @@ find . -group `groupname`
 
 #### 查找大小为0的文件或空目录
     find . -empty
+
+#### 查找小于10k的文件
+    find . -size -10k
+大于10k的改用+号
+
+#### 查找权限为775(rwx rwx r-x)的文件
+	find . -perm 775
+
+## 查找属主为peter的文件并执行chown命令
+	find . -user peter -exec sudo chown www.www {} \;
+
+#### 查找属主不是www的文件
+	find . ! -user www
+
+#### 查找名为controller或member的文件
+	find . -name "controller" -or -name "member"
+
+## 查找普通文件内容包含getSql的文件
+	find . -type f |xargs grep "getSql"
+
+
+
+
 
