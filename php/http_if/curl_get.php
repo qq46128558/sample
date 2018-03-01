@@ -1,7 +1,7 @@
 <?php
 /* 
 GET请求 CURL
-php利用curl实现http get请求
+php利用curl实现http/https get请求
 实现自定义http头
 */
 
@@ -17,6 +17,13 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 $headers = array();
 $headers[] = 'User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36';
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+// 请求HTTPS协议接口api
+// 跳过证书检查
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER,0);
+// 从证书中检查SSL加密算法是否存在
+curl_setopt($curl, CURLOPT_SSL_VERIFYHOST,2);
+
 //执行命令
 $data = curl_exec($curl);
 //关闭URL请求
