@@ -17,3 +17,6 @@ if($tmpstr == $signature)
     echo $_GET['echostr'];  
     exit;  
 }
+
+// 返回 echostr仅用于微信公众平台上的服务器配置提交token校验
+// 其它接口应该可以只校验$signature后再执行后续操作
