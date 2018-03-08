@@ -4,8 +4,8 @@
 
 $access=new TokenUtil();
 // 第一次获取用
-// $access->build_access_token();
-echo $access->read_token();
+$access->build_access_token();
+// echo $access->read_token();
 
 class TokenUtil {
     //获取access_token并保存到token.txt文件中
