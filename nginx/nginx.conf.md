@@ -1,5 +1,7 @@
 ##### 文件位置
     /usr/local/nginx/conf/nginx.conf
+    或
+    /etc/nginx/nginx.conf
 
 ##### 加载监听的配置文件
 ~~~
