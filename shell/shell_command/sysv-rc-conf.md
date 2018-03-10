@@ -25,7 +25,7 @@
 
 ls /etc/rc2.d/
 README  S20mysql  S20nginx  S20php-fpm  S20postfix  S20rsync  S20screen-cleanup  S70dns-clean  S70pppd-dns  S99grub-common  S99ondemand  S99rc.local
-其中的S20,S70,S99等， 20，70，99应该是优先级
+其中的S20,S70,S99等， 20，70，99应该是优先级(执行序号,序号越大的越晚执行)
 ~~~
 
 Linux 系统主要启动步骤
