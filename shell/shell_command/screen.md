@@ -22,6 +22,9 @@
     C-a tab
     #分割一个横屏
     C-a S
+    #关掉当前分屏
+    C-a X
+
     #离线，暂时离开当前session，将目前的 screen session (可能含有多个 windows) 丢到后台执行，并会回到还没进 screen 时的状态，此时在 screen session 里，每个 window 内运行的 process (无论是前台/后台)都在继续执行，即使 logout 也不影响
     C-a d
 
