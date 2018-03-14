@@ -19,7 +19,7 @@ var mobile="13928016056";
 var shareUserId="";
 
 $.ajax({
-    type: "post",
+    method: "post",
     url: "http://192.168.239.136/apply/dev/main/submit",
     data: {activityId:activityId, user:user,data:data,mobile:mobile,shareUserId:shareUserId},
     anysc: false,
