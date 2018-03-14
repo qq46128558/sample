@@ -1,17 +1,49 @@
-<script>
-    var func1 = function() {
-  func2();
+<html>
+<!DOCTYPE>
+<head>
+<script src="/sample/jquery/lib/jquery.js"></script>
+<script type="text/javascript">
+'use strict';
+
+// 蟹宝盒post接口测试
+var activityId="5aa64336f8990b4d9c82fdcb";
+var user={
+  "userId":"oRnBdwv0rXOiUWFt_UvC1ZyMBJuo",
+  "nickName":"Peter",
+  "headImgUrl":"http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ4gfafuPCFibAfhWc5d41EI4ad6KWfP4IGbIzouLYJhUqQufsS1brmNZSsCEEoTPica5Ywic9F5dLTQ/132",
 };
-
-var Car = function() {
-  this.funcX = function() {
-    this.funcY();
-  }
-
-  this.funcY = function() {
-    this.funcZ();
-  }
+var data={
+  "name":"guiwen","phone":"13928016056","product":"蟹宝盒","area":"珠海",
 }
+var mobile="13928016056";
+var shareUserId="";
 
-var car = new Car();
+$.ajax({
+    type: "post",
+    url: "http://192.168.239.136/apply/dev/main/submit",
+    data: {activityId:activityId, user:user,data:data,mobile:mobile,shareUserId:shareUserId},
+    anysc: false,
+    success: function (data) {
+        // console.log(data);
+        var responseText=data;
+        responseText = unescape(responseText.replace(/\\/g, "%"));
+        document.getElementById("responsetext").innerText=responseText;
+    },
+    error: function (e) {
+        alert('接口调用错误,请到控制台查看错误信息.')
+        console.log(e);
+    },
+    complete: function(data){
+        console.log(data);
+        // var responseText=data.responseText;
+        // responseText = unescape(responseText.replace(/\\/g, "%"));
+        // console.log(responseText);
+    }
+});
+
 </script>
+</head>
+<body>
+  <div id='responsetext'></div>
+</body>
+</html>
