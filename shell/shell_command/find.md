@@ -1,11 +1,14 @@
+#### 查找并显示文件
+    find . -name "testweb.php" -ls
+
 #### 查找filename指定文件
-find . -name `filename`
+    find . -name `filename`
 
 #### 按文件属主查找
-find . -user `username`
+    find . -user `username`
 
 #### 按文件属组查找
-find . -group `groupname`
+    find . -group `groupname`
 
 #### 查找1分钟以内修改过的文件
     find . -mmin -1
@@ -52,7 +55,7 @@ find . -group `groupname`
 #### 查找权限为775(rwx rwx r-x)的文件
 	find . -perm 775
 
-## 查找属主为peter的文件并执行chown命令
+#### 查找属主为peter的文件并执行chown命令
 	find . -user peter -exec sudo chown www.www {} \;
 
 #### 查找属主不是www的文件
@@ -61,9 +64,8 @@ find . -group `groupname`
 #### 查找名为controller或member的文件
 	find . -name "controller" -or -name "member"
 
-## 查找普通文件内容包含getSql的文件
+#### 查找普通文件内容包含getSql的文件
 	find . -type f |xargs grep "getSql"
-
 
 
 
