@@ -1,16 +1,16 @@
-####提交add与modified(包括untracked)
+##### 提交modified与add(包括untracked)
 git add .
 
-#####提交modified和deleted
+##### 提交modified和deleted
 git add -u
 
-#####提交所有变化(包括untracked)
+##### 提交所有变化(包括untracked)
 git add -A
 
-#####增加修改, 将修改(git管理的是修改, 不是文件)从工作区提交到版本库的stage(暂存区)
+##### 增加修改, 将修改(git管理的是修改, 不是文件)从工作区提交到版本库的stage(暂存区)
 git add <filename>
 
-#####将文件修改分段提交
+##### 将文件修改分段提交
 git add -p `filename`
 
 - y - stage this hunk
