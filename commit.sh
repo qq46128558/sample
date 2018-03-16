@@ -6,7 +6,7 @@ if [ $? == 0 ]; then
 	git commit -m "Sample code improved:${result}"
 fi
 
-function(){
+function nopush(){
 if [ $? == 0 ]; then
 	git push origin master
 fi
