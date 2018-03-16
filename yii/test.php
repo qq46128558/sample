@@ -18,6 +18,6 @@ $config = require(__DIR__ . '/../../yiibasic/config/web.php');
 
 //使用Yii类
 // 控制器中如果没有use Yii(namespace yii\web),则可以用\Yii调用
-use yii\helpers\Html;
-$value=Html::encode('<script>alert("abc");</script>');
-var_dump($value);
+// echo floor( (9999999999- 1325347200) / 86400);
+// echo floor(9999*86400+1325347200);
+echo date('Y-m-d',1999999999);
