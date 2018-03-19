@@ -29,8 +29,13 @@
 	use yii\helpers\Inflector;
 	echo Inflector::camel2words("helloWorld", true);
 
+##### 从config.php加载配置来初始化模块
+	\Yii::configure($this, require(__DIR__ . '/config.php'));
 
-##模型/控制器/视图方法
+
+
+
+##模型/控制器/视图/模块方法
 ---------------------------
 ##### 模型加载Post数据
     $model->load(Yii::$app->request->post());
@@ -113,10 +118,71 @@
 	- 控制器按顺序调用控制器、模块（如果控制器属于模块）、应用主体的 afterAction() 方法
 	- 应用主体获取操作结果并赋值给响应
 
+##### 使用视图布局文件
+	#配置yii\base\Application::$layout 或 yii\base\Controller::$layout 
+	#前者管理所有控制器的布局，后者覆盖前者来控制单个控制器布局
+	public $layout = 'post';
+
 ##### 其他地方渲染视图
 	#在任何地方都可以通过表达式 Yii::$app->view 访问 view 应用组件
 	echo \Yii::$app->view->renderFile('@app/views/site/about.php');
-	
+
+##### 视图中访问数据
+	#推送
+	echo $this->render('report', [
+		'foo' => 1,
+		'bar' => 2,
+	]);
+	#拉取 $this->context
+	<?= $this->context->id ?>
+
+##### 嵌套布局
+	<?php $this->beginContent('@app/views/layouts/base.php'); ?>
+		...child layout content here...
+	<?php $this->endContent(); ?>
+
+##### 使用数据块
+	#内容视图
+	<?php $this->beginBlock('block1'); ?>
+		...content of block1...
+	<?php $this->endBlock(); ?>
+	#布局视图
+	<?php if (isset($this->blocks['block1'])): ?>
+		<?= $this->blocks['block1'] ?>
+	<?php else: ?>
+		... default content for block1 ...
+	<?php endif; ?>
+
+##### 模块目录结构
+	forum/
+		Module.php                   模块类文件
+		controllers/                 包含控制器类文件
+			DefaultController.php    default 控制器类文件
+		models/                      包含模型类文件
+		views/                       包含控制器视图文件和布局文件
+			layouts/                 包含布局文件
+			default/                 包含DefaultController控制器视图文件
+				index.php            index视图文件
+
+##### 访问模块
+	#getInstance() 方法返回当前请求的模块类实例， 如果模块没有被请求，该方法会返回空
+	$module = yii\gii\Module::getInstance();
+	var_dump($module);
+
+	#获取ID为 "forum" 的模块
+	$module = \Yii::$app->getModule('forum');
+	#获取处理当前请求控制器所属的模块
+	$module = \Yii::$app->controller->module;
+
+##### 模块嵌套
+	$this->modules = [
+            'admin' => [
+                // 此处应考虑使用一个更短的命名空间
+                'class' => 'app\modules\forum\modules\admin\Module',
+            ],
+        ];
+
+
 
 ##对象/应用组件
 ---------------------------
@@ -159,6 +225,22 @@
 	use app\modules\api\Api;
 	$modules=new Api('xxx');
 	echo $modules->viewPath;
+
+##### 视图布局路径
+	#yii\base\Application::layoutPath
+	Yii::$app->layoutPath;
+	#配置yii\base\Module::layoutPath来自定义应用或模块的布局默认路径
+
+##### 视图布局文件
+	Yii::$app->layout;
+
+##### 获取ID为 "forum" 的模块
+	$module = \Yii::$app->getModule('forum');
+
+##### 获取处理当前请求控制器所属的模块
+	$module = \Yii::$app->controller->module;
+
+
 
 ##位置
 ---------------------------

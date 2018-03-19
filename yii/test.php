@@ -18,4 +18,6 @@ $config = require(__DIR__ . '/../../yiibasic/config/web.php');
 
 //使用Yii类
 // 控制器中如果没有use Yii(namespace yii\web),则可以用\Yii调用
-echo Yii::$module->viewPath;
+// use yii\gii\Module;
+$module = \Yii::$app->getModule('gii');
+var_dump($module);
