@@ -32,6 +32,8 @@
 ##### 从config.php加载配置来初始化模块
 	\Yii::configure($this, require(__DIR__ . '/config.php'));
 
+##### 未研究
+	Yii::trace("Action '{$action->uniqueId}' spent $time second.");
 
 
 
@@ -182,6 +184,15 @@
             ],
         ];
 
+##### 使用过滤器
+	#覆盖 yii\base\Controller::behaviors() 方法声明过滤器
+	#配置only属性明确指定控制器应用到哪些动作
+	#除了控制器外，可在 模块或应用主体 中申明过滤器。 申明之后，过滤器会应用到所属该模块或应用主体的 所有 控制器动作
+	#继承 yii\base\ActionFilter 类并覆盖 beforeAction() 或 afterAction() 方法来创建动作的过滤器，前者在动作执行之前执行，后者在动作执行之后执行。 beforeAction() 返回值决定动作是否应该执行， 如果为 false，之后的过滤器和动
+
+##### 核心过滤器
+	#Yii 提供了一组常用过滤器，在 yii\filters 命名空间下
+	vendor/yiisoft/yii2/filters/
 
 
 ##对象/应用组件
@@ -265,10 +276,15 @@
 	vendor/yiisoft/yii2/base/Model.php
 	#继承组件
 
-#### 基类小部件
+##### 基类小部件
 	use yii\base\Widget
 	vendor/yiisoft/yii2/base/Widget.php
 	#继承组件
+
+##### 基类过滤器
+	use yii\base\ActionFilter
+	vendor/yiisoft/yii2/base/ActionFilter.php
+	#继承Behavior再继承BaseObject
 
 ##### 小部件引用及位置
 	use yii\widgets\......
@@ -293,6 +309,9 @@
 	gii模块类是 yii\gii\Module
 	vendor\yiisoft\yii2-gii\
 
+##### 扩展清单文件
+	vendor/yiisoft/extensions.php
+	
 ##### 入口文件
 	#web应用
 	web/index.php
