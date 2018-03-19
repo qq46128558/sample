@@ -15,6 +15,21 @@
     Yii::$app->request->csrfToken;
 
 ##### 错误处理
+	#使用错误处理器
+	use yii\base\ErrorException;
+	try{}
+	catch(ErrorException $e){}
+
+	#自定义错误显示
+	#error handler 错误处理器默认使用两个视图显示错误
+	#PRD
+	@yii/views/errorHandler/error.php
+	#DEV
+	@yii/views/errorHandler/exception.php
+	#可以配置错误处理器的 errorView 和 exceptionView 属性 使用自定义的错误显示视图
+
+	#使用错误动作
+	#使用指定的错误操作 来自定义错误显示更方便
 	#配置errorHandler组件
 	'errorAction' => 'site/error',
 		controllers/SiteController.php
@@ -33,10 +48,38 @@
 ##### 获取版本
     Yii::getVersion();
 
-##### 写日志
+##### 日志
+	vendor\yiisoft\yii2\base\log\
+	Yii::trace("Action '{$action->uniqueId}' spent $time second.");
+	Yii::info();
+	Yii::warning();
 	#2018-03-16 05:41:16 [::1][-][-][error][application] XXX
+	#Timestamp [IP address][User ID][Session ID][Severity Level][Category] Message Text
 	Yii::error('XXX');
-	Yii::info('XXX');
+	#假如一条日志消息不是一个字符串，它将被导出为一个字符串，通过调用 yii\helpers\VarDumper::export()
+
+	#它们共享相同的函数签名 function ($message, $category = 'application')
+	#建议使用PHP魔术常量 __METHOD__ 作为分类名称
+	Yii::trace('start calculating average revenue', __METHOD__);
+
+	#日志目标
+	#通过配置在应用配置里的 log application component ，你可以注册多个日志目标
+	#保存日志消息到文件中
+		'class'=>'yii\log\FileTarget',
+		'levels' => ['error', 'warning'],
+
+	#日志文件
+		runtime/log/app.log
+
+	#消息格式化
+	#通过配置 yii\log\Target::$prefix 的属性来自定义格式
+
+	#性能分析
+	#levels profile：相应的消息通过 Yii::beginProfile() 和 Yii::endProfile() 被记录。
+		\Yii::beginProfile('myBenchmark');
+			...code block being profiled...
+		\Yii::endProfile('myBenchmark');
+
 
 ##### 将驼峰式大小写变量名转换为多个首字母大写的单词
 	use yii\helpers\Inflector;
@@ -45,8 +88,6 @@
 ##### 从config.php加载配置来初始化模块
 	\Yii::configure($this, require(__DIR__ . '/config.php'));
 
-##### 未研究
-	Yii::trace("Action '{$action->uniqueId}' spent $time second.");
 
 
 
