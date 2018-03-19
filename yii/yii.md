@@ -14,6 +14,19 @@
     Yii::$app->request->getCsrfToken();
     Yii::$app->request->csrfToken;
 
+##### 错误处理
+	#配置errorHandler组件
+	'errorAction' => 'site/error',
+		controllers/SiteController.php
+			actions()
+				'error'
+					yii\web\ErrorAction
+	vendor\yiisoft\yii2\web\ErrorAction.php
+	#上述代码定义error 操作使用yii\web\ErrorAction 类， 该类渲染名为error视图来显示错误
+
+	#除了使用yii\web\ErrorAction, 可定义error 动作使用类似如下的操作方法：
+	$exception = Yii::$app->errorHandler->exception;
+
 
 ##方法
 ---------------------------
@@ -210,10 +223,30 @@
 
 ##### 请求对象
 	Yii::$app->request
+	#vendor\yiisoft\yii2\web\Request.php
+	#继承\yii\base\Request再继承Component
 
+##### 响应对象
+	Yii::$app->response
+	#vendor\yiisoft\yii2\web\Response.php
+	#设置响应格式
+	\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+	#调用 yii\web\Response::send() 方法来确保没有其他内容追加到响应中
+	\Yii::$app->response->redirect('http://example.com/new', 301)->send();
+	#一旦yii\web\Response::send() 方法被执行后，其他地方调用该方法会被忽略， 这意味着一旦响应发出后，就不能再追加其他内容
+	
 ##### Redis对象
 	Yii::$app->redis
 
+##### Sessions
+	Yii::$app->session
+
+##### Cookies
+	Yii::$app->request->cookies
+	Yii::$app->response->cookies
+	#cookieValidationKey 对你的应用安全很重要， 应只被你信任的人知晓，请不要将它放入版本控制中。
+	#当通过 request 和 response 组件读取和发送 cookie 时， 你会喜欢扩展的 cookie 验证的保障安全功能，它能 使 cookie 不被客户端修改。该功能通过给每个cookie签发一个哈希字符串来告知服务端 cookie 是否在客户端被修改， 如果被修改，通过 request 组件的 yii\web\Request::cookies cookie 集合访问不到该 cookie。
+	
 ##### 获取模块
 	#vendor/yiisoft/yii2/base/Module.php
 	Yii::$app->getModule('gii');
@@ -311,7 +344,7 @@
 
 ##### 扩展清单文件
 	vendor/yiisoft/extensions.php
-	
+
 ##### 入口文件
 	#web应用
 	web/index.php
