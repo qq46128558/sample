@@ -151,6 +151,14 @@
 ##### primary cache
 	\Yii::$app->cache
 
+##### 视图路径
+	#yii\base\Application::viewPath 
+	Yii::$app->viewPath;
+	#模块的视图路径
+	#yii\base\Module::viewPath
+	use app\modules\api\Api;
+	$modules=new Api('xxx');
+	echo $modules->viewPath;
 
 ##位置
 ---------------------------

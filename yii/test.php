@@ -18,4 +18,4 @@ $config = require(__DIR__ . '/../../yiibasic/config/web.php');
 
 //使用Yii类
 // 控制器中如果没有use Yii(namespace yii\web),则可以用\Yii调用
-echo \Yii::$app->view->renderFile('@app/views/site/about.php');
+echo Yii::$module->viewPath;
