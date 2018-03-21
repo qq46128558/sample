@@ -1,0 +1,37 @@
+<div id='get'></div>
+<script>
+// 获取get传值的方法  
+function getQueryString(name) {  
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    // window.location.search为url?及之后的字串
+    var r = window.location.search.substr(1).match(reg);  
+    if (r != null) return decodeURI(r[2]);  
+    return null;  
+}
+var code=getQueryString('code');
+document.getElementById('get').innerText=code;
+
+console.log("%c%s","color:red",code);
+
+// 方法2:
+function getValue(url){  
+    //首先获取地址  
+    var url = url || window.location.href;  
+    //获取传值  
+    var arr = url.split("?");  
+    //判断是否有传值  
+    if(arr.length == 1){  
+        return null;  
+    }  
+    //获取get传值的个数  
+    var value_arr = arr[1].split("&");  
+    //循环生成返回的对象  
+    var obj = {};  
+    for(var i = 0; i < value_arr.length; i++){  
+        var key_val = value_arr[i].split("=");  
+        obj[key_val[0]]=key_val[1];  
+    }  
+    return obj;  
+}  
+console.log("%c%s","color:red",getValue().code);
+</script>
