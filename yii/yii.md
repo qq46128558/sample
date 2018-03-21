@@ -383,6 +383,34 @@
 	gii模块类是 yii\gii\Module
 	vendor\yiisoft\yii2-gii\
 
+##### getter和setter方法
+	#Yii 引入了一个名为 yii\base\Object 的基类， 它支持基于类内的 getter 和 setter（读取器和设定器）方法来定义属性
+	private $_label;
+
+```php
+public function getLabel()
+{
+	return $this->_label;
+}
+
+public function setLabel($value)
+{
+	$this->_label = trim($value);
+}
+// 调用
+// 等效于 $label = $object->getLabel();
+$label = $object->label;
+
+// 等效于 $object->setLabel('abc');
+$object->label = 'abc';
+```
+
+##### 事件
+	$foo = new Foo;
+	// 处理器是全局函数
+	$foo->on(Foo::EVENT_HELLO, 'function_name');
+	
+
 ##### 扩展清单文件
 	vendor/yiisoft/extensions.php
 
