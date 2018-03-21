@@ -7,6 +7,7 @@ require_once('https_method.php');
 $redirecturl="http://ser.yn-ce.com/wx/webpage_auth.php";
 $redirecturl=urlencode($redirecturl);
 
+// 不同公众号请修改appid
 if (isset($_GET['scope'])){
     // state是自定义传参
     echo 'scope=snsapi_base</br>';
