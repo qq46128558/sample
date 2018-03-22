@@ -268,6 +268,19 @@
 	#yii\db\Connection
 	#vendor/yiisoft/yii2/db/Connection.php
 	Yii::$app->db
+	
+	$posts = Yii::$app->db->createCommand('SELECT * FROM post')->queryAll();
+	$titles = Yii::$app->db->createCommand('SELECT title FROM post')->queryColumn();
+	$count = Yii::$app->db->createCommand('SELECT COUNT(*) FROM post')->queryScalar();
+	#所有从数据库取得的数据都被表现为字符串
+	Yii::$app->db->createCommand('UPDATE post SET status=1 WHERE id=1')->execute();
+	$table = Yii::$app->db->getTableSchema('post');
+	
+	#绑定参数防入SQL注入
+	$post = Yii::$app->db->createCommand('SELECT * FROM post WHERE id=:id AND status=:status')
+           ->bindValue(':id', $_GET['id'])
+           ->bindValue(':status', 1)
+           ->queryOne();
 
 ##### 请求对象
 	Yii::$app->request
@@ -441,6 +454,34 @@ $config = [
 $db = Yii::createObject($config);
 ~~~
 
+##### 别名
+	#一个别名必须以 @ 字符开头，以区别于传统的文件路径和 URL。 Yii 预定义了大量可用的别名。
+	@yii 指的是 Yii 框架本身的安装目录
+	@web 表示的是当前运行应用的根 URL
+
+	#定义别名
+	// 文件路径的别名
+	Yii::setAlias('@foo', '/path/to/foo');
+	#解析别名
+	echo Yii::getAlias('@foo'); 
+	#别名在 Yii 的很多地方都会被正确识别， 无需调用 Yii::getAlias() 来把它们转换为路径/URL。
+
+##### 服务定位器
+	#服务定位器是一个了解如何提供各种应用所需的服务（或组件）的对象
+	#在服务定位器中， 每个组件都只有一个单独的实例，并通过ID 唯一地标识。 用这个 ID 就能从服务定位器中得到这个组件
+	#服务定位器是 yii\di\ServiceLocator 或其子类的一个实例
+	$locator = new ServiceLocator;
+	$locator->set('cache', 'yii\caching\ApcCache');
+	$cache = $locator->cache;
+	#可以通过 yii\di\ServiceLocator::has() 检查某组件 ID 是否被注册
+
+##### 依赖注入容器
+	#未理解(https://martinfowler.com/articles/injection.html)
+	#依赖注入（Dependency Injection，DI）容器就是一个对象，它知道怎样初始化并配置对象及其依赖的所有对象。
+	#Yii 通过 yii\di\Container 类提供 DI 容器特性
+	#实际应用:
+		#全局性自定义 yii\widgets\LinkPager 中分页按钮的默认数量
+		\Yii::$container->set('yii\widgets\LinkPager', ['maxButtonCount' => 5]);
 
 ##### 扩展清单文件
 	vendor/yiisoft/extensions.php
