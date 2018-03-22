@@ -43,6 +43,13 @@
 	$exception = Yii::$app->errorHandler->exception;
 
 
+##### 默认配置
+	#如果你想自定义 yii\widgets\LinkPager 小部件，以便让分页器最多只显示 5 个翻页按钮（默认是 10 个）
+	\Yii::$container->set('yii\widgets\LinkPager', [
+		'maxButtonCount' => 5,
+	]);
+
+
 ##方法
 ---------------------------
 ##### 获取版本
@@ -406,10 +413,34 @@ $object->label = 'abc';
 ```
 
 ##### 事件
+	#Yii 引入了名为 yii\base\Component 的基类以支持事件
+	vendor\yiisoft\yii2\base\Component.php
+
 	$foo = new Foo;
 	// 处理器是全局函数
 	$foo->on(Foo::EVENT_HELLO, 'function_name');
 	
+	#类级别的事件处理器
+	 yii\base\Event::on()
+	 vendor\yiisoft\yii2\base\Event.php
+
+##### 行为
+	yii\base\Behavior
+	vendor\yiisoft\yii2\base\Behavior.php
+
+##### 配置
+~~~php
+$config = [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=127.0.0.1;dbname=demo',
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8',
+];
+
+$db = Yii::createObject($config);
+~~~
+
 
 ##### 扩展清单文件
 	vendor/yiisoft/extensions.php
