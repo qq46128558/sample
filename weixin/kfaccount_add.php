@@ -20,7 +20,8 @@ $json=<<<STR
     "password" : "pswmd5",
 }
 STR;
-$access_token=file_get_contents('./t_token.txt');
+// $access_token=file_get_contents('./t_token.txt');
+$access_token=t_access_token();
 $url="https://api.weixin.qq.com/customservice/kfaccount/add?access_token=$access_token";
 $value=https_post($url,$json);
 

@@ -11,6 +11,19 @@ error_reporting(E_ALL ^ E_NOTICE);
 $appinfo=appinfo();
 
 /**
+ * 检验授权凭证（access_token）是否有效
+ * 网页授权access_token
+ * 
+ */
+function auth_access_token($openid){
+    $value=file_get_contents("./openid/".$openid);
+    $access_token=json_decode($value)->access_token;
+    $url="https://api.weixin.qq.com/sns/auth?access_token=$access_token&openid=$openid";
+    $value=https_get($url);
+    return $value;
+}
+
+/**
  * 拉取用户信息(需scope为 snsapi_userinfo)
  * 根据openid
  * 
@@ -18,6 +31,7 @@ $appinfo=appinfo();
 function t_userinfo_byid($openid){
     $value=file_get_contents("./openid/".$openid);
     $value=json_decode($value,1);
+    // 网页授权access_token
     // 未过期
     if ($value && $value['expires_in']>time()){
         $access_token=$value['access_token'];
@@ -47,6 +61,7 @@ function t_userinfo_byid($openid){
  */
 function t_userinfo($code)
 {
+    // 网页授权access_token
     $value=t_openid($code);
     if ($value && $value['openid']){
         $url="https://api.weixin.qq.com/sns/userinfo?access_token=".$value['access_token']."&openid=".$value['openid']."&lang=zh_CN";
@@ -66,6 +81,7 @@ function t_userinfo($code)
 /**
  * 刷新access_token
  * 测试号
+ * 网页授权access_token
  */
 function t_refresh_token($openid){
     global $appinfo;
@@ -86,11 +102,12 @@ function t_refresh_token($openid){
         wlog("refresh_token failed: ".$value,2);
         throw new Exception($value);
     }
-    throw new Excption("openid file not found.");
+    throw new Exception("openid file not found.");
 }
 
 /**
  * 根据微信提供的code获取用户的openid & access_token
+ * 网页授权access_token
  */
 function t_openid($code)
 {
@@ -135,7 +152,7 @@ function appinfo()
 
  /**
   * 获取测试号的access_token
-  *
+  * 普通access_token
   */
 function t_access_token(){
     global $appinfo;
@@ -150,6 +167,7 @@ function t_access_token(){
   * 获取我的个人订阅号的access_token
   * 返回格式
   * {"access_token":"ACCESS_TOKEN","expires_in":7200}
+  * 普通access_token
   */
 function my_access_token(){
     global $appinfo;
@@ -158,7 +176,7 @@ function my_access_token(){
 
 /**
  * 获取指定appid的access_token
- * 
+ * 普通access_token
  */
  function access_token($appid,$secret,$filename){
     
