@@ -58,6 +58,7 @@ function t_userinfo_byid($openid){
 /**
  * 拉取用户信息(需scope为 snsapi_userinfo)
  * 根据code
+ * 通过code换取网页授权access_token(存起来，30天内可用refresh再获取最新的用户信息？)
  */
 function t_userinfo($code)
 {
