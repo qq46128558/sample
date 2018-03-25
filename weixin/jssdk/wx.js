@@ -1,10 +1,32 @@
 
-// const _=require('jweixin-1.2.0.js');
-wx.config({
-    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-    appId: '', // 必填，公众号的唯一标识
-    timestamp: , // 必填，生成签名的时间戳
-    nonceStr: '', // 必填，生成签名的随机串
-    signature: '',// 必填，签名
-    jsApiList: [] // 必填，需要使用的JS接口列表
-});
+
+'use strict';
+// 引入jquery
+document.write("<script type='text/javascript' src='./jquery-2.2.4.min.js'></script>");
+// 引入jweixin
+// document.write("<script type='text/javascript' src='https://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>");  
+document.write("<script type='text/javascript' src='./jweixin-1.2.0.js'></script>");  
+
+// console定制
+console.led=function(msg){
+    console.log('%c%s%s%s','font-size:15px;font-bold:true;color:#00ff00;background-color:black','---',msg,'---');
+}
+
+window.onload=function(){
+    // 通过config接口注入权限验证配置
+    $.ajax(
+        {
+            url:"./wxhelper.php",
+            method:"post",
+            dataType:"json",
+            data:{'url':location.href},
+            async:false,
+        }
+    ).done(function(data)
+        {
+            console.info(data);
+        }
+    ).fail(function(xhr,status)
+        {console.led(status+":"+xhr.status+" " +xhr.responseText);}
+    ).always(function(){});
+}

@@ -5,4 +5,6 @@
  */
 require_once ("../https_method.php");
 
-echo t_jsapi_ticket();
+// echo json_encode(t_jsapi_ticket());
+// echo $_POST['url'];
+echo t_wx_config();

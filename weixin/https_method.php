@@ -10,6 +10,81 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 $appinfo=appinfo();
 
+/**
+ * 生成wx.config所需的配置信息
+ * 测试号
+ * $_SERVER['HTTP_REFERER'] 链接到当前页面的前一页面的 URL 地址
+ * 
+ */
+function t_wx_config($url=null){
+    global $appinfo;
+    if (!$url) $url=$_SERVER['HTTP_REFERER'];
+    $ticket=t_jsapi_ticket();
+    $appid=$appinfo->t_appid;
+
+    return json_encode(wx_config($appid,$ticket,$url));
+}
+
+/**
+ * 生成wx.config所需的配置信息
+ * 通过config接口注入权限验证配置
+ * 
+ */
+function wx_config($appid,$ticket,$url){
+    // 生成签名的时间戳
+    $timestamp=time();
+    // 生成签名的随机串
+    $noncestr=getNoncestr();
+    // 参与签名的字段包括noncestr（随机字符串）, 有效的jsapi_ticket, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分）
+    $config=array('nonceStr'=>$noncestr,'jsapi_ticket'=>$ticket,'timestamp'=>$timestamp,'url'=>$url);
+    // 签名
+    $config['signature']=get_wx_signature($config);
+    // 公众号的唯一标识
+    $config['appId']=$appid;
+    $config['jsApiList']=array(
+        'checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','translateVoice','startRecord','stopRecord','onVoiceRecordEnd','playVoice','onVoicePlayEnd','pauseVoice','stopVoice','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard'
+    );
+    // unset($config['jsapi_ticket']);
+    // unset($config['url']);
+    return $config;
+    
+}
+/**
+ * wx.config 签名算法
+ * 签名生成规则如下：
+ * 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，
+ * 使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。
+ * 这里需要注意的是所有参数名均为小写字符。
+ * 对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
+ * 
+ */
+function get_wx_signature($config){
+    ksort($config);
+    $config['url']=explode('#',$config['url'])[0];
+    $str='';
+    foreach($config as $key=>$value){
+        $str.=strtolower($key).$value;
+    }
+    return sha1($str);
+}
+/**
+ * 生成随机字符串
+ * 
+ */
+function  make_seed ()
+{
+  list( $usec ,  $sec ) =  explode ( ' ' ,  microtime ());
+  return (float)  $sec  + ((float)  $usec  *  100000 );
+}
+function getNoncestr($len=16){
+    mt_srand ( make_seed ());
+    $noncestr='';
+    // ascii 33 ~ 126(字符) 随机
+    for ($i=0;$i<$len;$i++){
+        $noncestr.=chr(mt_rand(33,126));
+    }
+    return $noncestr;
+}
 
 /**
  * 用access_token 采用http GET方式请求获得jsapi_ticket
