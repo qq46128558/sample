@@ -19,6 +19,8 @@ console.led=function(msg){
     var jsapilist;
     var title='蟹宝盒';
     var imgUrl='https://plugs.yn-ce.com/ynbox/wx/img/links.png';
+    var link="http://ser.yn-ce.com";
+    var desc="这里是分享描述";
 
     $.ajax(
         {
@@ -82,7 +84,7 @@ console.led=function(msg){
         // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
         wx.onMenuShareTimeline({
             title: title, // 分享标题
-            link: 'http://ser.yn-ce.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: imgUrl, // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
@@ -98,8 +100,8 @@ console.led=function(msg){
         // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
             title: title, // 分享标题
-            desc: '这里是分享描述', // 分享描述
-            link: 'http://ser.yn-ce.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            desc: desc, // 分享描述
+            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: imgUrl, // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -114,6 +116,69 @@ console.led=function(msg){
             }
         });
 
+        // 没效果
+        // 获取“分享到QQ”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareQQ({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log('wx.onMenuShareQQ:success');
+                alert('分享成功');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log('wx.onMenuShareQQ:cancel');
+            }
+        });
+
+        // 未测试
+        // 获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareWeibo({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log('wx.onMenuShareWeibo:success');
+                alert('分享成功');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log('wx.onMenuShareWeibo:cancel');
+            }
+        });
+
+        // 未测试
+        // 获取“分享到QQ空间”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareQZone({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log('wx.onMenuShareQZone:success');
+                alert('分享成功');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log('wx.onMenuShareQZone:cancel');
+            }
+        });
+
+
+
+        
+        // 批量隐藏功能按钮接口
+        wx.hideMenuItems({
+            // 发送给朋友: "menuItem:share:appMessage",分享到朋友圈: "menuItem:share:timeline",分享到QQ: "menuItem:share:qq",分享到Weibo: "menuItem:share:weiboApp",收藏: "menuItem:favorite",分享到FB: "menuItem:share:facebook",分享到 QQ 空间/menuItem:share:QZone
+            // 编辑标签: "menuItem:editTag",删除: "menuItem:delete",复制链接: "menuItem:copyUrl",原网页: "menuItem:originPage",阅读模式: "menuItem:readMode",在QQ浏览器中打开: "menuItem:openWithQQBrowser",在Safari中打开: "menuItem:openWithSafari",邮件: "menuItem:share:email",一些特殊公众号: "menuItem:share:brand"
+            menuList: ["menuItem:share:facebook","menuItem:openWithQQBrowser","menuItem:openWithSafari","menuItem:share:email","menuItem:share:brand"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        });
 
     });
     // 通过error接口处理失败验证
