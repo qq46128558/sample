@@ -17,6 +17,9 @@ console.led=function(msg){
 // window.onload=function(){
     // 通过config接口注入权限验证配置
     var jsapilist;
+    var title='蟹宝盒';
+    var imgUrl='https://plugs.yn-ce.com/ynbox/wx/img/links.png';
+
     $.ajax(
         {
             url:"./wxhelper.php",
@@ -75,6 +78,43 @@ console.led=function(msg){
             }
 
         });
+
+        // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            link: 'http://ser.yn-ce.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log('wx.onMenuShareTimeline:success');
+                alert('分享成功');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log('wx.onMenuShareTimeline:cancel');
+            }
+        });
+
+        // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareAppMessage({
+            title: title, // 分享标题
+            desc: '这里是分享描述', // 分享描述
+            link: 'http://ser.yn-ce.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log('wx.onMenuShareTimeline:success');
+                alert('分享成功');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                console.log('wx.onMenuShareTimeline:cancel');
+            }
+        });
+
+
     });
     // 通过error接口处理失败验证
     wx.error(function(res){
