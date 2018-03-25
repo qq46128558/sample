@@ -63,7 +63,7 @@ function get_wx_signature($config){
     $config['url']=explode('#',$config['url'])[0];
     $str='';
     foreach($config as $key=>$value){
-        $str.=strtolower($key).$value;
+        $str.=(strlen($str)>0 ? '&':'').strtolower($key)."=".$value;
     }
     return sha1($str);
 }
@@ -88,6 +88,7 @@ function getNoncestr($len=16){
 
 /**
  * 用access_token 采用http GET方式请求获得jsapi_ticket
+ * 普通access_token
  * 测试号
  * 
  */
@@ -96,6 +97,7 @@ function t_jsapi_ticket(){
     $appid=$appinfo->t_appid;
     $secret=$appinfo->t_secret;
     $filename=__DIR__."/".$appinfo->t_ticket_filename;
+    // 普通access_token
     $access_token=t_access_token();
     return jsapi_ticket($appid,$secret,$filename,$access_token);
 }
