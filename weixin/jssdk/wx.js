@@ -10,7 +10,7 @@
 
 // console定制
 console.led=function(msg){
-    console.log('%c%s%s%s','font-size:15px;font-bold:true;color:#00ff00;background-color:black','---',msg,'---');
+    console.log('%c---%s---','font-size:15px;font-bold:true;color:#00ff00;background-color:black',msg);
 }
 
 // 需要在微信开发者工具(或微信)中才能使用微信的jssdk
