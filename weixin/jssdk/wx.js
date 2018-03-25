@@ -116,7 +116,6 @@ console.led=function(msg){
             }
         });
 
-        // 没效果
         // 获取“分享到QQ”按钮点击状态及自定义分享内容接口
         wx.onMenuShareQQ({
             title: title, // 分享标题
@@ -126,7 +125,8 @@ console.led=function(msg){
             success: function () {
                 // 用户确认分享后执行的回调函数
                 console.log('wx.onMenuShareQQ:success');
-                alert('分享成功');
+                // 会先弹出这个提示,所以注释
+                // alert('分享成功');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
@@ -134,7 +134,7 @@ console.led=function(msg){
             }
         });
 
-        // 未测试
+        // 未有此菜单
         // 获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
         wx.onMenuShareWeibo({
             title: title, // 分享标题
@@ -152,7 +152,6 @@ console.led=function(msg){
             }
         });
 
-        // 未测试
         // 获取“分享到QQ空间”按钮点击状态及自定义分享内容接口
         wx.onMenuShareQZone({
             title: title, // 分享标题
@@ -162,7 +161,8 @@ console.led=function(msg){
             success: function () {
                 // 用户确认分享后执行的回调函数
                 console.log('wx.onMenuShareQZone:success');
-                alert('分享成功');
+                // 会先弹出这个提示,所以注释
+                // alert('分享成功');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
