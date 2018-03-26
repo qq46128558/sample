@@ -16,7 +16,7 @@ require_once './https_method.php';
 $json=<<<STR
 {
     "touser":"o0ZAd1V-_YTIf2SXA3prYu_X6Cr0",
-    "template_id":"ltqLvdupREV5MSOsHTHpA9kYwYeQWcvmrkckrStLnoQ",
+    "template_id":"i81s6sh06YjBlmXs5ZgZUcjl1fXCY0AXeCG3bQ9ZzoA",
     "url":"http://weixin.qq.com/download",  
     "data":{
             "first": {
@@ -42,7 +42,8 @@ $json=<<<STR
     }
 }
 STR;
-$access_token=file_get_contents('./t_token.txt');
+// $access_token=file_get_contents('./t_token.txt');
+$access_token=t_access_token();
 $url="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$access_token";
 $value=https_post($url,$json);
 

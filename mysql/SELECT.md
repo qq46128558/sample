@@ -1,6 +1,9 @@
 #### 将时间戳转换为日期时间
     SELECT FROM_UNIXTIME(`timestamp`);
 
+#### 查询当前时间戳
+	SELECT UNIX_TIMESTAMP();
+	
 #### 基本查询
     SELECT * FROM `tablename` WHERE `condition`;
 
@@ -10,3 +13,4 @@
 #### 计算字段长度
     SELECT LENGTH("中文ABC");
 一个汉字算三个字符,一个数字或字母算一个字符
+
