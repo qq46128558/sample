@@ -350,6 +350,9 @@
 ##位置
 ---------------------------
 
+##### 类继承关系
+	yii\web\Application->yii\base\Application->yii\base\Module->yii\di\ServiceLocator->yii\base\Component->yii\base\Object->yii\base\Configurable  
+
 ##### 基类模块
 	use yii\bsae\Module
 	vendor/yiisoft/yii2/base/Module.php
