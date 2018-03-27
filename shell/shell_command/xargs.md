@@ -15,7 +15,7 @@ xargs 可以 **读入 stdin(标准输入) 的资料，并且以空白字元或�
 
 读取的内容以黄色粗体显示. 改进一版,结束后还原:
 
-	args -a test.php echo -e '\033[33;1m' && echo -e '\033[0m'
+	xargs -a test.php echo -e '\033[33;1m' && echo -e '\033[0m'
 
 #### -E flag 有flag这个标志的时候就停止
 有时候可能会是 -e  
