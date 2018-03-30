@@ -1,6 +1,6 @@
 <?php
 /**
- * 引入Yii框架基类的代码
+ * 引入Yii框架基类的代码 (web应用)
  */
 // comment out the following two lines when deployed to production
 defined('YII_DEBUG') or define('YII_DEBUG', true);
