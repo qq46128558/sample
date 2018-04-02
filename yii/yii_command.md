@@ -9,6 +9,8 @@
     #如:commands/HelloController.php
     #注意继承的是:yii\console\Controller类
     php yii hello/index 参数abc
+    #或
+    ./yii hello/index 参数abc
 
 #### The Process class relies on XXXX, which is not available on your PHP installation
     #修改 /usr/local/php/etc/php.ini 配置文件的disable_functions属性
