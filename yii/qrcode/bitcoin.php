@@ -7,11 +7,11 @@ $config = require(__DIR__ . '/../config/web.php');
 (new yii\web\Application($config));
 
 use Da\QrCode\QrCode;
-use Da\QrCode\Format\BookMarkFormat; 
-$format = new BookMarkFormat(['title' => '2amigos', 'url' => 'http://2amigos.us']);
+use Da\QrCode\Format\BtcFormat; 
+$format = new BtcFormat(['address' => '175tWpb8K1S7NmH4Zx6rewF9WQrcZv245W', 'amount' => 1, 'name' => 'antonio']);
 $qrCode = new QrCode($format);
 header('Content-Type: ' . $qrCode->getContentType());
 echo $qrCode->writeString();
 
 // 扫描结果:
-// MEBKM:TITLE:2amigos;URL:http://2amigos.us;;
+// bitcoin:175tWpb8K1S7NmH4Zx6rewF9WQrcZv245W?amount=1&label=antonio

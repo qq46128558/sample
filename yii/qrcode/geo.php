@@ -7,11 +7,11 @@ $config = require(__DIR__ . '/../config/web.php');
 (new yii\web\Application($config));
 
 use Da\QrCode\QrCode;
-use Da\QrCode\Format\BookMarkFormat; 
-$format = new BookMarkFormat(['title' => '2amigos', 'url' => 'http://2amigos.us']);
+use Da\QrCode\Format\GeoFormat; 
+$format = new GeoFormat(['lat' => 1,'lng' => 1, 'altitude' => 20]);
 $qrCode = new QrCode($format);
 header('Content-Type: ' . $qrCode->getContentType());
 echo $qrCode->writeString();
 
 // 扫描结果:
-// MEBKM:TITLE:2amigos;URL:http://2amigos.us;;
+// GEO:1,1,20

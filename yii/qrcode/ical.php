@@ -7,11 +7,11 @@ $config = require(__DIR__ . '/../config/web.php');
 (new yii\web\Application($config));
 
 use Da\QrCode\QrCode;
-use Da\QrCode\Format\BookMarkFormat; 
-$format = new BookMarkFormat(['title' => '2amigos', 'url' => 'http://2amigos.us']);
+use Da\QrCode\Format\iCalFormat; 
+$format = new iCalFormat(['summary' => 'test-summary', 'startTimestamp' => 1260232200, 'endTimestamp' => 1260318600]);
 $qrCode = new QrCode($format);
 header('Content-Type: ' . $qrCode->getContentType());
 echo $qrCode->writeString();
 
 // 扫描结果:
-// MEBKM:TITLE:2amigos;URL:http://2amigos.us;;
+// BEGIN:VEVENT SUMMARY:test-summary DTSTART:20091208T083000Z DTEND:20091209T083000Z END:VEVENT

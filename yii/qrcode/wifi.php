@@ -7,11 +7,12 @@ $config = require(__DIR__ . '/../config/web.php');
 (new yii\web\Application($config));
 
 use Da\QrCode\QrCode;
-use Da\QrCode\Format\BookMarkFormat; 
-$format = new BookMarkFormat(['title' => '2amigos', 'url' => 'http://2amigos.us']);
+use Da\QrCode\Format\WifiFormat; 
+$format = new WifiFormat(['authentication' => 'WPA', 'ssid' => 'testSSID', 'password' => 'HAKUNAMATATA']);
 $qrCode = new QrCode($format);
 header('Content-Type: ' . $qrCode->getContentType());
 echo $qrCode->writeString();
 
 // 扫描结果:
-// MEBKM:TITLE:2amigos;URL:http://2amigos.us;;
+// WIFI:T:WPA;S:testSSID;P:HAKUNAMATATA;;
+
