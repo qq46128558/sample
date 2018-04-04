@@ -1,6 +1,7 @@
 ## 活动记录(AR)
 - AR yii\db\ActiveRecord 继承了模型 yii\base\Model
 - 活动记录 AR 默认使用 db 组件 作为连接器
+- 内容较多=>[中文资料地址](http://www.yiichina.com/doc/guide/2.0/db-active-record,"http://www.yiichina.com/doc/guide/2.0/db-active-record")
 
 #### 声明AR类
 ~~~
