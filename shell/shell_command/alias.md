@@ -16,3 +16,13 @@
     #环境变量配置文件
     #永久生效
     ~/.bashrc
+    
+    #其实.bashrc由.profile调用
+    # ~/.profile: executed by Bourne-compatible login shells.
+    if [ "$BASH" ]; then
+    if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+    fi
+    fi
+
+    mesg n || true
