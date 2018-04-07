@@ -27,7 +27,7 @@ access_log /var/log/nginx/access.log;
 error_log /var/log/nginx/error.log;
 ~~~
 
-##### server{}配置
+##### server{}配置 http+yii2
 ~~~
 server {
     # 监听80端口
@@ -42,6 +42,20 @@ server {
     access_log /data/www/access.log;
     error_log /data/www/error.log;
 
+    # 增加一个一级path:test(指向/data/www/test目录,支持php解释)
+    location /test {
+                root /data/www/;
+                index index.php index.html;
+                location ~ \.php$ {
+                        include fastcgi_params;
+                        fastcgi_index index.php;
+                        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                        fastcgi_pass   127.0.0.1:9000;
+                        #fastcgi_pass unix:/var/run/php5-fpm.sock;
+                        try_files $uri =404;
+                }
+    }
+
     # yii2路由定位配置
     location / {
                 # First attempt to serve request as file, then
@@ -51,6 +65,7 @@ server {
     }
 
     # 使nginx支持php(需要php-fpm监听9000端口)
+    # ~ 表示正则匹配：区分大小写匹配
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     location ~ \.php$ {
             include fastcgi_params;
