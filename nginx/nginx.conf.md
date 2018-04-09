@@ -78,3 +78,43 @@ server {
 
 }
 ~~~
+
+#### server{} 配置 echo-nginx模块
+~~~
+server {
+    location /hello{
+        #基本使用
+        #指定默认响应类型为无格式
+        #发现不指定的话,变成直接下载文件
+        default_type text/plain;
+        echo "<h1>hello world</h1>";
+    }
+}
+~~~
+
+#### echo-nginx 关键字
+Key|Remark
+-|-
+echo_reset_timer|重置计数器
+echo_flush|
+echo_sleep|暂停(秒)
+echo_before_body|在body前显示
+echo_after_body|在body后显示
+echo_location_async|
+echo_subrequest_async |
+echo_duplicate|复制:echo_duplicate 10 A
+echo_read_request_body|
+echo_request_body|
+$echo_timer_elapsed|运行时间(秒)
+$echo_client_request_headers|请求头信息
+$echo_request_method|
+$echo_request_body|
+set|set $res miss
+
+#### server{} nginx变量
+
+url sample: xxx
+
+Variable|Value
+-|-
+
