@@ -6,3 +6,6 @@
 	#year-month-day of month time; same as %H:%M:%S
     #由于中间有空格,所以加引号
     date +"%Y-%m-%d %T"
+
+#### 将指定日期转成时间戳
+    date -d"2018-04-04 17:00" +%s
