@@ -5,3 +5,4 @@ node/course/web/view-koa/bower_components
 __pycache__
 python/virtualenv/venv
 .idea
+jcloud/jos-php-open-api-sdk-2.0
