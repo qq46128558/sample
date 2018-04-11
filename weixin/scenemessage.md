@@ -16,7 +16,7 @@
 
 [生成确认授权URL](build_message_url.php "build_message_url.php")
 
-### 示例代码
+### 示例代码 (蟹宝盒)
  ```php
  <?php
 /**
@@ -42,7 +42,7 @@ class ScenemessageController extends devController
                 )
             )
         );
-        $result=self::httppost($url,$postdata);
+        $result=self::httppost($url,json_encode($postdata));
         var_dump($result);
     }
 }
