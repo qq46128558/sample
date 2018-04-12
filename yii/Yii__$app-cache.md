@@ -65,3 +65,62 @@ $value2 = $cache['var2'];  // 等价于： $value2 = $cache->get('var2');
 ~~~
 
 
+#### 缓存键
+~~~
+// 当同一个缓存存储器被用于多个不同的应用时，应该为每个应用指定一个唯一的缓存键前缀以避免缓存键冲突
+'components' => [
+    'cache' => [
+        'class' => 'yii\caching\ApcCache',
+        'keyPrefix' => 'myapp',       // 唯一键前缀
+    ],
+],
+~~~
+
+#### 缓存过期
+~~~
+// 将数据在缓存中保留 45 秒
+$cache->set($key, $data, 45);
+
+sleep(50);
+
+$data = $cache->get($key);
+if ($data === false) {
+    // $data 已过期，或者在缓存中找不到
+}
+// 如果想自定义缓存的持续时间，你可以在缓存组件配置中设置 defaultDuration 成员属性的值
+~~~
+
+#### 缓存依赖
+~~~
+// 缓存依赖用 yii\caching\Dependency 的派生类所表示
+// 创建一个对 example.txt 文件修改时间的缓存依赖
+$dependency = new \yii\caching\FileDependency(['fileName' => 'example.txt']);
+
+// 缓存数据将在30秒后超时
+// 如果 example.txt 被修改，它也可能被更早地置为失效状态。
+$cache->set($key, $data, 30, $dependency);
+
+// 缓存会检查数据是否已超时。
+// 它还会检查关联的依赖是否已变化。
+// 符合任何一个条件时都会返回 false。
+$data = $cache->get($key);
+~~~
+
+#### 下面是可用的缓存依赖的概况：
+- yii\caching\ChainedDependency：如果依赖链上任何一个依赖产生变化，则依赖改变。
+- yii\caching\DbDependency：如果指定 SQL 语句的查询结果发生了变化，则依赖改变。
+- yii\caching\ExpressionDependency：如果指定的 PHP 表达式执行结果发生变化，则依赖改变。
+- yii\caching\FileDependency：如果文件的最后修改时间发生变化，则依赖改变。
+- yii\caching\TagDependency：将缓存的数据项与一个或多个标签相关联。 您可以通过调用 yii\caching\TagDependency::invalidate() 来检查指定标签的缓存数据项是否有效
+
+Note：**避免对带有缓存依赖的缓存项使用 exists() 方法**， 因为它不检测缓存依赖（如果有的话）是否有效，所以调用 get() 可能返回 false 而调用 exists() 却返回 true。
+
+
+
+## 查询缓存
+
+查询缓存是一个建立在数据缓存之上的特殊缓存特性。 它用于缓存数据库查询的结果。
+
+查询缓存需要一个 数据库连接 和一个有效的 cache 应用组件
+
+#### 基本用法
