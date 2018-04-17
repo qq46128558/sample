@@ -14,6 +14,7 @@ $reserved="test";
 $url="https://mp.weixin.qq.com/mp/subscribemsg?";
 $url.="action=get_confirm";
 $url.="&appid=$appid";
+// scene: 开发者可以填0-10000的整形值，用来标识订阅场景值, 若要订阅多条，需要不同scene场景值
 $url.="&scene=101";
 $url.="&template_id=$template_id";
 $url.="&redirect_url=$redirect_url";

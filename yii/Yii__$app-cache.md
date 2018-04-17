@@ -124,3 +124,101 @@ Note：**避免对带有缓存依赖的缓存项使用 exists() 方法**， 因�
 查询缓存需要一个 数据库连接 和一个有效的 cache 应用组件
 
 #### 基本用法
+~~~
+// 假设 $db 是一个 yii\db\Connection 实例
+$result = $db->cache(function ($db) {
+
+    // SQL 查询的结果将从缓存中提供
+    // 如果启用查询缓存并且在缓存中找到查询结果
+    return $db->createCommand('SELECT * FROM customer WHERE id=1')->queryOne();
+
+});
+
+// 查询缓存可以用在DAO和ActiveRecord上:
+$result = Customer::getDb()->cache(function ($db) {
+    return Customer::find()->where(['id' => 1])->one();
+});
+
+// 快捷方法(未理解7200是什么)
+(new Query())->cache(7200)->all();
+// and
+User::find()->cache(7200)->all();
+~~~
+
+#### 配置
+查询缓存通过 yii\db\Connection 有三个全局可配置选项：
+- enableQueryCache：是否打开或关闭查询缓存。 它默认为 true。 请注意，要有效打开查询缓存，  您还需要有一个由 queryCache 所指定的有效缓存。
+- queryCacheDuration：这表示查询结果在缓存中保持有效的秒数。  您可以使用 0 来表示查询结果永久保留在缓存中。 该属性是在未指定持续时间的情况下调用 yii\db\Connection::cache() 使用的默认值。
+- queryCache：缓存应用组件的 ID。默认为 'cache'。 只有在设置了一个有效的缓存应用组件时，查询缓存才会有效。
+
+### 使用
+~~~
+// 如果您有多个需要利用查询缓存的 SQL 查询，则可以使用 yii\db\Connection::cache()。 用法如下
+$duration = 60;     // 缓存查询结果 60 秒。
+$dependency = ...;  // 可选的依赖关系
+
+$result = $db->cache(function ($db) {
+
+    // ... 在这里执行 SQL 查询 ...
+
+    return $result;
+
+}, $duration, $dependency);
+~~~
+
+#### 在cache()里某些查询不使用缓存
+~~~
+// 有时在cache()里，你可能不想缓存某些特殊的查询， 这时你可以用yii\db\Connection::noCache()。
+$result = $db->cache(function ($db) {
+
+    // 使用查询缓存的 SQL 查询
+
+    $db->noCache(function ($db) {
+
+        // 不使用查询缓存的 SQL 查询
+
+    });
+
+    // ...
+
+    return $result;
+});
+~~~
+
+#### 单个查询缓存
+~~~
+// 如果您只想为单个查询使用查询缓存，则可以在构建命令时调用 yii\db\Command::cache()。 例如，
+// 使用查询缓存并将查询缓存持续时间设置为 60 秒
+$customer = $db->createCommand('SELECT * FROM customer WHERE id=1')->cache(60)->queryOne();
+
+// 您还可以使用 yii\db\Command::noCache() 禁用单个命令的查询缓存。例如，
+$result = $db->cache(function ($db) {
+
+    // 使用查询缓存的 SQL 查询
+
+    // 对此命令不使用查询缓存
+    $customer = $db->createCommand('SELECT * FROM customer WHERE id=1')->noCache()->queryOne();
+
+    // ...
+
+    return $result;
+});
+~~~
+
+#### 限制条件
+- 当查询结果中含有资源句柄时，查询缓存无法使用。 例如，在有些 DBMS 中使用了 BLOB 列的时候， **缓存结果会为该数据列返回一个资源句柄**。
+- 有些缓存存储器有大小限制。例如，**memcache 限制每条数据最大为 1MB**。 因此，如果查询结果的大小超出了该限制， 则会导致缓存失败。
+
+
+
+
+## 缓存冲刷
+当你想让所有的缓存数据失效时，可以调用yii\caching\Cache::flush()
+
+冲刷缓存数据，你还可以从控制台调用yii cache/flush。
+
+- yii cache: 列出应用中可用的缓存组件
+- yii cache/flush cache1 cache2: 冲刷缓存组件cache1, cache2 (可以传递多个用空格分开的缓存组件）
+- yii cache/flush-all: 冲刷应用中所有的缓存组件
+
+Info：默认情况下，控制台应用使用独立的配置文件。 所以，为了上述命令发挥作用，**请确保Web应用和控制台应用配置相同的缓存组件**。
