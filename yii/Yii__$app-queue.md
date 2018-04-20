@@ -28,6 +28,31 @@ return [
 ];
 ~~~
 
+**注意yii redis与queue redis是同一个**
+~~~php
+$redis1=Yii::$app->queue->redis;
+$redis1->executeCommand('set',['database',0]);
+echo $redis1->executeCommand('get',['database']);
+echo "(queue中redis的database)\n";
+
+$redis2=Yii::$app->redis;
+$redis2->select(1);
+$redis2->executeCommand('set',['database',1]);
+echo $redis2->executeCommand('get',['database']);
+echo "(切换yii中redis的database)\n";
+
+echo $redis1->executeCommand('get',['database']);
+echo "(此时queue中redis的database)\n";
+~~~
+
+结果展示:
+~~~
+0(queue中redis的database)
+1(切换yii中redis的database)
+1(此时queue中redis的database)
+~~~
+
+
 #### 代码中使用
 
 每个被发送到队列的任务应该被定义为一个单独的类
