@@ -1,4 +1,4 @@
-####查看进程使用内存的情况
+#### 查看进程使用内存的情况
 ps -eo 'rsz,cmd' |grep `"processname"`|grep -v "grep"
 
 标题名称
@@ -17,5 +17,16 @@ ps -eo 'rsz,cmd' |grep `"processname"`|grep -v "grep"
 - time 运行时间?
 - args
 
-####查看php-fpm进程数
+#### 查看php-fpm进程数
 ps aux|grep "php-fpm"|grep -v "grep"|wc -l
+
+- -A, -e               all processes
+
+- a                   all with tty, including other users
+- u                   user-oriented format
+- x                   processes without controlling ttys
+
+#### 查看全部进程
+    ps -e u
+    ps axu
+    
