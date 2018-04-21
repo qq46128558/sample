@@ -222,3 +222,222 @@ public function checkAccess($action, $model = null, $params = [])
 - 请求参数: access token 当作API URL请求参数发送，例如 https://example.com/users?access-token=xxxxxxxx， 由于大多数服务器都会保存请求参数到日志， 这种方式应主要用于JSONP 请求，因为它不能使用HTTP头来发送access token
 - OAuth 2: 使用者从认证服务器上获取基于OAuth2协议的access token， 然后通过HTTP Bearer Tokens 发送到API 服务器
 
+**设置 enableSession 属性为 false.**
+
+设置 loginUrl 属性为null 显示一个HTTP 403 错误而不是跳转到登录界面.
+
+RESTful APIs应为无状态的， 当enableSession为false， 请求中的用户认证状态就不能通过session来保持
+
+如果你将RESTful APIs作为应用开发，可以设置应用配置中 user 组件的 enableSession， 如果将RESTful APIs作为模块开发，可以在模块的 init() 方法中增加如下代码，如下所示
+~~~
+public function init()
+{
+    parent::init();
+    \Yii::$app->user->enableSession = false;
+}
+~~~
+
+为使用HTTP Basic Auth，**可配置authenticator 行为**，如下所示：
+
+~~~
+use yii\filters\auth\HttpBasicAuth;
+
+public function behaviors()
+{
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator'] = [
+        'class' => HttpBasicAuth::className(),
+    ];
+    return $behaviors;
+}
+~~~
+
+**在你的user identity class 类中实现 yii\web\IdentityInterface::findIdentityByAccessToken() 方法.**
+
+findIdentityByAccessToken()方法的实现是系统定义的， 例如，一个简单的场景，当每个用户只有一个access token, 可存储access token 到user表的access_token列中， 方法可在User类中简单实现，如下所示：
+
+~~~
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
+
+class User extends ActiveRecord implements IdentityInterface
+{
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+}
+~~~
+
+在上述认证启用后，对于每个API请求， 请求控制器都会在它的beforeAction()步骤中对用户进行认证。
+
+如果认证成功，控制器再执行其他检查(如频率限制，操作权限)，然后再执行动作， 授权用户信息可使用Yii::$app->user->identity获取.
+
+如果认证失败，会发送一个HTTP状态码为401的响应， 并带有其他相关信息头(如HTTP 基本认证会有WWW-Authenticate 头信息).
+
+
+## 限流
+为防止滥用，你应该考虑对您的 API 限流。 例如，您可以限制每个用户 10 分钟内最多调用 API 100 次。 如果在规定的时间内接收了一个用户大量的请求，将返回响应状态代码 429 (这意味着过多的请求)。
+
+要启用限流, user identity class 应该实现 yii\filters\RateLimitInterface.
+
+这个接口需要实现以下三个方法：
+
+- getRateLimit(): 返回允许的请求的最大数目及时间，例如，[100, 600] 表示在 600 秒内最多 100 次的 API 调用。
+- loadAllowance(): 返回剩余的允许的请求和最后一次速率限制检查时 相应的 UNIX 时间戳数。
+- saveAllowance(): 保存剩余的允许请求数和当前的 UNIX 时间戳。
+
+为了提高性能，你也可以考虑使用缓存或 NoSQL 存储这些信息。
+
+~~~
+public function getRateLimit($request, $action)
+{
+    return [$this->rateLimit, 1]; // $rateLimit requests per second
+}
+
+public function loadAllowance($request, $action)
+{
+    return [$this->allowance, $this->allowance_updated_at];
+}
+
+public function saveAllowance($request, $action, $allowance, $timestamp)
+{
+    $this->allowance = $allowance;
+    $this->allowance_updated_at = $timestamp;
+    $this->save();
+}
+~~~
+
+**一旦 identity 实现所需的接口， Yii 会自动使用 yii\filters\RateLimiter 为 yii\rest\Controller 配置一个行为过滤器来执行速率限制检查**。如果速度超出限制， 该速率限制器将抛出一个 yii\web\TooManyRequestsHttpException。
+
+当速率限制被激活，默认情况下每个响应将包含以下 HTTP 头发送目前的速率限制信息：
+
+- X-Rate-Limit-Limit: 同一个时间段所允许的请求的最大数目;
+- X-Rate-Limit-Remaining: 在当前时间段内剩余的请求的数量;
+- X-Rate-Limit-Reset: 为了得到最大请求数所等待的秒数。
+
+你可以参考以下代码在你的 REST 控制器类里配置速率限制：
+你可以禁用这些头信息通过配置 yii\filters\RateLimiter::$enableRateLimitHeaders 为 false, 就像代码示例所示。
+~~~
+public function behaviors()
+{
+    $behaviors = parent::behaviors();
+    $behaviors['rateLimiter']['enableRateLimitHeaders'] = false;
+    return $behaviors;
+}
+~~~
+
+
+## 版本
+一个常见的做法是在 API 的 URL 中嵌入版本号。例如， http://example.com/v1/users 代表 /users 版本 1 的 API。
+
+另一种 API 版本化的方法， 最近用的非常多的是把版本号放入 HTTP 请求头，通常是通过 Accept 头，如下
+~~~
+// 通过参数
+Accept: application/json; version=v1
+// 通过vendor的内容类型
+Accept: application/vnd.company.myapp-v1+json
+~~~
+
+下面我们描述在一种 API 版本混合了这两种方法的一个实用的策略：
+
+- 把每个主要版本的 API 实现在一个单独的模块 ID 的主版本号 (例如 v1, v2)。 自然，API 的 url 将包含主要的版本号。
+- 在每一个主要版本 (在相应的模块)，使用 Accept HTTP 请求头 确定小版本号编写条件代码来响应相应的次要版本。
+
+为每个模块提供一个主要版本， 它应该包括资源类和控制器类 为特定服务版本。 更好的分离代码， 你可以保存一组通用的 基础资源和控制器类， 并用在每个子类版本模块。 在子类中， 实现具体的代码例如 Model::fields()。
+
+你的代码可以类似于如下的方法组织起来：
+~~~
+api/
+    common/
+        controllers/
+            UserController.php
+            PostController.php
+        models/
+            User.php
+            Post.php
+    modules/
+        v1/
+            controllers/
+                UserController.php
+                PostController.php
+            models/
+                User.php
+                Post.php
+            Module.php
+        v2/
+            controllers/
+                UserController.php
+                PostController.php
+            models/
+                User.php
+                Post.php
+            Module.php
+~~~
+
+你的应用程序配置应该这样：
+
+~~~
+return [
+    'modules' => [
+        'v1' => [
+            'class' => 'app\modules\v1\Module',
+        ],
+        'v2' => [
+           'class' => 'app\modules\v2\Module',
+        ],
+    ],
+    'components' => [
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+            'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['v1/user', 'v1/post']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['v2/user', 'v2/post']],
+            ],
+        ],
+    ],
+];
+~~~
+
+**使用模块， 将不同版本的代码隔离。 通过共用基类和其他类 跨模块重用代码也是有可能的。**
+
+为了处理次要版本号， 可以利用内容协商 功能通过 contentNegotiator 提供的行为。 contentNegotiator 行为可设置 yii\web\Response::$acceptParams 属性当它确定支持哪些内容类型时。
+
+例如， 如果一个请求通过 Accept: application/json; version=v1 被发送， **内容交涉后，yii\web\Response::$acceptParams将包含值['version' => 'v1']**。
+
+基于 acceptParams 的版本信息，你可以写条件代码 如 actions，resource classes，serializers 等等。
+
+由于次要版本需要保持向后兼容性，希望你的代码不会有 太多的版本检查。否则，有机会你可能需要创建一个新的主要版本。
+
+
+#### 错误处理
+自定义错误响应
+
+有时你可能想自定义默认的错误响应格式。例如，你想一直使用HTTP状态码200， 而不是依赖于使用不同的HTTP状态来表示不同的错误， 并附上实际的HTTP状态代码为JSON结构的一部分的响应
+
+为了实现这一目的，你可以响应该应用程序配置的 response 组件的 beforeSend 事件：
+
+~~~
+return [
+    // ...
+    'components' => [
+        'response' => [
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null && !empty(Yii::$app->request->get('suppress_response_code'))) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+                    $response->statusCode = 200;
+                }
+            },
+        ],
+    ],
+];
+~~~
+
+当 suppress_response_code 作为 GET 参数传递时，上面的代码 将重新按照自己定义的格式响应（无论失败还是成功）。
