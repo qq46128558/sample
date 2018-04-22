@@ -1,4 +1,5 @@
 ## 数组助手类（ArrayHelper）
+yii\helpers\ArrayHelper
 
 ### 获取值 getValue
 用原生PHP从一个对象、数组、或者包含这两者的一个复杂数据结构中获取数据是非常繁琐的。 你首先得使用 isset 检查 key 是否存在, 然后如果存在你就获取它，如果不存在， 则提供一个默认返回值
@@ -324,4 +325,43 @@ $result = ArrayHelper::merge($array1, $array2);
         'admin' => 'admin@example.com',
     ],
 ]
+~~~
+
+### 对象转换为数组 toArray
+~~~
+$posts = Post::find()->limit(10)->all();
+$data = ArrayHelper::toArray($posts, [
+    'app\models\Post' => [
+        'id',
+        'title',
+        // the key name in array result => property name
+        'createTime' => 'created_at',
+        // the key name in array result => anonymous function
+        'length' => function ($post) {
+            return strlen($post->content);
+        },
+    ],
+]);
+~~~
+
+这上面的转换结果将会是：
+
+~~~
+[
+    'id' => 123,
+    'title' => 'test',
+    'createTime' => '2013-01-01 12:00AM',
+    'length' => 301,
+]
+~~~
+
+### 测试阵列 isIn/isSubset
+~~~
+// true
+ArrayHelper::isIn('a', ['a']);
+// true
+ArrayHelper::isIn('a', new(ArrayObject['a']));
+
+// true 
+ArrayHelper::isSubset(new(ArrayObject['a', 'c']), new(ArrayObject['a', 'b', 'c'])
 ~~~
