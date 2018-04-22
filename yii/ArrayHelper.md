@@ -187,3 +187,141 @@ $result = ArrayHelper::index($array, 'data', [function ($element) {
     ]
 ]
 ~~~
+
+
+### 建立哈希表 map
+~~~
+$array = [
+    ['id' => '123', 'name' => 'aaa', 'class' => 'x'],
+    ['id' => '124', 'name' => 'bbb', 'class' => 'x'],
+    ['id' => '345', 'name' => 'ccc', 'class' => 'y'],
+);
+
+$result = ArrayHelper::map($array, 'id', 'name');
+// 结果是： 
+// [
+//     '123' => 'aaa',
+//     '124' => 'bbb',
+//     '345' => 'ccc',
+// ]
+
+$result = ArrayHelper::map($array, 'id', 'name', 'class');
+// 结果是：
+// [
+//     'x' => [
+//         '123' => 'aaa',
+//         '124' => 'bbb',
+//     ],
+//     'y' => [
+//         '345' => 'ccc',
+//     ],
+// ]
+~~~
+
+### 多维排序 multisort
+~~~
+$data = [
+    ['age' => 30, 'name' => 'Alexander'],
+    ['age' => 30, 'name' => 'Brian'],
+    ['age' => 19, 'name' => 'Barney'],
+];
+ArrayHelper::multisort($data, ['age', 'name'], [SORT_ASC, SORT_DESC]);
+
+// 排序之后我们在 $data 中得到的值如下所示：
+[
+    ['age' => 19, 'name' => 'Barney'],
+    ['age' => 30, 'name' => 'Brian'],
+    ['age' => 30, 'name' => 'Alexander'],
+];
+~~~
+
+~~~
+ArrayHelper::multisort($data, function($item) {
+    return isset($item['age']) ? ['age', 'name'] : 'name';
+});
+~~~
+
+### 检测数组类型
+
+索引数组还是联合数组
+
+~~~
+// 不指定键名的数组
+$indexed = ['Qiang', 'Paul'];
+echo ArrayHelper::isIndexed($indexed);
+
+// 所有键名都是字符串
+$associative = ['framework' => 'Yii', 'version' => '2.0'];
+echo ArrayHelper::isAssociative($associative);
+~~~
+
+### HTML 编码和解码值
+
+通过给第二个参数传 false ，你也可以对键名做编码。 编码将默认使用应用程序的字符集，你可以通过第三个参数指定该字符集。
+
+~~~
+$encoded = ArrayHelper::htmlEncode($data);
+$decoded = ArrayHelper::htmlDecode($data);
+~~~
+
+### 合并数组 merge
+
+- 您可以使用 yii\helpers\ArrayHelper::merge() 将两个或多个数组合并成一个递归的数组。 
+- 如果每个数组都有一个具有相同字符串键值的元素，则后者将覆盖前者 （不同于 array_merge_recursive()）。 
+- 如果两个数组都有一个数组类型的元素并且具有相同的键，则将执行递归合并。 
+- 对于整数键的元素，来自后一个数组的元素将被附加到前一个数组。 
+- 您可以使用 yii\helpers\UnsetArrayValue 对象来取消前一个数组的值或 yii\helpers\ReplaceArrayValue 以强制替换先前的值而不是递归合并。
+
+~~~
+$array1 = [
+    'name' => 'Yii',
+    'version' => '1.1',
+    'ids' => [
+        1,
+    ],
+    'validDomains' => [
+        'example.com',
+        'www.example.com',
+    ],
+    'emails' => [
+        'admin' => 'admin@example.com',
+        'dev' => 'dev@example.com',
+    ],
+];
+
+$array2 = [
+    'version' => '2.0',
+    'ids' => [
+        2,
+    ],
+    'validDomains' => new \yii\helpers\ReplaceArrayValue([
+        'yiiframework.com',
+        'www.yiiframework.com',
+    ]),
+    'emails' => [
+        'dev' => new \yii\helpers\UnsetArrayValue(),
+    ],
+];
+
+$result = ArrayHelper::merge($array1, $array2);
+~~~
+
+结果
+
+~~~
+[
+    'name' => 'Yii',
+    'version' => '2.0',
+    'ids' => [
+        1,
+        2,
+    ],
+    'validDomains' => [
+        'yiiframework.com',
+        'www.yiiframework.com',
+    ],
+    'emails' => [
+        'admin' => 'admin@example.com',
+    ],
+]
+~~~
