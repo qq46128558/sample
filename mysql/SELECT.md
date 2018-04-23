@@ -1,3 +1,21 @@
+
+
+#### SELECT 显示加锁
+~~~
+#共享锁，其它事务可读，不可更新  
+SELECT ... LOCK IN SHARE MODE
+#排它锁，其它事务不可读写
+SELECT ... FOR UPDATE  
+
+#上面的2种语句只有在事务之中才能生效
+SET AUTOCOMMIT=0;   
+BEGIN WORK;   
+    a = SELECT num FROM table1 WHERE id=2 FOR UPDATE; 
+    UPDATE table1 SET num = a.num + 1 WHERE id=2;   
+COMMIT WORK;  
+~~~
+
+
 #### 将时间戳转换为日期时间
     SELECT FROM_UNIXTIME(`timestamp`);
 
