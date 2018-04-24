@@ -52,6 +52,7 @@ console.led=function(msg){
     // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后  
     wx.ready(function(){
         console.info('wx.ready');
+        /* 基础接口 */
         // 判断当前客户端版本是否支持指定JS接口
         wx.checkJsApi({
             jsApiList: jsapilist, // 需要检测的JS接口列表，所有JS接口列表见附录2,
@@ -81,6 +82,7 @@ console.led=function(msg){
 
         });
 
+        /* 分享接口 */
         // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
         wx.onMenuShareTimeline({
             title: title, // 分享标题
@@ -172,7 +174,9 @@ console.led=function(msg){
 
 
 
-        
+
+
+
         // 批量隐藏功能按钮接口
         wx.hideMenuItems({
             // 发送给朋友: "menuItem:share:appMessage",分享到朋友圈: "menuItem:share:timeline",分享到QQ: "menuItem:share:qq",分享到Weibo: "menuItem:share:weiboApp",收藏: "menuItem:favorite",分享到FB: "menuItem:share:facebook",分享到 QQ 空间/menuItem:share:QZone
@@ -186,6 +190,27 @@ console.led=function(msg){
         console.info('wx.error');
         console.error(res.errMsg);
     });
+
+    /* 图像接口 */
+    // 拍照或从手机相册中选图接口
+    // 待研究如何返回?
+    function chooseImage(){
+        console.info('wx.chooseImage begin');
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                console.info('wx.chooseImage:success');
+            }
+        });
+        console.info('wx.chooseImage end');
+    }
+
+
+
+
 // }
 
 

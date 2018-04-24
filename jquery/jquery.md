@@ -12,3 +12,8 @@
     $('#ID').html()
     $('#ID').val()
     $('#ID').attr('attributeName')
+
+##### 修改内容和属性
+    $('#ID').text('修改内容')
+    $('#ID').attr('attributeName','修改属性')
+    
