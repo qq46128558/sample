@@ -194,10 +194,11 @@ console.led=function(msg){
     /* 图像接口 */
     // 拍照或从手机相册中选图接口
     // 使用Promise来异步返回
-    function chooseImage(){
+    // 调用 p=chooseImage;p.then(function(res){});
+    function chooseImage(count=9){
         return new Promise(function(s,f){
             wx.chooseImage({
-                count: 1, // 默认9
+                count: count, // 默认9
                 sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
                 sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                 success: function (res) {
@@ -207,16 +208,18 @@ console.led=function(msg){
                 },
                 fail:function(res){
                     console.info('wx.chooseImage:fail');
-                    f(null);
+                    f(JSON.stringify(res));
                 }
             });
         });
     }
 
+    // 判断对象是否为数组
     var isArray = function (obj) {
         return Object.prototype.toString.call(obj) === '[object Array]';
     }
 
+    // 预览图片接口
     function previewImage(current,urls){
         if (!isArray(urls)) {urls=[urls];}
         wx.previewImage({
@@ -224,10 +227,28 @@ console.led=function(msg){
             urls: urls, // 需要预览的图片http链接列表
             success:function(res){console.info("wx.previewImage:success");},
             fail:function(res){console.info("wx.previewImage:fail");}
-
         });
     }
 
+    // 上传图片接口(单个)
+    // 备注：上传图片有效期3天，可用微信多媒体接口下载图片到自己的服务器，此处获得的 serverId 即 media_id。
+    function uploadImage(imageId){
+        return new Promise(function(s,f){
+            wx.uploadImage({
+                localId: imageId.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    console.info("wx.uploadImage:scuuess");
+                    var serverId = res.serverId; // 返回图片的服务器端ID
+                    s(serverId);
+                },
+                fail:function(res){
+                    console.info("wx.uploadImage:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
     
 
 

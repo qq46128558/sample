@@ -18,7 +18,15 @@
     <p><img id="img" src=''></p>
     <script>
         function testClick(){
-            previewImage(null,imgUrl);
+            p=chooseImage(1);
+            p.then(function(localId){
+                p2=uploadImage(localId);
+                p2.then(function(serverId){
+                    $('#data').text(serverId);
+                }).catch(function(res){
+                    $('#data').text(res);
+                });
+            });
         }
     </script>
 </body>
