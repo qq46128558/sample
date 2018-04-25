@@ -232,10 +232,10 @@ console.led=function(msg){
 
     // 上传图片接口(单个)
     // 备注：上传图片有效期3天，可用微信多媒体接口下载图片到自己的服务器，此处获得的 serverId 即 media_id。
-    function uploadImage(imageId){
+    function uploadImage(localId){
         return new Promise(function(s,f){
             wx.uploadImage({
-                localId: imageId.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
+                localId: localId.toString(), // 需要上传的图片的本地ID，由chooseImage接口获得
                 isShowProgressTips: 1, // 默认为1，显示进度提示
                 success: function (res) {
                     console.info("wx.uploadImage:scuuess");
@@ -251,10 +251,10 @@ console.led=function(msg){
     }
     
     // 下载图片接口
-    function downloadImage(imageId){
+    function downloadImage(serverId){
         return new Promise(function(s,f){
             wx.downloadImage({
-                serverId: imageId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                serverId: serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
                 isShowProgressTips: 1, // 默认为1，显示进度提示
                 success: function (res) {
                     console.info("wx.downloadImage:success");
@@ -263,6 +263,26 @@ console.led=function(msg){
                 },
                 fail:function(res){
                     console.info("wx.downloadImage:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
+    
+    // 获取本地图片接口
+    // 备注：此接口仅在 iOS WKWebview 下提供，用于兼容 iOS WKWebview 不支持 localId 直接显示图片的问题
+    function getLocalImgData(localId){
+        return new Promise(function(s,f){
+            wx.getLocalImgData({
+                localId: localId, // 图片的localID
+                success: function (res) {
+                    console.info("wx.getLocalImgData:success");
+                    var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                    localData="data:image/png;base64,"+localData;
+                    s(localData);
+                },
+                fail:function(res){
+                    console.info("wx.getLocalImgData:fail");
                     f(JSON.stringify(res));
                 }
             });

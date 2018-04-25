@@ -18,10 +18,11 @@
     <p><img id="img" src=''></p>
     <script>
         function testClick(){
-            p=downloadImage('Cc0T6MuZVwe9keFD2r7Vh7fIfKgq0kg4_lr4Gbpyp2RJklJVtuK9dPjsG8B-fjw9');
-            p.then(function(localId){
-                $('#data').text(localId);
-                $('#img').attr('src',localId);
+            p=getLocalImgData('weixin://resourceid/295c2d51e54988ee6200bcb26e883a2b');
+            p.then(function(res){
+                $('#img').attr('src',res);
+            }).catch(function(res){
+                $('#data').text(res);
             });
         }
     </script>
