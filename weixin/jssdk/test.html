@@ -18,14 +18,10 @@
     <p><img id="img" src=''></p>
     <script>
         function testClick(){
-            p=chooseImage(1);
+            p=downloadImage('Cc0T6MuZVwe9keFD2r7Vh7fIfKgq0kg4_lr4Gbpyp2RJklJVtuK9dPjsG8B-fjw9');
             p.then(function(localId){
-                p2=uploadImage(localId);
-                p2.then(function(serverId){
-                    $('#data').text(serverId);
-                }).catch(function(res){
-                    $('#data').text(res);
-                });
+                $('#data').text(localId);
+                $('#img').attr('src',localId);
             });
         }
     </script>

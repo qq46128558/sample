@@ -250,6 +250,24 @@ console.led=function(msg){
         });
     }
     
+    // 下载图片接口
+    function downloadImage(imageId){
+        return new Promise(function(s,f){
+            wx.downloadImage({
+                serverId: imageId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    console.info("wx.downloadImage:success");
+                    var localId = res.localId; // 返回图片下载后的本地ID
+                    s(localId);
+                },
+                fail:function(res){
+                    console.info("wx.downloadImage:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
 
 
 // }
