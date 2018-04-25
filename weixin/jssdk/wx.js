@@ -193,22 +193,42 @@ console.led=function(msg){
 
     /* 图像接口 */
     // 拍照或从手机相册中选图接口
-    // 待研究如何返回?
+    // 使用Promise来异步返回
     function chooseImage(){
-        console.info('wx.chooseImage begin');
-        wx.chooseImage({
-            count: 1, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                console.info('wx.chooseImage:success');
-            }
+        return new Promise(function(s,f){
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                    console.info('wx.chooseImage:success');
+                    s(localIds);
+                },
+                fail:function(res){
+                    console.info('wx.chooseImage:fail');
+                    f(null);
+                }
+            });
         });
-        console.info('wx.chooseImage end');
     }
 
+    var isArray = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
 
+    function previewImage(current,urls){
+        if (!isArray(urls)) {urls=[urls];}
+        wx.previewImage({
+            current: current, // 当前显示图片的http链接
+            urls: urls, // 需要预览的图片http链接列表
+            success:function(res){console.info("wx.previewImage:success");},
+            fail:function(res){console.info("wx.previewImage:fail");}
+
+        });
+    }
+
+    
 
 
 // }
