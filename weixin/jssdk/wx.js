@@ -173,7 +173,16 @@ console.led=function(msg){
         });
 
 
-
+        /* 音频接口 */
+        // 监听录音自动停止接口
+        // 未完善
+        wx.onVoiceRecordEnd({
+            // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+            complete: function (res) {
+                console.info('wx.onVoiceRecordEnd:complete');
+                var localId = res.localId;
+            }
+        });
 
 
 
@@ -195,6 +204,7 @@ console.led=function(msg){
     // 拍照或从手机相册中选图接口
     // 使用Promise来异步返回
     // 调用 p=chooseImage;p.then(function(res){});
+    // weixin://resourceid/295c2d51e54988ee6200bcb26e883a2b
     function chooseImage(count=9){
         return new Promise(function(s,f){
             wx.chooseImage({
@@ -219,7 +229,7 @@ console.led=function(msg){
         return Object.prototype.toString.call(obj) === '[object Array]';
     }
 
-    // 预览图片接口
+    // 预览图片接口 http
     function previewImage(current,urls){
         if (!isArray(urls)) {urls=[urls];}
         wx.previewImage({
@@ -232,6 +242,7 @@ console.led=function(msg){
 
     // 上传图片接口(单个)
     // 备注：上传图片有效期3天，可用微信多媒体接口下载图片到自己的服务器，此处获得的 serverId 即 media_id。
+    // Cc0T6MuZVwe9keFD2r7Vh7fIfKgq0kg4_lr4Gbpyp2RJklJVtuK9dPjsG8B-fjw9
     function uploadImage(localId){
         return new Promise(function(s,f){
             wx.uploadImage({
@@ -271,6 +282,7 @@ console.led=function(msg){
     
     // 获取本地图片接口
     // 备注：此接口仅在 iOS WKWebview 下提供，用于兼容 iOS WKWebview 不支持 localId 直接显示图片的问题
+    // base64数据
     function getLocalImgData(localId){
         return new Promise(function(s,f){
             wx.getLocalImgData({
@@ -286,6 +298,36 @@ console.led=function(msg){
                     f(JSON.stringify(res));
                 }
             });
+        });
+    }
+
+    /* 音频接口 */
+    // 开始录音接口
+    function startRecord(){
+        wx.startRecord();
+    }
+
+    // 停止录音接口
+    function stopRecord(){
+        return new Promise(function(s,f){
+            wx.stopRecord({
+                success: function (res) {
+                    console.info("wx.stopRecord:success");
+                    var localId = res.localId;
+                    s(localId);
+                },
+                fail:function(res){
+                    console.info("wx.stopRecord:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
+    
+    // 播放语音接口
+    function playVoice(localId){
+        wx.playVoice({
+            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
         });
     }
 

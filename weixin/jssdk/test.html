@@ -12,18 +12,32 @@
     <div class="weui-cell__bd" style="text-align:center">蟹宝盒微信JSSDK测试</div>
     <div class="page__bd page__bd_spacing">
         <a href="javascript:testClick();" class="weui-btn weui-btn_primary">按钮</a>
+        <div id='btn1' class="weui-btn weui-btn_primary">录音</div>
+        <a href="javascript:assitClick();" class="weui-btn weui-btn_default">播放</a>
     </div>
 
     <p id='data'>返回内容显示</p>
     <p><img id="img" src=''></p>
     <script>
-        function testClick(){
-            p=getLocalImgData('weixin://resourceid/295c2d51e54988ee6200bcb26e883a2b');
-            p.then(function(res){
-                $('#img').attr('src',res);
+        var recordId;
+        $('#btn1').on('touchstart',function(e){
+            // 防止手机长按时弹出菜单
+            e.preventDefault(); 
+            startRecord();
+        });
+        $('#btn1').on('touchend',function(){
+            p=stopRecord();
+            p.then(function(localId){
+                recordId=localId;
             }).catch(function(res){
                 $('#data').text(res);
             });
+        });
+        function testClick(){
+            
+        }
+        function assitClick(){
+            playVoice(recordId);
         }
     </script>
 </body>
