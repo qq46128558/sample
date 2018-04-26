@@ -34,10 +34,10 @@
             });
         });
         function testClick(){
-            p=scanQRCode(1);
-            p.then(function(result){
-                $('#data').text(result);
-            })
+           p=getLocation();
+           p.then(function(res){
+               openLocation(res.latitude,res.longitude);
+           })
         }
         function playClick(){
             playVoice(recordId);

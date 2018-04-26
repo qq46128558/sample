@@ -1,4 +1,6 @@
 
+// DEMO页面
+// http://demo.open.weixin.qq.com/jssdk
 
 'use strict';
 // 通过document.write引入需要window.onload后写代码
@@ -425,7 +427,7 @@ console.led=function(msg){
     function getLocation(){
         return new Promise(function(s,f){
             wx.getLocation({
-                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                 success: function (res) {
                     console.info("wx.getLocation:success");
                     var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
@@ -438,14 +440,19 @@ console.led=function(msg){
                 fail:function(res){
                     console.info("wx.getLocation:fail");
                     f(JSON.stringify(res));
-                }
+                },
+                cancel: function (res) {
+                    console.info("wx.getLocation:cancel");
+                    console.info('用户拒绝授权获取地理位置');
+                    f(JSON.stringify(res));
+                  }
             });
         });
     }
     
     // 使用微信内置地图查看位置接口
     // 未完善
-    function openLocation(latitude,longitude,scale=20,infoUrl="ser.yn-ce.com",name="地图定位",address="我的位置"){
+    function openLocation(latitude,longitude,scale=14,infoUrl="http://ser.yn-ce.com",name="地图定位",address="我的位置"){
         wx.openLocation({
             latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
             longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
