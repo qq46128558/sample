@@ -184,6 +184,14 @@ console.led=function(msg){
             }
         });
 
+        // 监听语音播放完毕接口
+        // 未测试
+        wx.onVoicePlayEnd({
+            success: function (res) {
+                console.info('wx.onVoicePlayEnd:success');
+                var localId = res.localId; // 返回音频的本地ID
+            }
+        });
 
 
         // 批量隐藏功能按钮接口
@@ -328,6 +336,42 @@ console.led=function(msg){
     function playVoice(localId){
         wx.playVoice({
             localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    
+    // 暂停播放接口
+    function pauseVoice(localId){
+        wx.pauseVoice({
+            localId: localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    
+    // 停止播放接口
+    function stopVoice(localId){
+        wx.stopVoice({
+            localId: localId // 需要停止的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    
+    // 上传语音接口
+    
+
+    /* 智能接口 */
+    // 识别音频并返回识别结果接口
+    function translateVoice(localId){
+        return new Promise(function(s,f){
+            wx.translateVoice({
+                localId: localId, // 需要识别的音频的本地Id，由录音相关接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    console.info("wx.translateVoice:success");
+                    s(res.translateResult); // 语音识别的结果
+                },
+                fail:function(res){
+                    console.info("wx.translateVoice:fail");
+                    f(JSON.stringify(res));
+                }
+            });
         });
     }
 

@@ -13,7 +13,7 @@
     <div class="page__bd page__bd_spacing">
         <a href="javascript:testClick();" class="weui-btn weui-btn_primary">按钮</a>
         <div id='btn1' class="weui-btn weui-btn_primary">录音</div>
-        <a href="javascript:assitClick();" class="weui-btn weui-btn_default">播放</a>
+        <a href="javascript:playClick();" class="weui-btn weui-btn_default">播放</a>
     </div>
 
     <p id='data'>返回内容显示</p>
@@ -29,6 +29,10 @@
             p=stopRecord();
             p.then(function(localId){
                 recordId=localId;
+                p2=translateVoice(localId);
+                p2.then(function(value){
+                    $('#data').text(value);
+                });
             }).catch(function(res){
                 $('#data').text(res);
             });
@@ -36,7 +40,7 @@
         function testClick(){
             
         }
-        function assitClick(){
+        function playClick(){
             playVoice(recordId);
         }
     </script>
