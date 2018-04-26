@@ -444,8 +444,8 @@ console.led=function(msg){
     }
     
     // 使用微信内置地图查看位置接口
-    // 目前发现定位有偏差
-    function openLocation(latitude,longitude,scale=28,infoUrl="ser.yn-ce.com",name="地图定位",address="我的位置"){
+    // 未完善
+    function openLocation(latitude,longitude,scale=20,infoUrl="ser.yn-ce.com",name="地图定位",address="我的位置"){
         wx.openLocation({
             latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
             longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
@@ -519,9 +519,19 @@ console.led=function(msg){
         });
     }
 
-    
+    /* 微信小店 */
+    // 未尝试
+
+    /* 微信卡券 */
+    // 未研究
+
+    // 微信支付
+    // 未研究
+
+    /* 快速输入 */
+    // 未尝试
+
     // }
     
     
     
-    f(JSON.stringify(res));
