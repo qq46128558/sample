@@ -34,13 +34,10 @@
             });
         });
         function testClick(){
-            p=downloadVoice('1237378768e7q8e7r8qwesafdasdfasdfaxss111');
-            p.then(function(localId){
-                p2=translateVoice(localId);
-                p2.then(function(data){
-                    $('#data').text(data);
-                });
-            });
+           p=getLocation();
+           p.then(function(res){
+               openLocation(res.latitude,res.longitude);
+           })
         }
         function playClick(){
             playVoice(recordId);

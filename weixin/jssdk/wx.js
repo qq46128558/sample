@@ -409,6 +409,60 @@ console.led=function(msg){
             });
         });
     }
+    
+    /* 设备信息 */
+    // 获取网络状态接口
+    function getNetworkType(){
+        return new Promise(function(s,f){
+            wx.getNetworkType({
+                success: function (res) {
+                    console.info("wx.getNetworkType:success");
+                    var networkType = res.networkType; // 返回网络类型2g，3g，4g，wifi
+                    s(networkType);
+                },
+                fail:function(res){
+                    console.info("wx.getNetworkType:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
+    
+    /* 地理位置 */
+    // 获取地理位置接口
+    function getLocation(){
+        return new Promise(function(s,f){
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    console.info("wx.getLocation:success");
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    // {"speed":"0.0","indoor_building_floor":"1000","longitude":"113.55883","latitude":"22.373041","indoor_building_type":"-1","accuracy":"30.0","indoor_building_id":"","errMsg":"getLocation:ok"}
+                    s(res);
+                },
+                fail:function(res){
+                    console.info("wx.getLocation:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
+    
+    // 使用微信内置地图查看位置接口
+    // 目前发现定位有偏差
+    function openLocation(latitude,longitude,scale=28,infoUrl="ser.yn-ce.com",name="地图定位",address="我的位置"){
+        wx.openLocation({
+            latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+            longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+            name: name, // 位置名
+            address: address, // 地址详情说明
+            scale: scale, // 地图缩放级别,整形值,范围从1~28。默认为最大
+            infoUrl: infoUrl // 在查看位置界面底部显示的超链接,可点击跳转
+        });
+    }
 
 
 // }
