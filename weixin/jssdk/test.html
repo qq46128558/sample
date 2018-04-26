@@ -29,16 +29,18 @@
             p=stopRecord();
             p.then(function(localId){
                 recordId=localId;
-                p2=translateVoice(localId);
-                p2.then(function(value){
-                    $('#data').text(value);
-                });
             }).catch(function(res){
                 $('#data').text(res);
             });
         });
         function testClick(){
-            
+            p=downloadVoice('1237378768e7q8e7r8qwesafdasdfasdfaxss111');
+            p.then(function(localId){
+                p2=translateVoice(localId);
+                p2.then(function(data){
+                    $('#data').text(data);
+                });
+            });
         }
         function playClick(){
             playVoice(recordId);

@@ -354,8 +354,43 @@ console.led=function(msg){
     }
     
     // 上传语音接口
+    // 备注：上传语音有效期3天，可用微信多媒体接口下载语音到自己的服务器，此处获得的 serverId 即 media_id，参考文档 .目前多媒体文件下载接口的频率限制为10000次/天，如需要调高频率，请登录微信公众平台，在开发 - 接口权限的列表中，申请提高临时上限。
+    function uploadVoice(localId){
+        return new Promise(function(s,f){
+            wx.uploadVoice({
+                localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    console.info("wx.uploadVoice:success");
+                    var serverId = res.serverId; // 返回音频的服务器端ID
+                    s(serverId);
+                },
+                fail:function(res){
+                    console.info("wx.uploadVoice:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
     
-
+    // 下载语音接口
+    function downloadVoice(serverId){
+        return new Promise(function(s,f){
+            wx.downloadVoice({
+                serverId: serverId, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (res) {
+                    console.info("wx.downloadVoice:success");
+                    var localId = res.localId; // 返回音频的本地ID
+                    s(localId);
+                },
+                fail:function(res){
+                    console.info("wx.downloadVoice:fail");
+                    f(JSON.stringify(res));
+                }
+            });
+        });
+    }
     /* 智能接口 */
     // 识别音频并返回识别结果接口
     function translateVoice(localId){
