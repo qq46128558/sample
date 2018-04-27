@@ -452,14 +452,24 @@ console.led=function(msg){
     
     // 使用微信内置地图查看位置接口
     // 未完善
-    function openLocation(latitude,longitude,scale=14,infoUrl="http://ser.yn-ce.com",name="地图定位",address="我的位置"){
-        wx.openLocation({
-            latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
-            longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
-            name: name, // 位置名
-            address: address, // 地址详情说明
-            scale: scale, // 地图缩放级别,整形值,范围从1~28。默认为最大
-            infoUrl: infoUrl // 在查看位置界面底部显示的超链接,可点击跳转
+    function openLocation(latitude,longitude,scale=14,infoUrl="http://ser.yn-ce.com",name="",address=""){
+        // 云逆地理编码服务
+        $.ajax("./cloudrgc.php?latitude="+latitude+"&longitude="+longitude,{
+            method:"get"
+        }).done(function(data){
+            console.info("cloudrgc:"+data);
+            var jsonData=JSON.parse(data);
+            if (!name) name=jsonData.recommended_location_description;
+            if (!address) address=jsonData.formatted_address;
+
+            wx.openLocation({
+                latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+                longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+                name: name, // 位置名
+                address: address, // 地址详情说明
+                scale: scale, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                infoUrl: infoUrl // 在查看位置界面底部显示的超链接,可点击跳转
+            });
         });
     }
     
