@@ -1,9 +1,10 @@
 ## 百度地图开放平台
 
 
-应用编号|应用名称|访问应用(AK)|应用类别
--|-|-|-
-11160197|MyAPI|mutYvoaB2U47IrueGcGzNWzfvDSefiWk|浏览器端
+应用编号|应用名称|访问应用(AK)|应用类别|启用服务
+-|-|-|-|-
+11160197|MyAPI|mutYvoaB2U47IrueGcGzNWzfvDSefiWk|浏览器端|云检索/Javascript API/地点检索/正逆地理编码/普通IP定位/静态图/全景静态图/坐标转换/鹰眼轨迹/全景URL API/云逆地理编码/云地理编码
+11167494|微信小程序API|nZU5zEXjfIG2SWKzFX8ld6Fsvt0Xj8WR|微信小程序|地点检索/正逆地理编码/天气查询API
 
 #### 坐标系说明
 - WGS84：为一种大地坐标系，也是目前广泛使用的GPS全球卫星定位系统使用的坐标系。
