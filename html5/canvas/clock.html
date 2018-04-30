@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>一个基本的时钟程序</title>
+		<style>
+			body{background: #dddddd;}
+			#canvas{
+				margin: 10px;
+				padding: 10px;
+				background: #ffffff;
+				border: thin inner #aaaaaa;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='300' height="300">
+			Canvas not supported
+		</canvas>
+	</body>
+	<script>
+		var canvas=document.getElementById('canvas'),
+			context=canvas.getContext('2d'),
+			FONT_HEIGHT=15,
+			MARGIN=35,
+			HAND_TRUCATION=canvas.width/25,
+			HOUR_HAND_TRUNCATION=canvas.width/10,
+			NUMERAL_SPACING=20,
+			RADIUS=canvas.width/2-MARGIN,
+			HAND_RADIUS=RADIUS+NUMERAL_SPACING;
+		function drawCircle(){
+			context.beginPath();
+			context.arc(canvas.width/2,canvas.height/2,RADIUS,0,Math.PI*2,true);
+			context.stroke();
+		}
+		drawCircle();
+	</script>
+</html>
