@@ -1,5 +1,7 @@
+
 #### 查看进程使用内存的情况
 ps -eo 'rsz,cmd' |grep `"processname"`|grep -v "grep"
+ps -eo 'cmd,%mem,rsz'|grep -v " 0.0 "
 
 标题名称
 
