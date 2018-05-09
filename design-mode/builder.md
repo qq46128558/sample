@@ -19,6 +19,7 @@ class ConcreteBuilder{
     +GetResult()
 }
 class Product{
+    +IList<string> part
     +Add(part)
     +Show()
 }
