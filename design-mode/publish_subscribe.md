@@ -45,3 +45,23 @@ note left of ConcreteObserver: ConcreteObserver类,具体观察者\n实现抽象
 
 
 ### 事件委托
+```c#
+// 声明一个委托
+delegate void EventHandler();
+// 声明一事件update,,类型为委托EventHandler
+public event EventHandler Update;
+
+public void Notify(){
+    // 在访问通知方法时,调用更新
+    Update();
+}
+...
+主题实例.Update+=new EventHandler(观察者实例.方法);
+```
+- 委托就是一种引用方法的类型
+- 一旦为委托分配了方法,委托将与该方法具有完全相同的行为
+- 委托可以具有参数及返回值
+- 委托的实例将代表一个具体的函数
+- 一个委托可以搭载多个方法,委托对所搭载的方法并不需要属于同一个类
+
+**先有观察者模式,再有委托事件技术**
