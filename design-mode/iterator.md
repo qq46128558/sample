@@ -6,7 +6,7 @@
 
 ### 何时使用迭代器模式
 - 当你需要访问一个聚集对象,而且不管这些对象是什么都需要遍历的时候
-- 你需要对聚集有多种方式遍历时
+- 你需要对聚集有多种方式遍历时(由于继承Iterator,所以增加ConcreteIteratorX即可多方式遍历)
 
 
 ### 迭代器模式(Iterator)结构图
@@ -17,7 +17,10 @@ abstract class Aggregate{
     +CreateIterator():Iterator
 }
 class ConcreteAggregate{
+    -items:IList<object>
     +CreateIterator():Iterator
+    +Count
+    +this[int index]:object
 }
 abstract class Iterator{
     +First()
@@ -25,7 +28,10 @@ abstract class Iterator{
     +IsDone()
     +CurrentItem()
 }
-class ConcreteIterator
+class ConcreteIterator{    
+    -aggregate:ConcreteAggregate
+    -current:int
+}
 Client-->Iterator
 Client-->Aggregate
 ConcreteAggregate--|>Aggregate
@@ -39,4 +45,32 @@ note top of ConcreteIterator: 具体迭代器类,继承Iterator\n实现开始,�
 @enduml
 ```
 
+
+```c#
+class ConcreteAggregate:Aggregate{
+    private IList<object> items=new List<object>();
+    public override Iterator CreateIterator(){
+        return new ConcreteIterator(this);
+    }
+    public int Count{
+        get {return items.Count;}
+    }
+    public object this[int index]{
+        get {return items[index];}
+        set {items.Insert(index,value);}
+    }
+}
+```
+
+
+```c#
+// foreach in在编译器里做了些什么?
+IEnumerator<string> e=xxx.GetEnumerator();
+while (e.MoveNext()){
+    return e.Current;
+}
+```
+
+### 优点
+迭代器(Iterator)模式就是分离了集合对象的遍历行为,抽象出一个迭代器类来负责,这样既可以做到不暴露集合的内部结构,又可以让外部代码透时地访问集合内部的数据.
 
