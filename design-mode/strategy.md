@@ -11,6 +11,7 @@
 ```uml
 @startuml
 class Context{
+    -strategy:Strategy
     +ContextInterface()
 }
 abstract class Strategy{
