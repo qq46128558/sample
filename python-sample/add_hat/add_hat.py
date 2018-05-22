@@ -18,6 +18,11 @@ def add_hat(img,hat_img):
     rgb_hat = cv2.merge((r,g,b))
 
     cv2.imwrite("hat_alpha.jpg",a)
+    cv2.imwrite("hat_r.jpg",r)
+    cv2.imwrite("hat_g.jpg",g)
+    cv2.imwrite("hat_b.jpg",b)
+    cv2.imwrite("hat_rgb.jpg",rgb_hat)
+
 
     # ------------------------- 用dlib的人脸检测代替OpenCV的人脸检测-----------------------
     # # 灰度变换
@@ -58,8 +63,8 @@ def add_hat(img,hat_img):
             # cv2.waitKey()  
             
             # 选取左右眼眼角的点
-            point1 = shape.part(0)
-            point2 = shape.part(2)
+            point1 = shape.part(0) # 左眼左边
+            point2 = shape.part(2) # 右眼左边
 
             # 求两点中心
             eyes_center = ((point1.x+point2.x)//2,(point1.y+point2.y)//2)
@@ -70,6 +75,7 @@ def add_hat(img,hat_img):
             # cv2.waitKey()
 
             #  根据人脸大小调整帽子大小
+            """ 未知shape是什么 """
             factor = 1.5
             resized_hat_h = int(round(rgb_hat.shape[0]*w/rgb_hat.shape[1]*factor))
             resized_hat_w = int(round(rgb_hat.shape[1]*w/rgb_hat.shape[1]*factor))
@@ -85,14 +91,16 @@ def add_hat(img,hat_img):
             mask_inv =  cv2.bitwise_not(mask)
 
             # 帽子相对与人脸框上线的偏移量
-            dh = 20
+            dh = 0
             dw = 0
             # 原图ROI
             # bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w]
+            """ ROI待处理的区域 未理解"""
             bg_roi = img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)]
 
             # 原图ROI中提取放帽子的区域
             bg_roi = bg_roi.astype(float)
+            # merge((r,g,b))?
             mask_inv = cv2.merge((mask_inv,mask_inv,mask_inv))
             alpha = mask_inv.astype(float)/255
 
