@@ -5,6 +5,7 @@
 # 安装opencv_python-3.4.1+contrib-cp35-cp35m-win_amd64.whl
 # 安装cmake
 # 安装dlib
+# 修改支持同一张图多个人脸加帽子
 
 import numpy as np 
 import cv2
@@ -40,7 +41,7 @@ def add_hat(img,hat_img):
     # 如果检测到人脸
     if len(dets)<=0:
         print("get frontal face failed.")
-        quit()
+        return False
     else: 
         for d in dets:
             x,y,w,h = d.left(),d.top(), d.right()-d.left(), d.bottom()-d.top()
@@ -84,7 +85,7 @@ def add_hat(img,hat_img):
             mask_inv =  cv2.bitwise_not(mask)
 
             # 帽子相对与人脸框上线的偏移量
-            dh = 0
+            dh = 10
             dw = 0
             # 原图ROI
             # bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w]
@@ -124,6 +125,7 @@ def add_hat(img,hat_img):
             add_hat = cv2.add(bg,hat)
             # cv2.imshow("add_hat",add_hat) 
             # cv2.waitKey()
+            cv2.imwrite("add_hat.jpg",add_hat)
 
             # 把添加好帽子的区域放回原图
             img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)] = add_hat
@@ -132,7 +134,9 @@ def add_hat(img,hat_img):
             # cv2.imshow("img",img )  
             # cv2.waitKey(0)  
 
-            return img
+            cv2.imwrite("output.jpg",img)
+            # return img
+        return True
 
    
 # 读取帽子图，第二个参数-1表示读取为rgba通道，否则为rgb通道
@@ -140,23 +144,20 @@ hat_img = cv2.imread("hat2.png",-1)
 
 # 读取头像图
 # img = cv2.imread("07_01 290x293.jpg")
-img = cv2.imread("2018-1-3 9-28-59.png")
+img = cv2.imread("mmexport1493386807101.jpg")
 output = add_hat(img,hat_img)
 
 # 展示效果
 # cv2.imshow("output",output )  
 # cv2.waitKey(0)  
-cv2.imwrite("output.jpg",output)
+# cv2.imwrite("output.jpg",output)
+
 # import glob as gb 
-
 # img_path = gb.glob("./images/*.jpg")
-
 # for path in img_path:
 #     img = cv2.imread(path)
-
 #     # 添加帽子
 #     output = add_hat(img,hat_img)
-
 #     # 展示效果
 #     cv2.imshow("output",output )  
 #     cv2.waitKey(0)  
