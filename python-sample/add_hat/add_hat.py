@@ -90,6 +90,7 @@ def add_hat(img,hat_img):
             mask = cv2.resize(a,(resized_hat_w,resized_hat_h))
             mask_inv =  cv2.bitwise_not(mask)
 
+            # 从原图中取出需要添加帽子的区域，这里我们用的是位运算操作
             # 帽子相对与人脸框上线的偏移量
             dh = 0
             dw = 0
