@@ -95,22 +95,21 @@ def add_hat(img,hat_img):
             dw = 0
             # 原图ROI
             # bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w]
-            """ ROI待处理的区域 未理解"""
+            """ ROI待处理的区域:就人脸框上部份区域,未理解计算公式"""
             bg_roi = img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)]
-
             # 原图ROI中提取放帽子的区域
             bg_roi = bg_roi.astype(float)
             # merge((r,g,b))?
             mask_inv = cv2.merge((mask_inv,mask_inv,mask_inv))
             alpha = mask_inv.astype(float)/255
 
+            # 截取帽子遮罩
             # 相乘之前保证两者大小一致（可能会由于四舍五入原因不一致）
             alpha = cv2.resize(alpha,(bg_roi.shape[1],bg_roi.shape[0]))
             # print("alpha size: ",alpha.shape)
             # print("bg_roi size: ",bg_roi.shape)
             bg = cv2.multiply(alpha, bg_roi)
             bg = bg.astype('uint8')
-
             cv2.imwrite("bg.jpg",bg)
             # cv2.imshow("image",img)
             # cv2.waitKey()
@@ -127,6 +126,7 @@ def add_hat(img,hat_img):
             # print("bg size: ",bg.shape)
             # print("hat size: ",hat.shape)
 
+            # 将头像框与帽子合并
             # 相加之前保证两者大小一致（可能会由于四舍五入原因不一致）
             hat = cv2.resize(hat,(bg_roi.shape[1],bg_roi.shape[0]))
             # 两个ROI区域相加
@@ -137,11 +137,11 @@ def add_hat(img,hat_img):
 
             # 把添加好帽子的区域放回原图
             img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)] = add_hat
-
             # 展示效果
             # cv2.imshow("img",img )  
             # cv2.waitKey(0)  
 
+            # 输出修改后的原图
             cv2.imwrite("output.jpg",img)
             # return img
         return True
