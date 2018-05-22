@@ -65,7 +65,7 @@ def add_hat(img,hat_img):
             eyes_center = ((point1.x+point2.x)//2,(point1.y+point2.y)//2)
 
             # 显示两眼中心点
-            cv2.circle(img,eyes_center,3,color=(0,255,0))  
+            # cv2.circle(img,eyes_center,3,color=(0,255,0))  
             # cv2.imshow("image",img)
             # cv2.waitKey()
 
@@ -85,7 +85,7 @@ def add_hat(img,hat_img):
             mask_inv =  cv2.bitwise_not(mask)
 
             # 帽子相对与人脸框上线的偏移量
-            dh = 10
+            dh = 20
             dw = 0
             # 原图ROI
             # bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w]
@@ -144,7 +144,7 @@ hat_img = cv2.imread("hat2.png",-1)
 
 # 读取头像图
 # img = cv2.imread("07_01 290x293.jpg")
-img = cv2.imread("mmexport1493386807101.jpg")
+img = cv2.imread("mmexport1506238138243.jpg")
 output = add_hat(img,hat_img)
 
 # 展示效果
