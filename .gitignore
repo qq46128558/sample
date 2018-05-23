@@ -6,3 +6,4 @@ __pycache__
 python/virtualenv/venv
 .idea
 jos/jos-php-open-api-sdk-2.0
+ghostdriver.log
