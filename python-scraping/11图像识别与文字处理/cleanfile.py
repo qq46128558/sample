@@ -9,7 +9,7 @@ import subprocess
 def cleanFile(filePath,newFilePath):
     image=Image.open(filePath)
 
-    # 对图片进行阈值过滤，然后保存 (120~143)
+    # 对图片进行阈值过滤，然后保存 (120~143) 255是白色, 0是黑色
     image=image.point(lambda x:0 if x<120 else 255)
     image.save(newFilePath)
 
