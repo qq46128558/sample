@@ -1,5 +1,5 @@
 #普通修改后快捷更新到Git
-result=`git status -s`
+result=`git status -s|sed 's/??/ A/g'`
 git add -A
 
 if [ $? == 0 ]; then
