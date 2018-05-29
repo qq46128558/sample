@@ -3,7 +3,7 @@ result=`git status -s|sed 's/??/ A/g'`
 git add -A
 
 if [ $? == 0 ]; then
-	git commit -m "Sample code improved:${result}"
+	git commit -m "${result}"
 fi
 
 function nopush(){

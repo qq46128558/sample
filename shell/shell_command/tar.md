@@ -1,7 +1,7 @@
-#####查看帮助
+##### 查看帮助
 tar --help
 
-#####基本解压
+##### 基本解压
 tar -zxvf `gzip_filename` -C `directory`
 
 - -z 处理gzip类型文件
@@ -10,3 +10,5 @@ tar -zxvf `gzip_filename` -C `directory`
 - -f 指定处理的文件(gzip_filename)
 - -C 解压到directory指定目录
 
+##### 打包
+    tar czvf `打包文件名.tar.gz` `打包目录`
