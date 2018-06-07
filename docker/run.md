@@ -1,6 +1,11 @@
 Run a command in a new container
 
-在新容器中运行命令
+在新容器中运行命令同时启动容器
+
+#### 如何让容器长期运行
+    #因为容器的生命周期依赖于启动时执行的命令，只要该命令不结束，容器也就不会退出
+    docker run -d ubuntu:15.10 /bin/bash -c "while true;do sleep 1;done"
+    #容器常见的用途是运行后台服务
 
 #### 在docker容器中运行hello world
     docker run `指定要运行的镜像` `在启动的容器里执行的命令`
@@ -41,4 +46,22 @@ Run a command in a new container
 
 #### 启动容器,命名容器
     docker run -d -P --name runoob training/webapp python app.py
-    
+
+#### 启动容器,进行目录挂载
+    #-v:Bind mount a volume
+    #-v $PWD/conf:/etc/nginx/conf.d 将主机当前目录下的conf挂载到容器的/etc/nginx/conf.d
+    #-v $PWD/logs:/var/log/nginx 将主机当前目录下的logs挂载到容器的/var/log/nginx
+    #-v $PWD/www:/usr/share/nginx/html 将主机当前目录下的www挂载到容器的/usr/share/nginx/html
+    docker run -p 8001:80 --name mynginx  -v $PWD/conf:/etc/nginx/conf.d -v $PWD/logs:/var/log/nginx -v $PWD/www:/usr/share/nginx/html -d nginx
+    #主机的挂载目录不存在则会自动创建,里面的文件需要手动添加或复制
+    #建议:首先需要创建将要映射到容器中的目录以及.cnf文件，然后再创建容器
+
+#### 启动容器,初始化 root 用户的密码
+    #-e:Set environment variables
+    #-e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码
+    docker run -p 3306:3306 --name mymysql -v $PWD/conf:/etc/mysql/conf.d -v $PWD/logs:/logs -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
+
+#### 启动容器,指定工作目录
+    #-w:Working directory inside the container
+    #-w /usr/src/myapp:指定容器的/usr/src/myapp目录为工作目录
+    docker run  -v $PWD/myapp:/usr/src/myapp  -w /usr/src/myapp python:3.5 python helloworld.py

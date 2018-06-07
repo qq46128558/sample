@@ -4,3 +4,6 @@ Return low-level information on a container or image
     docker inspect `镜像id`
     docker inspect f1b
     
+#### 查看容器IP
+    docker inspect `容器id`|grep "IPAddress"
+    
