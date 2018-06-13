@@ -2,10 +2,17 @@ Run a command in a new container
 
 在新容器中运行命令同时启动容器
 
+#### 退出但不关闭容器
+    按 ctrl + p + q
+
 #### 如何让容器长期运行
     #因为容器的生命周期依赖于启动时执行的命令，只要该命令不结束，容器也就不会退出
     docker run -d ubuntu:15.10 /bin/bash -c "while true;do sleep 1;done"
     #容器常见的用途是运行后台服务
+
+    #以下运行后,可通过attach进入
+    docker run -dit -p 80:80 centos
+    #经验证,关闭后,可使用start启动
 
 #### 在docker容器中运行hello world
     docker run `指定要运行的镜像` `在启动的容器里执行的命令`

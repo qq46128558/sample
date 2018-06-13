@@ -58,6 +58,8 @@
     apt-get install sysv-rc-conf -y
     #screen(会话管理)
     apt-get install screen -y
+    #docker
+    apt-get install docker.io -y
     
 #### 取得apt安装的nginx源码
     #最好先进入到家目录
