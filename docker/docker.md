@@ -28,4 +28,14 @@ service docker start
     docker
     docker `命令` --help
     docker ps --help
-    
+
+
+### 常用命令
+    docker ps -a
+    docker logs upbeat_khorana
+    docker start upbeat_khorana
+    docker stop upbeat_khorana
+    docker exec upbeat_khorana ls -lh
+    docker pull centos
+    docker push XXX
+    docker cp /root/yii-advanced-app-2.0.15.tgz upbeat_khorana:/home/www/
