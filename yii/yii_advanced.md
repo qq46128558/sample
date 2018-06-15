@@ -30,3 +30,6 @@
     重新相关服务
     ~~~
 12. yii2框架搭建完成
+13. 登入mysql,为高级应用创建数据库: mysql>create database yii2advanced;
+14. 修改数据库配置信息: common/config/main-local.php (修改mysql连接信息)
+15. 用migrate创建表: php yii migrate
