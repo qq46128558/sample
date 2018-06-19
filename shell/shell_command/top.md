@@ -7,6 +7,7 @@
 
 ### 统计信息
 ~~~
+l: load avg
 top - 17:43:23 up 2 days,  4:00,  1 user,  load average: 0.08, 0.02, 0.01
 ~~~
 - 当前时间
@@ -15,7 +16,9 @@ top - 17:43:23 up 2 days,  4:00,  1 user,  load average: 0.08, 0.02, 0.01
 - 系统负载, 即任务队列的平均长度. 分别是1min,5min,15min前到现在的平均值
 
 ~~~
+t: task/cpu stats
 Tasks: 107 total,   2 running, 105 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
 ~~~
 - 进程总数
 - 正在运行的进程数
@@ -23,9 +26,6 @@ Tasks: 107 total,   2 running, 105 sleeping,   0 stopped,   0 zombie
 - 停止的进程数
 - 僵尸进程数
 
-~~~
-%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-~~~
 - us: 用户空间进程占用CPU百分比
     - us指标统计的是: 所有nice值小于等于0的用户空间进程的CPU使用率
     - 进程默认的nice值是0
@@ -46,7 +46,9 @@ Tasks: 107 total,   2 running, 105 sleeping,   0 stopped,   0 zombie
     - id+wa之和越小,说明CPU越忙碌
 
 ~~~
+m: memory info
 KiB Mem :  2048124 total,   103864 free,   175684 used,  1768576 buff/cache
+KiB Swap:        0 total,        0 free,        0 used.  1662972 avail Mem
 ~~~
 - 单位K
 - total: 物理内存总量
@@ -54,9 +56,6 @@ KiB Mem :  2048124 total,   103864 free,   175684 used,  1768576 buff/cache
 - used: 使用的物理内存总量
 - buff/cache: 用作内核缓存的内存量
 
-~~~
-KiB Swap:        0 total,        0 free,        0 used.  1662972 avail Mem
-~~~
 - 单位K
 - total: 交换区总量
 - free: 空闲交换区总量
