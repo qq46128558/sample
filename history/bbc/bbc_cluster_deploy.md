@@ -216,9 +216,12 @@
 	quit
 	~~~
 
+tcp://xxxx:6379
+
 **如果redis服务设置了密码, 则安装bbc连接时注意填写**
 
-**tcp://xxxx:6379?password=123456**
+**redis://xxxx:6379?password=123456**
+
 
 ## 安装缓存服务器
 *如果是阿里云产品 云数据库Memcache版 直接配置后连接即可*
@@ -453,8 +456,13 @@
 	bbc
 	#redis配置
 	#tcp://192.168.239.132:6379?password=123456
-	#发现redis服务器设置密码后,能连接,但是进入下一步时报错:NOAUTH Authentication required.(未解决)
+	#无密码
 	tcp://192.168.239.132:6379
+	#发现redis服务器设置密码后,能连接,但是进入下一步时报错:NOAUTH Authentication required.
+	#解决：
+	redis://192.168.239.132:6379?password=123456
+	
+
 	#redis数据库
 	database=0
 	~~~
