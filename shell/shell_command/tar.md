@@ -12,3 +12,8 @@ tar -zxvf `gzip_filename` -C `directory`
 
 ##### 打包
     tar czvf `打包文件名.tar.gz` `打包目录`
+
+
+##### 压缩包类型
+	j bz2 (bzip2)
+	z gz(gzip)

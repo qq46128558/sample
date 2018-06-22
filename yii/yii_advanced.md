@@ -15,7 +15,7 @@
     ;open_basedir =
     ~~~
 8. 下载yii高级模板: http://www.yiichina.com/download
-9. 解压到 /home/www, 并将advance改名为yii2
+9. 解压到 /home/www, 并将advance改名为yii2，设置yii2用户及用户组www.www
 10. 执行/home/www/yii2/init php脚本,进行环境初始化
 10. 修改root目录
     ~~~

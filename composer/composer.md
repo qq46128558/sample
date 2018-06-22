@@ -1,4 +1,5 @@
 
+[中文文档](http://docs.phpcomposer.com/ "http://docs.phpcomposer.com/")
 
 ####  下载并安装composer(使用php命令行)
 ~~~
