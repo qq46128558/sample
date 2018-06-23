@@ -39,3 +39,21 @@ service docker start
     docker pull centos
     docker push XXX
     docker cp /root/yii-advanced-app-2.0.15.tgz upbeat_khorana:/home/www/
+
+### docker技术应用场景
+    - 节省项目环境部署时间
+        - 单项目打包：打包到镜像>>push>>pull>>启动容器
+        - 整套项目打包：DockerCompose
+        - 新开源技术试用：pull官方镜像
+    - 环境一致性
+    - 微服务：多个独立服务组成业务系统，一个容器一个服务，容器之间相互隔离
+    - 弹性伸缩：集群模式下存在
+        - 可以很快速启动上百个容器来提供更多并发和资源利用率
+
+### docker特点
+    - 开箱即用
+    - 快速部署
+    - 可移植性强
+    - 环境隔离
+
+
