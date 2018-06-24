@@ -15,6 +15,19 @@ from requests.exceptions import RequestException
 import math
 from bs4 import BeautifulSoup
 
+# 画图
+import matplotlib.pyplot as plt
+
+# 截取词
+import jieba
+# 处理词
+import pandas as pd
+# 词频统计
+import numpy
+# 词云
+from scipy.misc import imread
+from wordcloud import WordCloud,ImageColorGenerator
+
 def get_one_page(city,keyword,region,page):
     """ 获取网页html内容并返回 """
     paras={
@@ -187,16 +200,85 @@ def main(city,keyword,region,pages):
             job_dict['月薪']=item.get('月薪')
             job_dict['地点']=item.get('地点')
             # 对数据进行清洗，将标点符号等对词频统计造成影响的因素剔除
-            # pattern = re.compile(r'[一-龥]+')
-            # filterdata = re.findall(pattern, job_detail.get('requirement'))
-            filterdata = job_detail.get('requirement')
+            # [\u4E00-\u9FD5]中文字的unicode范围
+            pattern = re.compile(r'[\u4E00-\u9FD5]+')
+            filterdata = re.findall(pattern, job_detail.get('requirement'))
+            # filterdata = job_detail.get('requirement')
             write_txt_file(txt_filename,''.join(filterdata))
             write_csv_rows(csv_filename,headers,job_dict)
 
-    
+    # 工资统计
+    if True:
+        salaries=[]
+        sal=read_csv_column(csv_filename,5)
+        # 撇除第一项，并转换成整形，生成新的列表
+
+        for i in range(len(sal)-1):
+            print(i)
+            # 工资为'0'的表示招聘上写的是'面议',不做统计
+            if not (sal[i]=='0' or sal[i]=='月薪'):
+                salaries.append(int(sal[i]))
+        # 用直方图进行展示
+        # 注意生成文件后会报错：ValueError: invalid literal for int() with base 10: '月薪'
+        plt.hist(salaries,bins=10,)
+        plt.show()
+
+    if True:
+        # 职位描述词频统计
+        content=read_txt_file(txt_filename)
+        segment=jieba.lcut(content)
+
+        words_df=pd.DataFrame({'segment':segment})
+        # 忽略常用词
+        stopwords=pd.read_csv("stopwords.txt",index_col=False,quoting=3,sep=" ",names=['stopword'],encoding='utf-8')
+        words_df=words_df[~words_df.segment.isin(stopwords.stopword)]
+
+        words_stat=words_df.groupby(by=['segment'])['segment'].agg({"计数":numpy.size})
+        words_stat=words_stat.reset_index().sort_values(by=["计数"],ascending=False)
+
+        # 设置词云属性
+        color_mask = imread('china.jfif')
+        wordcloud=WordCloud(font_path='simhei.ttf', # 设置字体可以显示中文
+        background_color="white",                   # 背景颜色
+        max_words=100,                              # 词云显示的最大词数
+        mask=color_mask,                            # 设置背景图片
+        max_font_size=100,                          # 字体最大值
+        random_state=42,
+        width=1000,height=860,margin=2,             # 设置图片默认的大小,但是如果使用背景图片的话那么保存的图片大小将会按照其大小保存,margin为词语边缘距离
+        )
+        # 生成词云, 可以用generate输入全部文本,也可以我们计算好词频后使用generate_from_frequencies函数
+        word_frequence={x[0]:x[1] for x in words_stat.head(100).values}
+        # {'经验': 34, '开发': 34, '网站': 29, ...
+        word_frequence_dict={}
+        for key in word_frequence:
+            word_frequence_dict[key]=word_frequence[key]
+        wordcloud.generate_from_frequencies(word_frequence_dict)
+        # 从背景图片生成颜色值
+        image_colors=ImageColorGenerator(color_mask)
+        # 重新上色
+        wordcloud.recolor(color_func=image_colors)
+        # 保存图片
+        wordcloud.to_file('output.jpg')
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        plt.show()
+
+
+# 读取csv的一列    
+def read_csv_column(path,column):
+    with open(path,'r',encoding='gb18030',newline='') as f:
+        reader=csv.reader(f)
+        return [row[column] for row in reader]
+
+# 读取txt文本
+def read_txt_file(path):
+    with open(path,'r',encoding='gb18030',newline='') as f:
+        return f.read()
+
+
 if __name__=='__main__':
     # 3185保税区 3184高新区 3183横琴新区 3182金湾区 3181斗门区 3180香洲区 0不限
-    city,keyword,region='珠海','PHP',3180
+    city,keyword,region='珠海','PHP开发工程师',0
     # 获取职位个数
     html=get_one_page(city,keyword,region,1)
     pcount=parse_position_count(html)
@@ -204,3 +286,7 @@ if __name__=='__main__':
     pages=math.ceil(pcount/60)
     main(city,keyword,region,pages)
     
+""" 可以继续发挥：
+分析工作年限和工资的关系并展示、预测
+统计不同工作岗位的薪资差别
+利用多线程或多进程提升效率 """
