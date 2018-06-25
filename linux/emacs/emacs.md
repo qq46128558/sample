@@ -43,7 +43,37 @@ Emacs中Control键用C表示,Alt键用M表示, 即: C-c表示Control C, M-x表�
 - 删除一行: C-k
 - 删除前一个字符：C-Backspace(老子研究了半天)
 - 删除后一个字符：C-d
+- 保存：C-x C-s
 
+
+### help文档
+- 查看指南
+    - C-h t
+- 查看变量的值和文档
+    - C-h v (describe-variable)
+- 查看函数的文档
+    - C-h f (describe-function)
+- 查看face的文档
+    - M-x describe-face
+- 查看某个mode的文档
+    - C-h m (describe-mode)
+    - 刚开始学习某个mode的时候, 可以用C-h m看看当前buffer对应的主mode和副mode的文档, 这个文档一般都会包括mode中的命令和快捷键列表.
+- 查看某个快捷键对应的命令
+    - C-h k (describe-key)
+- **查看某个命令对应的快捷键**
+    - C-h w (where-is)
+- 查看当前buffer所有的快捷键列表
+    - C-h b (describe-bindings)
+- 查看当前buffer中以某个快捷键序列开头的快捷键列表
+    - <待查看的快捷键序列> C-h，比如你想查看当前buffer中所有以C-c开头的快捷键列表，按C-c C-h就可以了。
+- 查看函数的代码
+    - find-function
+- 查看变量的代码
+    - find-variable
+- 查看face的代码
+    - find-face-definition
+- M-x apropos
+    - 查看包含某个关键词的函数,变量,face
 
 ### 配置
     - 当你的配置出现问题时, 在Emacs启动命令后增加参数 –debug-init
