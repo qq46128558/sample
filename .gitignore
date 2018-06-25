@@ -5,5 +5,5 @@ node/course/web/view-koa/bower_components
 __pycache__
 python/virtualenv/venv
 .idea
-jos/jos-php-open-api-sdk-2.0
+/vendor/jos/jos-php-open-api-sdk-2.0
 ghostdriver.log
