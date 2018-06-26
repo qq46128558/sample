@@ -11,10 +11,12 @@ import requests
 from requests.exceptions import RequestException
 import pdfkit
 import os
+from PyPDF2 import PdfFileWriter,PdfFileReader
+import shutil
 
 # 全局变量
 base_url="http://python3-cookbook.readthedocs.io/zh_CN/latest/"
-book_name=""
+book_name=''
 chapter_info=[]
 
 def parse_title_and_url(html):
@@ -26,7 +28,8 @@ def parse_title_and_url(html):
     soup=BeautifulSoup(html,'html.parser')
 
     # 获取书名
-    book_name=soup.find('div',class_='wy-side-nav-search').a.text
+    global book_name
+    book_name=soup.find('div',class_='wy-side-nav-search').a.text.strip()
     menu=soup.find_all('div',class_='section')
     chapters=menu[0].div.ul.find_all('li',class_='toctree-l1')
     for chapter in chapters:
@@ -78,18 +81,21 @@ html_template = """
 </html>
 """
 
-# 构造html下载器
 def get_one_page(url):
+    """
+    获取网页html内容并返回
+    :param url: 目标网址
+    :return html
+    """
     try:
-        headers={
-            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
-            'Accept-Language': 'zh,zh-CN;q=0.9',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            'Host': 'python3-cookbook.readthedocs.io',
-            }
+        headers = {
+        'User-Agent': """Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36(KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"""
+        }
+
         res=requests.get(url,headers=headers)
         if res.status_code==200:
+            # 指定编码，否则中文出现乱码
+            res.encoding='utf-8'
             return res.text
         return None
     except RequestException:
@@ -161,10 +167,64 @@ def parse_html_to_pdf():
     except Exception as e:
         print(e)
 
+def merge_pdf(infnList,outfn):
+    """
+    合并pdf
+    :param infnList: 要合并的PDF文件路径列表
+    :param outfn: 保存的PDF文件名
+    :return: None
+    """
+    pagenum=0
+    pdf_output=PdfFileWriter()
 
-if __name__=='__main__':
+    for pdf in infnList:
+        # 先合并一级目录的内容
+        first_level_title=pdf['title']
+        dir_name=os.path.join(os.path.dirname(__file__),'gen',first_level_title)
+        padf_path=os.path.join(dir_name,first_level_title+'.pdf')
+
+        pdf_input=PdfFileReader(open(padf_path,'rb'))
+        # 获取 pdf 共用多少页
+        page_count=pdf_input.getNumPages()
+        for i in range(page_count):
+            pdf_output.addPage(pdf_input.getPage(i))
+        
+        # 添加书签
+        parent_bookmark=pdf_output.addBookmark(first_level_title,pagenum=pagenum)
+
+        # 页数增加
+        pagenum+=page_count
+
+        # 存在子章节
+        if pdf['child_chapters']:
+            for child in pdf['child_chapters']:
+                second_level_title=child['title']
+                padf_path=os.path.join(dir_name,second_level_title+'.pdf')
+
+                pdf_input=PdfFileReader(open(padf_path,'rb'))
+                # 获取 pdf 共用多少页
+                page_count=pdf_input.getNumPages()
+                for i in range(page_count):
+                    pdf_output.addPage(pdf_input.getPage(i))
+                
+                # 添加书签
+                pdf_output.addBookmark(second_level_title,pagenum=pagenum,parent=parent_bookmark)
+                # 增加页数
+                pagenum+=page_count
+    # 合并
+    pdf_output.write(open(outfn,'wb'))
+    
+
+
+def main():
     html=get_one_page(base_url)
     parse_title_and_url(html)
-    # parse_html_to_pdf()
-    print(chapter_info)
+    parse_html_to_pdf()
+    merge_pdf(chapter_info,os.path.join(os.path.dirname(__file__),book_name+'.pdf'))
+    # 删除所有章节文件
+    # 目前删除失败： PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'gen\\Copyright\\Copyright.pdf'
+    shutil.rmtree(os.path.join(os.path.dirname(__file__),'gen'))
+
+if __name__=='__main__':
+    main()
 
