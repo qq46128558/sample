@@ -1,16 +1,16 @@
 
-REM 普通修改后快捷更新到Git
-REM result=`git status -s|sed 's/??/ A/g'`
-REM git add -A
+@echo off
+REM 普通修改后快捷更新到Git(未完善)
 
-REM if [ $? == 0 ]; then
-REM 	git commit -m "${result}"
-REM fi
-
-REM function nopush(){
-REM if [ $? == 0 ]; then
-REM 	git push origin master
-REM fi
-REM }
+REM CMD 中用 %i
+REM for /f "usebackq delims==" %i in (`git status -s`) do @set comment= %i
+REM 将命令执行结果赋值给变量(目前只有最后一行)<<<<<
+for /f "usebackq delims==" %%i in (`git status -s`) do @set comment= %%i
+REM 字符串替换 ?=>空白
+set comment=%comment:?=%
+git add -A
+if %errorlevel% EQU 0 (
+    git commit -m "%comment%"
+)
 
 
