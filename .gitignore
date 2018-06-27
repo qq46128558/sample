@@ -7,3 +7,4 @@ python/virtualenv/venv
 .idea
 /vendor/jos/jos-php-open-api-sdk-2.0
 ghostdriver.log
+resnet50_coco_best_v2.0.1.h5
