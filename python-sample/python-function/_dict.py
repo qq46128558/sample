@@ -1,4 +1,15 @@
-''' dict() 函数用于创建一个字典。 '''
+''' dict() 函数 '''
+
+# 使用字典进行分支处理
+def fn1():
+    print("fn1")
+def fn2():
+    print("fn2")
+def fn3():
+    print("fn3")
+f=dict(keya=fn1,keyb=fn2,keyc=fn3)
+f['keyb']()
+# fn2
 
 # 创建空字典
 print(dict())
