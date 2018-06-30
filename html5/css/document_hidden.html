@@ -1,0 +1,28 @@
+<!-- //Head部分 在离开网页时，触发事件（这里以改变标题为例）-->
+<head>
+   <meta name="viewport" content="width=device-width" charset="utf-8" />
+   <title>IT发烧友，一个真正的技术交流群</title>
+   <link rel="shortcut icon" href="/Content/Images/icon.png">
+</head>
+<!-- //JS部分 -->
+   <script src="../../jquery/lib/jquery-2.2.3.min.js"></script>
+   <script>
+       window.onload = function () {
+           var OriginTitile = document.title;
+           var titleTime;
+           document.addEventListener('visibilitychange', function () {
+               if (document.hidden) {
+                   $('[rel="shortcut icon"]').attr('href', "/Content/Images/fail.ico");
+                   document.title = '(●—●)喔哟，崩溃啦！';
+                   clearTimeout(titleTime);
+               }
+               else {
+                   $('[rel="shortcut icon"]').attr('href', "/Content/Images/icon.png");
+                   document.title = '(/≧▽≦/)咦！又好了！' + OriginTitile;
+                   titleTime = setTimeout(function () {
+                       document.title = OriginTitile;
+                   }, 2000);
+               }
+           });
+       }
+   </script>
