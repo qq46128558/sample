@@ -18,4 +18,21 @@
     - Don't install Memory Allocator. (Default)
     - Install lnmp takes 63 minutes.
     - Install lnmp V1.5 completed! enjoy it.
-5. 
+5. 安装Composer
+    - mkdir -p /data/www && cd /data/www
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/bin --filename=composer
+6. 安装Yii2 advanced
+    - apt-get install zip unzip php-zip -y
+    - composer global require "fxp/composer-asset-plugin:^1.2.0"
+        - (未解决)报错但不影响安装: Unzip with unzip command failed, falling back to ZipArchive class
+    - composer  create-project yiisoft/yii2-app-advanced yii 2.0.14
+    - cd /data/www/yii
+    - php init
+    - vim /usr/local/nginx/conf/nginx.conf 修改网站目录指向
+        - root  /data/www/yii/frontend/web/
+    - vim /usr/local/nginx/conf/fastcgi.conf 修改
+        - fastcgi_param PHP_ADMIN_VALUE "open_basedir=/home/www/yii/:/tmp/:/proc/";
+    - /etc/init.d/nginx restart
+    - 测试 http://47.106.160.48/index.php 页面能打开为正确安装
+    
