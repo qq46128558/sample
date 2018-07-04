@@ -6,18 +6,17 @@
 ## 安装过程记录
 
 ### 系统安装
-1. 系统Ubuntu 16.04 64位
-2. 可选: apt-get update (如安装screen失败,更新源)
+1. 系统Ubuntu 16.04 64位,远程shell连入
+2. 可选: apt-get update (阿里云服务器初次使用需要更新源)
 3. 安装screen工具: apt-get install screen
 3. 启动一个会话: screen -S lnmp
 4. 安装lnmp: wget -c http://soft.vpser.net/lnmp/lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && ./install.sh lnmp
     - Install MySQL 5.7.22
-    - 配置mysql密码如: 123456
+    - 配置mysql密码如: 123456(自定义)
     - enable InnoDB: y
     - Install PHP 7.2.6
     - Don't install Memory Allocator. (Default)
-    - Install lnmp takes 63 minutes.
-    - Install lnmp V1.5 completed! enjoy it.
+    - 1核2G 1M宽带安装约需1个小时
 4. 安装PHP fileinfo扩展模块(lnmp默认没开启)
     - 否则后面composer安装报错:  the requested PHP extension fileinfo is missing from your system.
     - cd /root/lnmp1.5/src/
@@ -26,25 +25,26 @@
     - /usr/local/php/bin/phpize
     - ./configure --with-php-config=/usr/local/php/bin/php-config
     - make && make install
-    - ls /usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/
-    - vim /usr/local/php/etc/php.ini
+    - 查看fileinfo.so是否存在：ls /usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/
+    - 编辑配置：vim /usr/local/php/etc/php.ini
         - 最后面增加: extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20170718/fileinfo.so
-    - /etc/init.d/php-fpm restart
+    - 重启服务：/etc/init.d/php-fpm restart
 5. 安装Composer
-    - apt-get install zip unzip php-zip -y
+    - 额外需要的工具：apt-get install zip unzip php-zip -y
     - mkdir -p /data/www && cd /data/www
-    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    - php composer-setup.php --install-dir=/usr/bin --filename=composer
-    - composer global require "fxp/composer-asset-plugin:^1.2.0"
+    - 利用php来下载composer: php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - 安装composer: php composer-setup.php --install-dir=/usr/bin --filename=composer
+    - 引入yii框架所需要的组件：composer global require "fxp/composer-asset-plugin:^1.2.0"
         - 有可能报错,但不影响安装: Unzip with unzip command failed, falling back to ZipArchive class
 
 ### 安装Yii2Admin
 1. 下载安装
     - 切换工作目录: cd /data/www
     - 下载yii2admin源码: git clone  http://git.oschina.net/ccdream/yii2admin yii
-    - ~~(不用装yii2 advanced)复制目录及子目录及隐藏文件: cp -rf yii2admin/. yii~~
     - cd /data/www/yii
 2. 配置composer.json
+    - config内对象增加fxp-asset以及github-oauth
+    - extra内对象删除
     ~~~
     "config": {
         "fxp-asset":{
@@ -54,20 +54,22 @@
                 }
         },
         "github-oauth":{
-                "github.com":"填入你的github授权码"
+                "github.com":"填入你的github token"
         }
     },
     "extra": {
     },
     ~~~
-    **我的github授权码:b239145879923993bc168860e4f37286676cf617**
+    **如何获取github token**
+
+    登入你的github账号>>右上角settings>>Developer settings>>Personal access tokens>>generate new token
 
 2. 安装依赖库前, 修改配置 vim /usr/local/php/etc/php.ini
     - 否则后面composer会报错: Failed to download bower-asset/yii2-pjax from source: The Process class relies on proc_open, which is not available on your PHP installation / The Process class relies on proc_open, which is not available on your PHP installation.
-    - 找到 disable_functions = passthru,exec,system,chroot,chgrp,... 这一段, 将proc_open以及proc_get_status删除, 表示proc_open,proc_get_status可用
+    - 找到 disable_functions = passthru,exec,system,chroot,chgrp,... **这一段, 将proc_open以及proc_get_status删除**, 表示proc_open,proc_get_status可用
     - 重启php服务: /etc/init.d/php-fpm restart
     
-3. 安装依赖库: composer install(or composer update)
+3. 安装依赖库: composer install
 
 4. 配置环境、配置数据库并安装数据库(开始安装): /usr/local/php/bin/php /data/www/yii/yii install
     
@@ -75,7 +77,7 @@
     - 备份原配置文件 cp /usr/local/nginx/conf/nginx.conf /usr/local/nginx/conf/nginx.conf.bak
     - 修改配置文件 vim /usr/local/nginx/conf/nginx.conf
         - 删除 server{}段的内容
-    - 新建配置文件/usr/local/nginx/conf/vhost/default.conf
+    - 新建配置文件/usr/local/nginx/conf/vhost/default.conf,贴入以下内容：
     ~~~
     # ======================= Nginx Yii2通用后台 单域名配置=================================
     server {
@@ -132,6 +134,8 @@
     }
     ~~~
     - 重启服务: /etc/init.d/nginx restart
-6. 测试 http://47.106.160.48/ 能打开前台页面, http://47.106.160.48/admin 能打开后台页面
+6. 测试 http://服务器IP地址/ 能打开前台页面, http://服务器IP地址/admin 能打开后台页面
+7. 最后shell退出screen: exit
+
 
 
