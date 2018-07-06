@@ -1,0 +1,17 @@
+<!-- 利用localStorage保存值 -->
+<p>Value:</p>
+<p><input id="text" type="text"></input></p>
+<p><button onclick="save()">Save</button></p>
+<script>
+    'use strict';
+    function save(){
+        if (window.localStorage){
+            localStorage.mytest_value=document.getElementById("text").value;
+            alert('Save completed.');
+        }
+    }
+    window.onload=function(){
+        if (localStorage.mytest_value)
+            document.getElementById("text").value=localStorage.mytest_value;
+    }
+</script>

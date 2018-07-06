@@ -160,3 +160,11 @@ KiB Swap:        0 total,        0 free,        0 used.  1662972 avail Mem
     - j: 字符串左/右对齐
     - H: tasks/threads切换(summary位置)
     - n/#: 任务显示行数
+
+
+### 初始进入,我的常按
+    x,b 反色显示当前排序字段
+    E,e 切换内存显示为MB单位
+    <,> 切换排序列
+
+    W 保存当前top配置
