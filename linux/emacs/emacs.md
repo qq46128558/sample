@@ -1,5 +1,8 @@
 ## emacs
 
+### 安装
+    apt-get update (可选)
+    apt-get install emacs -y
 
 ### 基本概念
 buffer是文件的内存表示, windows则是显示buffer的区域, 一个frame中可以有多个window, Emacs则可以有多个frame
