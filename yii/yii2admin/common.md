@@ -52,3 +52,8 @@
             5. 修改languages为应该被翻译成什么语言的一个数组(['zh-CN','en-US'])
             6. php yii message mymesconfig.php 生成待翻译文件
             7. 则文件common/messages/en-US/backend.php 可以看到...'這是一句繁體字信息的輸出' => '',待翻译
+
+#### 后台项目js及css资源文件
+    common/metronic/*
+    
+
