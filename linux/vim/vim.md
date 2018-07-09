@@ -37,3 +37,11 @@ py import sys;print(sys.version_info)
 #### 切换vim使用的版本
     update-alternatives --config vim
 
+#### vim配置文件
+    cp /etc/vim/vimrc ~/.vimrc
+    # 显示行号
+    set nu
+    # 修改注释颜色
+    hi comment ctermfg=6
+    
+
