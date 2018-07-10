@@ -4,6 +4,20 @@
     apt-get update (可选)
     apt-get install emacs -y
 
+
+
+### 初学
+- C 表示按下Ctrl键, M 表示按下Alt键
+- Emacs快速指南: C-h t
+- 光标移动上,下,左,右: C-p, C-n, C-b, C-f
+- 退出: C-x C-c
+- 删除一行: C-k
+- 删除前一个字符：C-Backspace(老子研究了半天)
+- 删除后一个字符：C-d
+- 保存：C-x C-s
+- 下翻一页: C-v 上翻一页: M-v(或Esc+v)
+- 居中显示光标文本: C-l (多次按则依次切换中部/上部/下部)
+
 ### 基本概念
 buffer是文件的内存表示, windows则是显示buffer的区域, 一个frame中可以有多个window, Emacs则可以有多个frame
 
@@ -36,18 +50,6 @@ Emacs中Control键用C表示,Alt键用M表示, 即: C-c表示Control C, M-x表�
 ~~~
 键盘映射. Emacs的快捷键是通过keymap来控制的. 有全局和局部的keymap. 每个mode都会有一个自己的局部的keymap, 局部的keymap会覆盖全局的keymap, 另外如果对应的major mode有开启的minor mode, 而且这个minor mode有keymap的话, 这个minor mode的keymap会覆盖major mode的keymap.
 ~~~
-
-
-### 初学
-- C 表示按下Ctrl键, M 表示按下Alt键
-- Emacs快速指南: C-h t
-- 光标移动上,下,左,右: C-p, C-n, C-b, C-f
-- 退出: C-x C-c
-- 删除一行: C-k
-- 删除前一个字符：C-Backspace(老子研究了半天)
-- 删除后一个字符：C-d
-- 保存：C-x C-s
-
 
 ### help文档
 - 查看指南

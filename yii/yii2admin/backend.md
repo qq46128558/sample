@@ -21,3 +21,25 @@
     - function success($message = '', $jumpUrl = '', $ajax = false)
     - function setForward()
     - function getForward($default = '')
+
+#### 后台图片上传
+    使用backend/controllers/PublicController控制器
+    结合Yii::$app->params['upload']生成图片路径
+    也可以使用common/helpers/Html::src()方法生成图片路径
+
+#### 后台(首页)入口代码跟踪记录
+~~~
+require()       /data/www/yii/backend/views/index/index.php:5
+yii\web\View->renderPhpFile() /data/www/yii/vendor/yiisoft/yii2/base/View.php:348
+yii\web\View->renderFile() /data/www/yii/vendor/yiisoft/yii2/base/View.php:257
+yii\web\View->render() /data/www/yii/vendor/yiisoft/yii2/base/View.php:156
+backend\controllers\IndexController->render() /data/www/yii/vendor/yiisoft/yii2/base/Controller.
+backend\controllers\IndexController->actionIndex() /data/www/yii/backend/controllers/IndexContro
+call_user_func_array:{/data/www/yii/vendor/yiisoft/yii2/base/InlineAction.php:57}() /data/www/yi
+yii\base\InlineAction->runWithParams() /data/www/yii/vendor/yiisoft/yii2/base/InlineAction.php:5
+backend\controllers\IndexController->runAction() /data/www/yii/vendor/yiisoft/yii2/base/Controll
+yii\web\Application->runAction() /data/www/yii/vendor/yiisoft/yii2/base/Module.php:528
+yii\web\Application->handleRequest() /data/www/yii/vendor/yiisoft/yii2/web/Application.php:103
+yii\web\Application->run() /data/www/yii/vendor/yiisoft/yii2/base/Application.php:386
+{main}          /data/www/yii/backend/web/index.php:24
+~~~
