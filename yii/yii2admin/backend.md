@@ -21,3 +21,8 @@
     - function success($message = '', $jumpUrl = '', $ajax = false)
     - function setForward()
     - function getForward($default = '')
+
+#### 后台图片上传
+    使用backend/controllers/PublicController控制器
+    结合Yii::$app->params['upload']生成图片路径
+    也可以使用common/helpers/Html::src()方法生成图片路径

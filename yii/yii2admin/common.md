@@ -56,4 +56,20 @@
 #### 后台项目js及css资源文件
     common/metronic/*
     
+#### 图片上传
+    <!-- 图片上传widgets -->
+    common/widgets/images
+    <!-- 上传配置 -->
+    common/config/params的upload配置项
+    <!-- 存放位置 -->
+    storage/web/image
+    <!-- 后台图片上传控制器 -->
+    backend/controllers/PublicController
+    <!-- 生成图片路径 -->
+    结合Yii::$app->params['upload']
+    或用 common/helpers/Html::src()方法
 
+#### 编辑器(UEditor)
+    <!-- 配置文件 -->
+    common/config/params的ueditorConfig配置项
+    
