@@ -24,6 +24,20 @@ echo has('python')
 echo has('python3')
 ~~~
 
+
+#### 多页签
+~~~
+:tabnew [++opt选项] ［＋cmd］ 文件 建立对指定文件新的tab
+:tabc 关闭当前的tab
+:tabo 关闭所有其他的tab
+:tabs 查看所有打开的tab
+:tabp 前一个
+:tabn 后一个
+标准模式下：
+gt , gT 可以直接在tab之间切换。
+~~~
+
+
 #### python
 ~~~
 #vim python2支持,可执行python命令,如:
