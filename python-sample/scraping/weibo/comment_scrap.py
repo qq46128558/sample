@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+'爬取微博某博主的评论及用户信息: 结构变化后失败'
+
 import json
 import time
 import pandas as pd
@@ -32,7 +34,8 @@ if __name__=="__main__":
     # 获取每条微博评论url
     c_url_base='https://m.weibo.cn/api/comments/show?id='
     for parameter in comment_parameter:
-        for page in range(1,101):#提前知道每条微博只可抓取前100页评论
+        # edit by peter: 改成1页测试
+        for page in range(1,2):#提前知道每条微博只可抓取前100页评论
             c_url=c_url_base+str(parameter)+"&page="+str(page)
             comment_url.append(c_url)
         
@@ -69,20 +72,25 @@ if __name__=="__main__":
         # by peter: num[0]user_id,num[1]containerid
         url = "https://m.weibo.cn/api/container/getIndex?uid="+str(num[0])+"&luicode=10000011&lfid=100103type%3D1%26q%3D&featurecode=20000320&type=uid&value="+str(num[0])+"&containerid="+str(num[1])
         try:
-            r=requests.get(url,headers=headers,cookies=cookie)
-            feature.append(json.loads(r.text)["data"]["cards"][1]["card_group"][1]["item_content"].split("  "))
+            # edit by peter: 去掉cookies=cookie
+            r=requests.get(url,headers=headers)
+            # edit by peter: 结构有变化,取数失败
+            item_content=json.loads(r.text)["data"]["cards"][0]["card_group"][0]["item_content"].split("  ")
+            feature.append(item_content)
             print("成功第{}条".format(m))
+            logging.info(item_content)
             m+=1
             time.sleep(1)
         except:
             id_lose.append(num[0])
         
     
-    logging.info(id_lose)
+    # logging.info(id_lose)
     # 将featrue建立成DataFrame结构便于后续分析
-    user_info=pd.DataFrame(feature,columns=["性别","年龄","星座","国家城市"])
-    comment_info=pd.DataFrame(comment,columns-["评论"])
-
-    user_info.to_csv('user_info.csv',index=False,encoding='gb18030')
+    # edit by peter: 结构有变化,取数失败
+    comment_info=pd.DataFrame(comment,columns=["评论"])
     comment_info.to_csv("comment_info.csv",index=False,encoding="gb18030")
+
+    user_info=pd.DataFrame(feature,columns=["性别","年龄","星座","国家城市"])
+    user_info.to_csv('user_info.csv',index=False,encoding='gb18030')
     logging.info("Save csv")
