@@ -45,3 +45,6 @@
 - yii\web\Application->run() /data/www/yii/vendor/yiisoft/yii2/base/Application.php:386
 - {main}          /data/www/yii/backend/web/index.php:24
 ~~~
+
+#### 修改后臺模板(框架)頁面
+    backend\views\layouts\main.php
