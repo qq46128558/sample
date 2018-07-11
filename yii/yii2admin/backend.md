@@ -46,5 +46,14 @@
 - {main}          /data/www/yii/backend/web/index.php:24
 ~~~
 
-#### 修改后臺模板(框架)頁面
+#### 修改后台模版(框架)页面
+    <!-- 整体框架 -->
     backend\views\layouts\main.php
+    <!-- 导航菜单 -->
+    backend\views\layouts\public\menu.php
+    <!-- 侧边导航 -->
+    backend\views\layouts\public\menu-sub.php
+    <!-- 消息通知 -->
+    backend\views\layouts\public\notice.php
+    <!-- 框架颜色搭配 -->
+    backend\views\layouts\public\setting.php
