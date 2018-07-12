@@ -29,13 +29,20 @@
 
 #### 后台(首页)入口代码跟踪记录
 ~~~
+    (布局文件)
 - require()       /data/www/yii/backend/views/layouts/main.php:12
+    (默认视图文件)
 - require()       /data/www/yii/backend/views/index/index.php:5
+
 - yii\web\View->renderPhpFile() /data/www/yii/vendor/yiisoft/yii2/base/View.php:348
 - yii\web\View->renderFile() /data/www/yii/vendor/yiisoft/yii2/base/View.php:257
+    (此render的作用是先findViewFile,再调用renderFile)
 - yii\web\View->render() /data/www/yii/vendor/yiisoft/yii2/base/View.php:156
-- backend\controllers\IndexController->renderContent() /data/www/yii/vendor/yiisoft/yii2/base/Controll
+        (此处render布局文件,跳入view进行renderFile)
+    - backend\controllers\IndexController->renderContent() /data/www/yii/vendor/yiisoft/yii2/base/Controll
+    (此处render传入的文件,跳入view进行render)
 - backend\controllers\IndexController->render() /data/www/yii/vendor/yiisoft/yii2/base/Controller.
+
 - backend\controllers\IndexController->actionIndex() /data/www/yii/backend/controllers/IndexContro
 - call_user_func_array:{/data/www/yii/vendor/yiisoft/yii2/base/InlineAction.php:57}() /data/www/yi
 - yii\base\InlineAction->runWithParams() /data/www/yii/vendor/yiisoft/yii2/base/InlineAction.php:5
