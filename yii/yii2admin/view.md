@@ -2,7 +2,7 @@
 
 - $this 对应类: \yii\web\View
 - $this->context 对应类: \yii\web\Controller
-
+- 布局中的$content : 正文内容
 
 
 #### 控制器向页面传递值的方法(多种)

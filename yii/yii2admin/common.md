@@ -55,6 +55,11 @@
 
 #### 后台项目js及css资源文件
     common/metronic/*
+    <!-- 所有内置icon -->
+    common\metronic\global\plugins\simple-line-icons\simple-line-icons.css
+    <!-- icon下载 -->
+    https://graphicburger.com/simple-line-icons-webfont/
+    
     
 #### 图片上传
     <!-- 图片上传widgets -->

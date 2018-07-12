@@ -64,3 +64,7 @@
     backend\views\layouts\public\notice.php
     <!-- 框架颜色搭配 -->
     backend\views\layouts\public\setting.php
+
+#### 后台页面使用的资源文件位置(css/js等)
+    <!-- 不上传git,暂未知如何生成的 -->
+    backend/web/assets/*
