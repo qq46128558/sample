@@ -1,0 +1,25 @@
+<p id='responsetext'>Testing...</p>
+<script>
+'use strict';
+
+// 'XMLHttpRequest异步调用示例'
+window.onload=function(){
+    if (!window.XMLHttpRequest) return;
+
+    var url="http://localhost/sample/php/test.php";
+
+    var req=new XMLHttpRequest();
+    req.open("GET",url);
+    req.send(null);
+
+    req.onreadystatechange=function(){
+        if (req.readyState==4 && req.status==200){
+            console.info(req)
+            var responseText=document.getElementById("responsetext");
+            if (responseText)
+                responseText.innerText=req.responseText;
+        }
+        
+    }
+}
+</script>
