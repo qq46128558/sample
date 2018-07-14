@@ -1,15 +1,80 @@
 #!/usr/bin/env python3
 
 import pandas as pd
+from numpy import NaN
 
-dict={'标题1':['值1','值2','值3','值4'],'标题2':['值5','值6','值7','值8']}
+# 将dict转成DataFrame(列模式)
+dict={'浙': 541, '苏': 485, '粤': 477}
+# If using all scalar values, you must pass an index
+df=pd.DataFrame(dict,index=[0])
+print(df,'\n')
+#      浙    苏    粤
+# 0  541  485  477
+
+
+# 将list转成DataFrame(行模式)
+list=[('浙', 541), ('苏', 485), ('粤', 477)]
+df=pd.DataFrame(data=list,columns=['地区','数量'])
+print(df,'\n')
+#   地区   数量
+# 0  浙  541
+# 1  苏  485
+# 2  粤  477
+
+# 将dict转成DataFrame(列模式)
+dict={'标题1':['值1','值2','值3','值4','值空'],'标题2':['值5','值6','值7','值8',NaN]}
 df=pd.DataFrame(dict)
-print(df)
+print(df,'\n')
 #   标题1 标题2
 # 0  值1  值5
 # 1  值2  值6
 # 2  值3  值7
 # 3  值4  值8
+# 4  值空  NaN
+
+# 取标题2等于值7的行
+df_one=df[df['标题2']=='值7']
+print(df_one,'\n')
+#   标题1 标题2
+# 2  值3  值7
+
+# 移除标题2等于值7的行
+df_drop=df.drop(df[df['标题2']=='值7'].index,inplace=False)
+print(df_drop,'\n')
+#   标题1  标题2
+# 0  值1   值5
+# 1  值2   值6
+# 3  值4   值8
+# 4  值空  NaN
+
+# 查找NaN值并替换为字符串'无'
+df['标题2'][df['标题2'].isnull()]='无'
+print(df,'\n')
+#   标题1 标题2
+# 0  值1  值5
+# 1  值2  值6
+# 2  值3  值7
+# 3  值4  值8
+# 4  值空   无
+
+# 将标题2的内容,值字替换为正字
+df['标题2']=df['标题2'].str.replace('值','正')
+print(df,'\n')
+#   标题1 标题2
+# 0  值1  正5
+# 1  值2  正6
+# 2  值3  正7
+# 3  值4  正8
+# 4  值空   无
+
+# 删除带正字的行
+df_drop2=df.drop(df[df['标题2'].str.contains('无')].index,inplace=False)
+print(df_drop2,'\n')
+#   标题1 标题2
+# 0  值1  正5
+# 1  值2  正6
+# 2  值3  正7
+# 3  值4  正8
 
 list1=['VC','1/1/1','增强免疫力']
 list2=['钙','2/0/2','强化骨骼']
