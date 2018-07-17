@@ -20,3 +20,15 @@
 	if ($result)
 		return $result->title
 
+#### 添加非表字段属性
+~~~php
+// 在model中增加方法
+public function getPidname(){
+    $name=Menu::findOne($this->pid);
+    if ($name && $this->pid!=0)
+        return $name->title;
+    else
+        return Yii::t('backend','一級菜單');
+}
+// 则可以通过$model->pidname取得值,也可以应用于view页面
+~~~
