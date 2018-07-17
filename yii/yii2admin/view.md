@@ -33,3 +33,12 @@ $this->myparams=array('item1','item2');
 // 页面中
 <?php var_dump($this->context->myparams);?>
 ~~~
+
+
+#### 新增页面注意事项
+	比如menu新加页面view(查看详情)
+	需要增加对应的菜单动作(yii2_menu表),这样侧边的导航栏才能正常显示出来
+
+
+#### 按钮中执行JS
+	<?= Html::button('重置', ['class' => 'btn btn-default','onclick'=>"javascript:$('#menusearch-title').val('');"]) ?>

@@ -39,3 +39,7 @@ return $this->render('edit', [
     'model' => $model,
 ]);
 ~~~
+
+#### 删除记录
+	<!-- 根据id从url参数中取值 -->
+	$this->delRow($model, 'id')
