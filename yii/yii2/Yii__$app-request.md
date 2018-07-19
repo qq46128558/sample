@@ -17,3 +17,12 @@
 
 #### 是否Ajax方式提交
 	Yii::$app->request->isAjax
+
+#### 读取Cookie(当前请求的cookie信息)
+	$cookies = Yii::$app->request->cookies;
+	<!-- 获取名为 "language" cookie 的值，如果不存在，返回默认值 "en" -->
+	$language = $cookies->getValue('language', 'en');
+
+#### 判断某Cookie名是否存在
+	if ($cookies->has('language')) ...
+	if (isset($cookies['language'])) ...
