@@ -44,7 +44,3 @@
     <!-- 一般编辑控件间距及大小 -->
     .form-group {
     .form-control {
-
-#### common\metronic\global\plugins\select2\css\select2-bootstrap.min.css
-    <!-- 下拉框控件间距及大小 -->
-    .select2-container--bootstrap .select2-selection--single
