@@ -1,5 +1,9 @@
 ''' dict() 函数 '''
 
+# dict的值转tuple
+print(tuple({'comment':'好评','date':'2018-07-21','rate':5,'city':'珠海','nickname':'Peter'}.values()))
+# ('好评', '2018-07-21', 5, '珠海', 'Peter')
+
 # 使用字典进行分支处理
 def fn1():
     print("fn1")
