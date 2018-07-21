@@ -71,6 +71,7 @@ def save_to_csv():
     try:
         itemdata=[]
         # 此处可修改页数:1001
+        # by Peter: <<邪不压正>>实时评论太多，所以第1页可能跟后面几页相同，一天的评论就上万
         for i in range(1,1001):
             url=baseurl+str(i)
             html=get_one_page(url)
