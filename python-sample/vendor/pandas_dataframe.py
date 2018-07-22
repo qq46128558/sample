@@ -5,6 +5,35 @@
 import pandas as pd
 from numpy import NaN
 
+# 写csv文件
+list=[]
+dict={
+    'comment':'完全不知道演什么，从来没看过这么差劲的片子～',
+    'date':'2018/7/21',
+    'rate':2,
+    'city':'长沙',
+}
+list.append(tuple(dict.values()))
+dict={
+    'comment':'好看，意犹未尽，反派干脆利落，惨烈的剧情却配了雄伟的交响乐，优美的享受着就看完了整部片子。',
+    'date':'2018/7/21',
+    'rate':5,
+    'city':'晋中',
+}
+list.append(tuple(dict.values()))
+df=pd.DataFrame(data=list,columns=['评论','日期','评分','城市'])
+df.to_csv('hidden_man.csv',index=False,encoding='gb18030')
+
+# 读csv文件
+df=pd.read_csv('hidden_man.csv',encoding='gb18030')
+print(df['城市'])
+# 0    长沙
+# 1    晋中
+# Name: 城市, dtype: object
+
+
+
+
 # 将dict转成DataFrame(列模式)
 dict={'浙': 541, '苏': 485, '粤': 477}
 # If using all scalar values, you must pass an index
