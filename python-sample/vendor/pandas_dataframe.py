@@ -122,3 +122,24 @@ print(df)
 # 2   锌  0/1/0  提高男性魅力
 df.to_csv('1.csv',index=False,encoding='gbk')
 # 1/1/1 写入为2001/1/1问题,未解决
+
+
+
+# 数据去重
+data={'pop':['a','b','c','d','b','c','d'],'state':[1,2,3,4,5,6,7]}
+df=pd.DataFrame(data)
+# keep='first' 将重复数据保留一个
+a = df.drop_duplicates(subset=['pop'],keep='first')
+print(a)
+#   pop  state
+# 0   a      1
+# 1   b      1
+# 2   c      2
+# 3   d      2
+
+# 查看重复得数据(暂时有问题)
+# keep=False 将重复数据全部去除
+b=df.drop_duplicates(subset=['pop'],keep=False)
+# a=a.append(b)
+# a.drop_duplicates(subset=['pop'],keep=False)
+# print(a)
