@@ -1,5 +1,9 @@
 ## Model中的方法
+	$model=XXX::find()
 
+#### like语句查询数据
+	$result=$model->where(['like','title','xxx'])->orderBy('sort asc')->all();
+	
 #### 根据ID查找一个Model
 	<!-- backend\models\Menu -->
 	$model = Menu::findOne($id)
