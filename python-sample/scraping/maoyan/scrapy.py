@@ -6,6 +6,8 @@
 # 最后，发现其数据接口为：http://m.maoyan.com/mmdb/comments/movie/248566.json?_v_=yes&offset=1，其中258566属于电影的专属id，offset代表页数
 # 最后检验，这个接口只给展示1000页数据
 
+# 最多1000页，数据太多，基本1000页都是同一天的，所以需要每天爬，此处略
+
 import requests
 import json
 import time
