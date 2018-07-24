@@ -52,3 +52,6 @@ return [
 #比如$result->status为10002
 $msg = \Yii::t('app', $result->status);
 ~~~
+
+消息参数:
+    Yii::t('backend','可通過{0}標識{1}訪問',['Yii::$app->params["web"]["','"]']);
