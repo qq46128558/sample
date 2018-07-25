@@ -7,7 +7,6 @@ import logging
 import pandas as pd
 from pyecharts import Style
 from pyecharts import Geo
-import sys
 
 
 logging.basicConfig(level=logging.INFO)
@@ -38,11 +37,8 @@ style = Style(
 #  visual_split_number=4)
 # geo.render()
 
-# -*- coding:utf-8 -*-
-# reload(sys)
-# sys.setdefaultencoding('utf8') 
 
-# data = [("惠来", 80), ('漳州', 180)]
+# data = [("惠来县", 80), ('漳州', 180)]
 # geo = Geo("全国主要城市空气质量", "data from pm2.5")
 # attr, value = geo.cast(data)
 # geo.add("city", attr, value, visual_range=[0, 200], maptype='china', visual_text_color="#fff",
@@ -53,3 +49,4 @@ style = Style(
 
 # 安装了地图仍报错
 # ValueError: No coordinate is specified for 惠来
+# 解决: 是字符串完全匹配问题, 改为惠来县即可
