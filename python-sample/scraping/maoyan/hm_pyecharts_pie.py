@@ -41,5 +41,5 @@ for k,v in series.to_dict().items():
 logging.info(dict)
 
 pie=Pie("饼图-星级玫瑰图示例",title_pos="center",width=1440-15,height=767-16)
-pie.add("7-17",list(dict.keys()),list(dict.values()),center=[75,50],is_random=True,radius=[30,75],rosetype='area',is_legend_show=False,is_label_show=True)
+pie.add("评分人数",list(dict.keys()),list(dict.values()),center=[50,50],is_random=True,radius=[30,75],rosetype='area',is_legend_show=False,is_label_show=True)
 pie.render('pie.html')

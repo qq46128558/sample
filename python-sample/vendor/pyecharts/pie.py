@@ -26,5 +26,5 @@ pie=Pie("饼图式数据展示","数据来源:手工录入",**style.init_style)
 # rosetype: 是否展示成南丁格尔图，通过半径区分数据大小，有'radius'和'area'两种模式。默认为'radius' radius：扇区圆心角展现数据的百分比，半径展现数据的大小。area：所有扇区圆心角相同，仅通过半径展现数据大小。
 # is_legend_show: 显示图例
 # is_label_show: 显示标签
-pie.add("7-17",attr,value,center=[50,50],is_random=True,radius=[0,75],rosetype='area',is_legend_show=True,is_label_show=True)
+pie.add("销售量",attr,value,center=[50,50],is_random=True,radius=[0,75],rosetype='area',is_legend_show=True,is_label_show=True)
 pie.render('pie.html')
