@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 # **style.init_style
 # 也可以传入上面的style
 # 初始化
-geo=Geo('京西网全国销售数据分布图','数据来源:京西网',title_color="#fff",title_pos="left",width=1366-15,height=594-16,background_color="#404a59")
+geo=Geo('地图式数据展示','数据来源:手工录入',title_color="#fff",title_pos="left",width=1366-15,height=594-16,background_color="#404a59")
 
 
 attr=['珠海','澳门','北京','广州','深圳','杭州','青岛','孝感','新丰县','乳源瑶族自治县','昆明','厦门']
