@@ -1,19 +1,33 @@
-##### 版本
+#### 版本
     $.fn.jquery
 
-##### 按ID获取Jquery对象(并取第1个Dom元素)
+#### 按ID获取Jquery对象(并取第1个Dom元素)
     #直接获取的是Jquery对象,get(0)再取dom元素
     $('#ID').get(0)
     #Dom元素转回Jquery对象
     $($('#ID').get(0))
 
-##### 获得内容和属性
+#### 获得内容和属性
     $('#ID').text()
     $('#ID').html()
     $('#ID').val()
     $('#ID').attr('attributeName')
 
-##### 修改内容和属性
+#### 修改内容和属性
     $('#ID').text('修改内容')
     $('#ID').attr('attributeName','修改属性')
-    
+
+#### 操作元素的Style属性
+    $("p").css("color");  //获取p元素的样式颜色
+    $("p").css("color","red");  //设置p元素的样式颜色为红色
+    $("p").css({"fontSize":"30px" ,"backgroundColor":"#ccc"})；
+
+#### 判断Checkbox的勾选值
+    $("#checkboxID").prop('checked');
+    $("#checkboxID").is(':checked');
+    $("#checkboxID").get(0).checked;
+
+#### 给Checkbox加Click和Change事件
+    $("#checkboxID").change(function() { 
+        alert("checked"); 
+    });
