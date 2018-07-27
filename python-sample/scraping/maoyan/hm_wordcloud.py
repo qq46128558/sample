@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 
 df=pd.read_csv('hidden_man_norepeat.csv',encoding='gb18030')
 
