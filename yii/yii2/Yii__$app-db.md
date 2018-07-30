@@ -229,3 +229,9 @@ Yii::$app->db->createCommand()->createTable('post', [
 #### 检索某张表的定义信息
     $table = Yii::$app->db->getTableSchema('post');
 
+
+#### 查询当前数据库名
+    $dbname=Yii::$app->db->createCommand("select database()")->queryScalar();
+
+#### 查询表的信息
+    $list = Yii::$app->db->createCommand('SHOW TABLE STATUS')->queryAll();

@@ -25,3 +25,10 @@ echo $command->sql;
 // 打印被绑定的参数
 print_r($command->params);
 ~~~~
+
+
+#### 查询表的信息
+~~~
+$dbname=Yii::$app->db->createCommand("select database()")->queryScalar();
+$query->select(['name'=>'table_name','rows'=>'table_rows','data_length','create_time','update_time','comment'=>'table_comment','engine','auto_increment','table_collation'])->from('information_schema.tables')->where(['table_schema'=>$dbname]);
+~~~

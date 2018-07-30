@@ -31,3 +31,6 @@
     $("#checkboxID").change(function() { 
         alert("checked"); 
     });
+
+#### 选取指定ID:top-alert的类名为alert-content的子元素
+    $('#top-alert .alert-content').text('abc')
