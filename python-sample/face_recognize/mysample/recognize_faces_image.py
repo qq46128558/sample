@@ -109,8 +109,13 @@ for encoding in encodings:
 		# votes (note: in the event of an unlikely tie Python will
 		# select first entry in the dictionary)
 		# 取出counts中投票最高的名字
-		name = max(counts, key=counts.get)
-	
+
+		# add by peter 2018-08-04(dataset比较少)
+		name = "Unknown"
+		if counts[max(counts,key=counts.get)]==9:
+			name = max(counts, key=counts.get)
+
+
 	# update the list of names
 	names.append(name)
 
@@ -134,4 +139,4 @@ cv2.imshow("Image", image)
 cv2.waitKey(0)
 
 # 运行该脚本，同时至少提供两个命令行参数。如果选择HoG方式，别忘了传递--detection-method hog（否则默认会使用深度学习检测方式）
-# python recognize_faces_image.py --encodings encodings.pickle --image examples/mmexport1506238138243.jpg
+# python recognize_faces_image.py -e encodings.pickle -i examples/xx.jpg

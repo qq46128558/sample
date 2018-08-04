@@ -18,6 +18,10 @@ import argparse
 import pickle
 import cv2
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 # 首先利用argparse分析命令行参数，在命令行上执行Python程序时，可以在终端中给脚本提供格外的信息
 # construct the argument parser and parse the arguments
@@ -87,6 +91,10 @@ for (i, imagePath) in enumerate(imagePaths):
 		# encodings
 		knownEncodings.append(encoding)
 		knownNames.append(name)
+		
+		logging.info(name)
+		logging.info(encoding)
+		
 
 # 提取这些编码encodings的目的就是要在另一个脚本中利用它们进行面部识别
 # dump the facial encodings + names to disk
@@ -113,3 +121,5 @@ f.close()
 # $ cmake --build .
 # $ cd ..
 # $ python setup.py install --yes USE_AVX_INSTRUCTIONS --yes DLIB_USE_CUDA
+
+# 注：dataset内的文件不支持中文
