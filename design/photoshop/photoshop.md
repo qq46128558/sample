@@ -42,6 +42,8 @@
 |合并可见图层|ctrl+shift+e|-
 |盖印|ctrl+alt+shift+e|-
 |调出定界框|ctrl+t|-
+|调出定界框并复制图层|ctrl+alt+t|-
+|复制并重复上一次变换|ctrl+alt+shift+t|-
 |合并拷贝|ctrl+shift+c|-
 
 
