@@ -32,3 +32,9 @@ COMMIT WORK;
     SELECT LENGTH("中文ABC");
 一个汉字算三个字符,一个数字或字母算一个字符
 
+
+#### 限制结果
+	SELECT * FROM `tablename` LIMIT `偏移量`,`记录数`;
+	SELECT * FROM `tablename` LIMIT `记录数` OFFSET `偏移量`;
+	SELECT * FROM `tablename` ORDER BY `field` DESC	LIMIT 1;
+	
