@@ -25,7 +25,7 @@ def get_one_page(url):
 
 def parse_one_page(html):
 	try:
-		data=json.loads(html)['ctms']
+		data=json.loads(html)['cmts']
 		for item in data:
 			yield {
                 'comment':item['content'],
@@ -35,14 +35,15 @@ def parse_one_page(html):
                 'nickname':item['nickName'],
             }
 	except Exception as e:
-		logging.error(str(e))
-		return 	{
-                'comment':'',
-                'date':'',
-                'rate':'',
-                'city':'',
-                'nickname':'',
-            }
+		# logging.error(str(e))
+		# return 	{
+  #               'comment':'',
+  #               'date':'',
+  #               'rate':'',
+  #               'city':'',
+  #               'nickname':'',
+  #           }
+  		raise Exception(str(e))
 
 def save_to_csv(items):
 	df=pd.DataFrame(data=items,columns=['评论','日期','评分','城市','昵称'])
@@ -68,14 +69,16 @@ def scraping():
 
 	try:
 		items=[]
-		for i in range(1,2):
-			print("Scraping page {}".format(i))
+		# 猫眼最多1000页，此处只爬100页
+		for i in range(1,101):
+			logging.info("Scraping page {}".format(i))
+			# print("Scraping page {}".format(i))
 			html=get_one_page(baseurl.format(i))
 			if (html==None):
 				raise Exception("Scraping nothing")
 			for item in parse_one_page(html):
 				items.append(list(item.values()))
-			if i<1000:
+			if i<100:
 				time.sleep(1)
 		save_to_csv(items)
 	except Exception as e:
@@ -84,7 +87,7 @@ def scraping():
 def to_wordcloud(text):
 	# background_image=plt.imread('./xxx.jpg')
 	stopwords=STOPWORDS.copy()
-	for i in ['电影']:
+	for i in ['电影','电影院','影片','IMAX']:
 	    stopwords.add(i)
 	# mask=background_image,
 	wc = WordCloud(width=1024,height=768,background_color='white',font_path = 'simhei.ttf',stopwords=stopwords,max_font_size=400,random_state=50)

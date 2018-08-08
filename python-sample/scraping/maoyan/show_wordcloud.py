@@ -30,8 +30,12 @@ try:
 	# background_image=plt.imread('./xxx.jpg')
 	stopwords=STOPWORDS.copy()
 
-	for i in ['电影']:
+	# 通用
+	for i in ['电影','电影院','影片','IMAX']:
 	    stopwords.add(i)
+	# 个别
+	# for i in ['巨齿','鲨鱼','李冰冰','杰森']:
+	# 	stopwords.add(i)
 
 	# mask=background_image,
 	wc = WordCloud(width=1024,height=768,background_color='white',font_path = 'simhei.ttf',stopwords=stopwords,max_font_size=400,random_state=50)
