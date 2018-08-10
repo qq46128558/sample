@@ -14,7 +14,10 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
 
 # 引入进程池,多线程处理
-from multiprocessing import Pool
+from multiprocessing import Pool,freeze_support,RLock
+import os
+
+'多线程处理的不是很好'
 
 
 def get_one_page(url):
@@ -65,7 +68,7 @@ def save_to_csv(items):
 	# 生成词云
 	to_wordcloud(word_space_split)
 
-
+# 单线程
 def scraping():
 	baseurl="http://m.maoyan.com/mmdb/comments/movie/"+code+".json?_v_=yes&offset={}"
 	logging.info(baseurl)
@@ -87,17 +90,26 @@ def scraping():
 	except Exception as e:
 		logging.error(str(e))
 
+# 多线程
 def multi_scraping(page):
+	# global items
+	in_items=[]
+	# logging.basicConfig(level=logging.INFO)
 	baseurl="http://m.maoyan.com/mmdb/comments/movie/"+code+".json?_v_=yes&offset={}"
 	logging.info(baseurl)
-
 	try:
 		logging.info("Scraping page {}".format(page))
 		html=get_one_page(baseurl.format(page))
 		if (html==None):
 			raise Exception("Scraping nothing")
 		for item in parse_one_page(html):
-			items.append(list(item.values()))
+			# 无法返回global items,改为写csv文件
+			in_items.append(list(item.values()))
+		# print(in_items)
+		df=pd.DataFrame(data=in_items)
+		# 多线程这样写文件，有时出现合并的乱码
+		df.to_csv('temp.csv',encoding='gb18030',mode='a')
+
 		time.sleep(1)
 	except Exception as e:
 		logging.error(str(e))
@@ -120,24 +132,50 @@ def to_wordcloud(text):
 	plt.axis('off')
 	plt.show()
 
+# 读多线程生成的临时csv
+def read_from_csv():
+	df=pd.read_csv('temp.csv',encoding='gb18030')
+	# 数据去重
+	df.drop_duplicates(subset=['0','4'],keep='first',inplace=True)
+	# 删除多出来的无标题的行
+	df.drop(df[df['0']=='0'].index,inplace=True)
+	# 数据筛选
+	df['0']=df['0'].str.replace('\r\r\n','')
+	# 保存csv
+	df.to_csv('maoyan_'+code+".csv",index=False,encoding='gb18030')
+	# 删除临时文件
+	os.remove('temp.csv')
 
-# 全局变量
+	comment_list=df['0'].tolist()
+	comment_cut=jieba.cut(str(comment_list),cut_all=False)
+	word_space_split=" ".join(comment_cut)
+	to_wordcloud(word_space_split)
+
+# 全局变量，始终无法在多线程中用？
 items=[]
-code=''
+
+logging.basicConfig(level=logging.INFO)
+ap=argparse.ArgumentParser()
+ap.add_argument("-c","--code",required=True,help="the maoyan film code",type=str,default="248566")
+args=vars(ap.parse_args())
+code=args["code"]
+
 
 if __name__=='__main__':
-	logging.basicConfig(level=logging.INFO)
-	ap=argparse.ArgumentParser()
-	ap.add_argument("-c","--code",required=True,help="the maoyan film code",type=str,default="248566")
-	args=vars(ap.parse_args())
-	code=args["code"]
 	logging.info(code)
 	# scraping()
+	
+	# 多线程抓取(忽然无效果，未知)
+	# freeze_support() # for windows support
+	# # p=Pool(4,initargs=(RLock(),))
+	# p=Pool(4)
+	# for i in range(1, 2):
+	# 	p.apply_async(multi_scraping,args=(i))
+	# p.close()
+	# p.join()
+	# print(items)
+	# # save_to_csv(items)
 
-	# 多线程抓取
 	p=Pool(4)
-	for i in range(1, 6):
-		p.apply_async(multi_scraping,args=(i,))
-	p.close()
-	p.join()
-	# save_to_csv(items)
+	p.map(multi_scraping,[i for i in range(1,101)])
+	read_from_csv()
