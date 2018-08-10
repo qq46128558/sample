@@ -13,6 +13,9 @@ import jieba
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
 
+# 引入进程池,多线程处理
+from multiprocessing import Pool
+
 
 def get_one_page(url):
 	headers={
@@ -84,6 +87,21 @@ def scraping():
 	except Exception as e:
 		logging.error(str(e))
 
+def multi_scraping(page):
+	baseurl="http://m.maoyan.com/mmdb/comments/movie/"+code+".json?_v_=yes&offset={}"
+	logging.info(baseurl)
+
+	try:
+		logging.info("Scraping page {}".format(page))
+		html=get_one_page(baseurl.format(page))
+		if (html==None):
+			raise Exception("Scraping nothing")
+		for item in parse_one_page(html):
+			items.append(list(item.values()))
+		time.sleep(1)
+	except Exception as e:
+		logging.error(str(e))
+
 def to_wordcloud(text):
 	# background_image=plt.imread('./xxx.jpg')
 	stopwords=STOPWORDS.copy()
@@ -103,6 +121,10 @@ def to_wordcloud(text):
 	plt.show()
 
 
+# 全局变量
+items=[]
+code=''
+
 if __name__=='__main__':
 	logging.basicConfig(level=logging.INFO)
 	ap=argparse.ArgumentParser()
@@ -110,5 +132,12 @@ if __name__=='__main__':
 	args=vars(ap.parse_args())
 	code=args["code"]
 	logging.info(code)
+	# scraping()
 
-	scraping()
+	# 多线程抓取
+	p=Pool(4)
+	for i in range(1, 6):
+		p.apply_async(multi_scraping,args=(i,))
+	p.close()
+	p.join()
+	# save_to_csv(items)
