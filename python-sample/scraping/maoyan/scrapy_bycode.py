@@ -17,8 +17,7 @@ from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
 from multiprocessing import Pool,freeze_support,RLock
 import os
 
-'多线程处理的不是很好'
-
+import threading
 
 def get_one_page(url):
 	headers={
@@ -114,6 +113,30 @@ def multi_scraping(page):
 	except Exception as e:
 		logging.error(str(e))
 
+# 多线程
+def run_thread(status):
+	global items
+	baseurl="http://m.maoyan.com/mmdb/comments/movie/"+code+".json?_v_=yes&offset={}"
+	logging.info(baseurl)
+	# 爬取100页
+	for page in [i*2-status for i in range(1,3)]:
+		try:
+			logging.info("Scraping page {}".format(page))
+			html=get_one_page(baseurl.format(page))
+			if (html==None):
+				raise Exception("Scraping nothing")
+			lock.acquire()
+			for item in parse_one_page(html):
+				# 多线程此处顺序会不定?
+				items.append(list(item.values()))
+		except Exception as e:
+			logging.error(str(e))
+		finally:
+			lock.release()
+			# 防止网站拉黑
+			time.sleep(1)
+
+
 def to_wordcloud(text):
 	# background_image=plt.imread('./xxx.jpg')
 	stopwords=STOPWORDS.copy()
@@ -160,6 +183,7 @@ ap.add_argument("-c","--code",required=True,help="the maoyan film code",type=str
 args=vars(ap.parse_args())
 code=args["code"]
 
+lock=threading.Lock()
 
 if __name__=='__main__':
 	logging.info(code)
@@ -176,6 +200,19 @@ if __name__=='__main__':
 	# print(items)
 	# # save_to_csv(items)
 
-	p=Pool(4)
-	p.map(multi_scraping,[i for i in range(1,101)])
-	read_from_csv()
+	# 多线程处理2,成功但效果不理想
+	# p=Pool(4)
+	# p.map(multi_scraping,[i for i in range(1,101)])
+	# read_from_csv()
+
+	# 多线程处理3(用两个线程,效果应该算是正常了)(毕竟python没有真正的多线程,因为GIL锁)
+	start_time=time.time()
+	t1=threading.Thread(target=run_thread,args=(0,))
+	t2=threading.Thread(target=run_thread,args=(1,))
+	t1.start()
+	t2.start()
+	t1.join()
+	t2.join()
+	end_time=time.time()
+	print('Scraping use %d seconds'%(end_time-start_time))
+	save_to_csv(items)
