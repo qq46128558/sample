@@ -45,6 +45,9 @@
 |调出定界框并复制图层|ctrl+alt+t|-
 |复制并重复上一次变换|ctrl+alt+shift+t|-
 |合并拷贝|ctrl+shift+c|-
+|填充颜色|alt+delete|-
+|取消选择|ctrl+d|-
+
 
 
 
