@@ -38,3 +38,13 @@ COMMIT WORK;
 	SELECT * FROM `tablename` LIMIT `记录数` OFFSET `偏移量`;
 	SELECT * FROM `tablename` ORDER BY `field` DESC	LIMIT 1;
 	
+#### 通配符
+	<!-- % 多个任意字符 _ 单个任意字符 -->
+	SELECT `field` FROM `tablename` WHERE `field` LIKE 'XXX%';
+	SELECT `field` FROM `tablename` WHERE `field` LIKE 'XXX_';
+
+#### WHERE子句操作符
+	= <> != < <= > >= BETWEEN
+
+#### WHERE子句关键字
+	IS NULL	AND	OR	IN	NOT	LIKE REGEXP
