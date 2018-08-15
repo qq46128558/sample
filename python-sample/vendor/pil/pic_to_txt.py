@@ -17,9 +17,9 @@ logging.basicConfig(level=logging.INFO)
 #  是我们的字符画所使用的字符集，一共有 70 个字符，字符的种类与数量可以自己根据字符画的效果反复调试的
 ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. ")
 
-# 字符画的宽高
-WIDTH=66
-HEIGHT=100
+# 字符画的宽高 (宽在原来的比例值上再增加1~1.5倍,如原来是290:293)
+WIDTH=115
+HEIGHT=50
 
 # 将256灰度映射到70个字符上，也就是RGB值转字符的函数：
 # alpha透明度
@@ -29,14 +29,15 @@ def get_char(r,g,b,alpha=256):
     length=len(ascii_char)
     # 计算灰度
     gray=int(0.2126*r+0.7152*g+0.0722*b)
-    # by peter: +1未理解
+    # by peter: +1未理解(验证不+1也正常)
     unit=(256.0+1)/length
     # 不同的灰度对应着不同的字符
     # 通过灰度来区分色块
     return ascii_char[int(gray/unit)]
 
 if __name__=='__main__':
-    img='../../../1353022505371.jpg'
+    # img='../../../1353022505371.jpg'
+    img="./07_01 290x293.jpg"
     im=Image.open(img)
     # 不改变图像大小的话太大看不出来
     im=im.resize((WIDTH,HEIGHT),Image.NEAREST)
