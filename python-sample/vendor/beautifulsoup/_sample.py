@@ -120,3 +120,26 @@ for child in soup.body.children:
 # INFO:root:Hey, buddy. Want to buy a used parser?
 
 '''.contents 和 .children 属性仅包含tag的直接子节点'''
+# 对所有tag的子孙节点进行递归循环
+for child in soup.body.descendants:
+	if child.name=='b':
+		logging.info(child.string)
+# INFO:root:The Dormouse's story
+# INFO:root:Hey, buddy. Want to buy a used parser?
+
+# 如果tag中包含多个字符串 [2] ,可以使用 .strings 来循环获取
+# 输出的字符串中可能包含了很多空格或空行,使用 .stripped_strings 可以去除多余空白内容:
+for string in soup.stripped_strings:
+	logging.debug(string)
+
+# 父节点
+logging.info(soup.title.string.parent)
+# INFO:root:<title>The Dormouse's story</title>
+
+# 遍历所有父节点
+for parent in soup.a.parents:
+	logging.info(parent.name)
+# INFO:root:p
+# INFO:root:body
+# INFO:root:html
+# INFO:root:[document]
