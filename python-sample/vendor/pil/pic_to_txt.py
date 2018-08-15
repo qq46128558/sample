@@ -26,11 +26,10 @@ HEIGHT=50
 def get_char(r,g,b,alpha=256):
     if alpha==0:
         return ' '
-    length=len(ascii_char)
     # 计算灰度
     gray=int(0.2126*r+0.7152*g+0.0722*b)
     # by peter: +1未理解(验证不+1也正常)
-    unit=(256.0+1)/length
+    unit=(256.0+1)/len(ascii_char)
     # 不同的灰度对应着不同的字符
     # 通过灰度来区分色块
     return ascii_char[int(gray/unit)]
@@ -48,6 +47,7 @@ if __name__=='__main__':
         for j in range(WIDTH):
             # 获得相应的字符
             txt+=get_char(*im.getpixel((j,i)))
+            logging.debug(im.getpixel((j,i)))
         # 一行像素对应的灰度字符获取完成,换行
         txt+="\n"
     # 打印出字符画
