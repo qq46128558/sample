@@ -22,10 +22,17 @@ def get_one_page(url):
 
 def get_cat_url(html):
 	soup=BeautifulSoup(html,'html.parser')
-	pass
+	tag=soup.find('div',attrs={'class':'hot-list clearfix'}).find_all('dt')
+	logging.info(tag)
+	cat_url=[]
+	cat_name=[]
+	for i in range(0,len(tag)):
+		for a in tag[i].find_all('a'):
+			cat_url.append(a.attrs['href'])
+	return cat_url
 
 if __name__=='__main__':
 	logging.basicConfig(level=logging.INFO)
 	baseurl="http://www.mafengwo.cn/mdd/"
 	html=get_one_page(baseurl)
-	get_cat_url(html)
+	# print(get_cat_url(html))
