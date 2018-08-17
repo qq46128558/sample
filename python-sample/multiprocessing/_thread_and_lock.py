@@ -34,13 +34,38 @@ def run_thread(ctrl):
 			# 改完了一定要释放锁:
 			lock.release()
 
+def run_thread_by_with_lock(ctrl):
+	for i in [j*2-ctrl for j in range(1,51)]:
+		# with lock等于自动获取锁与释放锁
+		with lock:
+			logging.info("Scraping page: {}".format(i))
+			scraping(i)
+
 if __name__=='__main__':
-	# 抓取奇数页
-	t1=threading.Thread(target=run_thread,args=(1,))
-	# 抓取偶数页
-	t2=threading.Thread(target=run_thread,args=(0,))
-	t1.start()
-	t2.start()
-	t1.join()
-	t2.join()
+	# 写法一
+	# start=time.time()
+	# # 抓取奇数页
+	# t1=threading.Thread(target=run_thread,args=(1,))
+	# # 抓取偶数页
+	# t2=threading.Thread(target=run_thread,args=(0,))
+	# t1.start()
+	# t2.start()
+	# t1.join()
+	# t2.join()
+	# logging.info(items)
+	# end=time.time()
+	# logging.info("{}s".format(round(end-start,3)))
+
+	# 写法二
+	start=time.time()
+	threads=[]
+	for i in range (2):
+		threads.append(threading.Thread(target=run_thread_by_with_lock,args=(i,)))
+	for t in threads:
+		t.start()
+	for t in threads:
+		t.join()
 	logging.info(items)
+	end=time.time()
+	logging.info("%ss"%round(end-start,3))
+	
