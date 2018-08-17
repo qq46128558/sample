@@ -54,7 +54,8 @@ def get_category(html):
 			# 查找dt里面的a tag
 			for a in tag.find_all('a'):
 				# 找到省名及url名,写入list
-				list_cat.append({"name":a.string,"url":a.attrs['href']})
+				m=re.match(r'/travel-scenic-spot/mafengwo/(\d+).html',a.attrs['href'])
+				list_cat.append({"name":a.string,"url":a.attrs['href'],"data-id":m.group(1) if m else 0})
 	return list_cat
 
 # 获取城市url信息
@@ -66,9 +67,20 @@ def get_city(list_cat):
 	# 测试用
 	# for i in range(0,1):
 	for i in range(0,len(list_cat)):
+		soup=BeautifulSoup(get_one_page(baseurl+list_cat[i]["url"]),'html.parser')
+		time.sleep(1)
 		# 统计城市数
 		city_count=0
-		province=BeautifulSoup(get_one_page(baseurl+list_cat[i]["url"]),'html.parser').find('div',class_='title').h1.string
+		# province=soup.find('div',class_='title').h1.string
+		province=list_cat[i]['name']
+		province_id=list_cat[i]['data-id']
+		
+		# 如果不存在目的地，则直接返回当前城市
+		if soup.find('a',href=re.compile('/mdd/citylist'))==None:
+			logging.info('Single city:{} data-id:{}'.format(province,province_id))
+			with lock:
+				list_city.append((province,province_id))
+			continue
 
 		# 用Selenium执行JavaScript
 		# driver=webdriver.Chrome(executable_path=r"C:\Program Files (x86)\Google\Chrome\Application\chrome")
@@ -147,7 +159,8 @@ def run_thread_by_cat(html):
 			# 查找dt里面的a tag
 			for a in tag.find_all('a'):
 				# 找到省名及url名,写入list
-				list_cat.append({"name":a.string,"url":a.attrs['href']})
+				m=re.match(r'/travel-scenic-spot/mafengwo/(\d+).html',a.attrs['href'])
+				list_cat.append({"name":a.string,"url":a.attrs['href'],"data-id":m.group(1) if m else 0})
 		# 多线程
 		threads.append(threading.Thread(target=get_city,args=(list_cat,),name='T'+str(i)))
 	for t in threads:
