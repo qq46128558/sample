@@ -139,6 +139,10 @@ def run_thread_by_cat(html):
 	soup=BeautifulSoup(html,'html.parser')
 	# 改为正则,匹配其它大目的地 class_='hot-list clearfix'则默认为国内
 	tag=soup.find_all('div',class_=re.compile('hot-list clearfix'))
+	country_name_tags=soup.find('div',class_='r-navbar').find_all('a')
+	logging.debug(country_name_tags[0].string)
+	country_name=[]
+
 	# 获取到多个hot-list DIV
 	logging.debug(tag)
 	# 定义一个list存放不同大目的地的大分类(如省)
@@ -146,11 +150,15 @@ def run_thread_by_cat(html):
 
 	# 循环各个DIV(大目的地)
 	for i in range(0,len(tag)):
-		# 查找大分类(省)
+		# 改为只爬国内+港澳台
+		if not re.match(r'国内|港澳台',country_name_tags[i].string):
+			continue
+		# 查找大分类(省) append 7个tags
 		list_tag.append(tag[i].find_all('dt'))
-	logging.info("{}个大目的地:{}".format(len(list_tag),[tag.string for tag in soup.find('div',class_='r-navbar').find_all('a')]))
+		country_name.append(country_name_tags[i].string)
+	logging.info("{}个大目的地:{}".format(len(list_tag),country_name))
 
-	# 多个线程爬取7个大类目的地
+	# 多个线程爬取7个大类目的地里面的省
 	threads=[]
 	for i in range(0,len(list_tag)):
 		list_cat=[]
@@ -162,6 +170,7 @@ def run_thread_by_cat(html):
 				m=re.match(r'/travel-scenic-spot/mafengwo/(\d+).html',a.attrs['href'])
 				list_cat.append({"name":a.string,"url":a.attrs['href'],"data-id":m.group(1) if m else 0})
 		# 多线程
+		# Exception in thread T0: ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。(一个线程停了，其他线程还在继续)
 		threads.append(threading.Thread(target=get_city,args=(list_cat,),name='T'+str(i)))
 	for t in threads:
 		t.start()
