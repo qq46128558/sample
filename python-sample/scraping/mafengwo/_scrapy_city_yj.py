@@ -72,6 +72,7 @@ def get_city_yj(df):
 				# 爬取页面上的统计条数
 				dict['城市游记']=int(soup_yj.find_all('span')[1].text) if soup_yj!=None else 0
 
+			time.sleep(1)
 			# 爬取完成
 			logging.info("city:{},url:{} 爬取行程页印象完成".format(df['name'][i],url.format(str(df['data-id'][i]))))
 			# 这里strip要传空格
@@ -81,11 +82,14 @@ def get_city_yj(df):
 			with lock:
 				# items.append((dict.values()))
 				items.append((dict['data-id'],dict["城市"],dict["印象"],dict['城市游记'],dict['印象游记'],dict['景点游记'],dict['餐饮游记'],dict['购物游记'],dict['娱乐游记']))
-			time.sleep(2)
+			time.sleep(1)
 			# ERROR:root:安庆:12058,[WinError 10054] 远程主机强迫关闭了一个现有的连接。
 	except Exception as e:
 		# 江都:84556,
-		logging.error("{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e)))
+		error_s="{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e))
+		logging.error(error_s)
+		with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
+			f.write(error_s+"\n")
 
 
 # 存放爬取的信息(全局多线程用)
@@ -94,7 +98,7 @@ lock=threading.Lock()
 
 if __name__=='__main__':
 	start=time.time()
-	logging.basicConfig(level=logging.INFO)
+	logging.basicConfig(level=logging.ERROR)
 	df=pd.read_csv('city_id.csv',encoding='gb18030')
 	# 三千多个城市,分四个线程
 	threads=[]
