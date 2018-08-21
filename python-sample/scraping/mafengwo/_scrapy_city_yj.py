@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'获取城市信息:印象游记/'
+'获取城市信息:印象游记/餐饮'
 
 import logging
 import urllib.request as request
@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import threading
 import pandas as pd
 import time
+import random
 
 # 获取一个页面
 def get_one_page(url):
@@ -91,6 +92,55 @@ def get_city_yj(df):
 		with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
 			f.write(error_s+"\n")
 
+# 获取城市特色美食
+def get_city_cy(df):
+	global items
+	url="http://www.mafengwo.cn/cy/{}/gonglve.html"
+	logging.debug(df.name.count())
+	dict={}
+	# 记录出错的城市
+	error_i=0 
+	try:
+		# 城市循环
+		for i in range(0,df.name.count()):
+			error_i=i
+			# 初始化城市信息
+			dict["data-id"]=df['data-id'][i]
+			dict["城市"]=df['name'][i]
+			dict["美食"]='没有'
+			dict['票数']=0
+			soup=BeautifulSoup(get_one_page(url.format(str(df['data-id'][i]))),'html.parser')
+			soup_cy=soup.find('ol',class_="list-rank")
+			if soup_cy==None:
+				logging.info("city:{},没有特色美食".format(df['name'][i]))
+				with lock:
+					# items.append((dict.values()))
+					items.append((dict['data-id'],dict["城市"],dict["美食"],dict['票数']))
+			else:
+				tags=soup_cy.find_all('li')
+				for tag in tags:
+					logging.debug(tag)
+					dict["美食"]=tag.find('h3').text
+					dict['票数 ']=int(tag.find('span',class_='trend').text) if tag.find('span',class_='trend')!=None else 1
+					logging.info(dict)
+					# 存入items list,加锁
+					with lock:
+						# items.append((dict.values()))
+						items.append((dict['data-id'],dict["城市"],dict["美食"],dict['票数']))
+
+			# 爬取完成
+			logging.info("city:{},url:{} 爬取美食完成".format(df['name'][i],url.format(str(df['data-id'][i]))))
+			# 随机暂停
+			time.sleep(random.choice(range(3)))
+			# ERROR:root:安庆:12058,[WinError 10054] 远程主机强迫关闭了一个现有的连接。
+	except Exception as e:
+		# 江都:84556,
+		error_s="{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e))
+		logging.error(error_s)
+		with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
+			f.write(error_s+"\n")
+
+
 
 # 存放爬取的信息(全局多线程用)
 items=[]
@@ -98,20 +148,32 @@ lock=threading.Lock()
 
 if __name__=='__main__':
 	start=time.time()
-	logging.basicConfig(level=logging.ERROR)
+	logging.basicConfig(level=logging.INFO)
 	df=pd.read_csv('city_id.csv',encoding='gb18030')
 	# 三千多个城市,分四个线程
 	threads=[]
 	for x,y in [(0,1000),(1000,2000),(2000,3000),(3000,df['name'].count())]:
 		# 注意需重新索引
-		threads.append(threading.Thread(target=get_city_yj,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
+		# 印象游记(已获取)
+		# threads.append(threading.Thread(target=get_city_yj,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
+
+		# 特色美食
+		threads.append(threading.Thread(target=get_city_cy,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
+
 	for t in threads:
 		t.start()
 	for t in threads:
 		t.join()
 
 	# 保存爬取记录
-	df=pd.DataFrame(data=items,columns=["data-id","城市","印象",'城市游记','印象游记','景点游记','餐饮游记','购物游记','娱乐游记'])
-	df.to_csv('city_yj.csv',index=False,encoding='gb18030')
+
+	# 印象游记(已获取)
+	# df=pd.DataFrame(data=items,columns=["data-id","城市","印象",'城市游记','印象游记','景点游记','餐饮游记','购物游记','娱乐游记'])
+	# df.to_csv('city_yj.csv',index=False,encoding='gb18030')
+
+	# 特色美食
+	df=pd.DataFrame(data=items,columns=["data-id","城市","美食","票数"])
+	df.to_csv('city_cy.csv',index=False,encoding='gb18030')
+
 	end=time.time()
 	print('Scraping time:{} minutes'.format((end-start)//60))

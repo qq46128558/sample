@@ -435,3 +435,9 @@ logging.info(pd.to_numeric(user_info.height,errors='ignore'))
 # James    180cm
 # Name: height, dtype: object
 
+
+# 用切片访问多行,同时重新索引
+logging.info(user_info.iloc[0:2].reset_index(drop=True))
+# INFO:root:   age      city   sex height
+# 0   18   BeiJing  male    178
+# 1   30  ShangHai  male    168
