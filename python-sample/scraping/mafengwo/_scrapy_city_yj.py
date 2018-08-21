@@ -100,9 +100,11 @@ def get_city_cy(df):
 	dict={}
 	# 记录出错的城市
 	error_i=0 
-	try:
-		# 城市循环
-		for i in range(0,df.name.count()):
+	
+	# 城市循环
+	for i in range(0,df.name.count()):
+		# 多次出现远程主机被强制关闭，把try放在for内
+		try:
 			error_i=i
 			# 初始化城市信息
 			dict["data-id"]=df['data-id'][i]
@@ -133,12 +135,12 @@ def get_city_cy(df):
 			# 随机暂停
 			time.sleep(random.choice(range(3)))
 			# ERROR:root:安庆:12058,[WinError 10054] 远程主机强迫关闭了一个现有的连接。
-	except Exception as e:
-		# 江都:84556,
-		error_s="{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e))
-		logging.error(error_s)
-		with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
-			f.write(error_s+"\n")
+		except Exception as e:
+			# 江都:84556,
+			error_s="{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e))
+			logging.error(error_s)
+			with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
+				f.write(error_s+"\n")
 
 
 
