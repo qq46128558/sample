@@ -123,7 +123,7 @@ def get_city_cy(df):
 				for tag in tags:
 					logging.debug(tag)
 					dict["美食"]=tag.find('h3').text
-					dict['票数 ']=int(tag.find('span',class_='trend').text) if tag.find('span',class_='trend')!=None else 1
+					dict['票数']=int(tag.find('span',class_='trend').text) if tag.find('span',class_='trend')!=None else 1
 					logging.info(dict)
 					# 存入items list,加锁
 					with lock:
@@ -132,6 +132,59 @@ def get_city_cy(df):
 
 			# 爬取完成
 			logging.info("city:{},url:{} 爬取美食完成".format(df['name'][i],url.format(str(df['data-id'][i]))))
+			# 随机暂停
+			time.sleep(random.choice(range(3)))
+			# ERROR:root:安庆:12058,[WinError 10054] 远程主机强迫关闭了一个现有的连接。
+		except Exception as e:
+			# 江都:84556,
+			error_s="{}:{},{}".format(df['name'][error_i],df['data-id'][error_i],str(e))
+			logging.error(error_s)
+			with open ('error.log','a',encoding='utf-8',errors='ignore') as f:
+				f.write(error_s+"\n")
+
+
+
+# 获取城市景点
+def get_city_jd(df):
+	global items
+	url="http://www.mafengwo.cn/jd/{}/gonglve.html"
+	logging.debug(df.name.count())
+	dict={}
+	# 记录出错的城市
+	error_i=0 
+	
+	# 城市循环
+	for i in range(0,df.name.count()):
+		# 多次出现远程主机被强制关闭，把try放在for内
+		try:
+			error_i=i
+			# 初始化城市信息
+			dict["data-id"]=df['data-id'][i]
+			dict["城市"]=df['name'][i]
+			dict["景点"]='没有'
+			dict['点评']=0
+			soup=BeautifulSoup(get_one_page(url.format(str(df['data-id'][i]))),'html.parser')
+			soup_jd=soup.find('div',class_="row-top5")
+			if soup_jd==None:
+				logging.info("city:{},没有必游景点".format(df['name'][i]))
+				with lock:
+					# items.append((dict.values()))
+					items.append((dict['data-id'],dict["城市"],dict["景点"],dict['点评']))
+			else:
+				tags=soup_jd.find_all('h3')
+				for tag in tags:
+					logging.debug(tag)
+					# dict["景点"]=tag.find('a').contents[0].replace('\n','').replace(' ','')
+					dict["景点"]=tag.find('a').text.split('\n')[0]
+					dict['点评']=int(tag.find('em').text) if tag.find('em')!=None else 0
+					logging.info(dict)
+					# 存入items list,加锁
+					with lock:
+						# items.append((dict.values()))
+						items.append((dict['data-id'],dict["城市"],dict["景点"],dict['点评']))
+
+			# 爬取完成
+			logging.info("city:{},url:{} 爬取景点完成".format(df['name'][i],url.format(str(df['data-id'][i]))))
 			# 随机暂停
 			time.sleep(random.choice(range(3)))
 			# ERROR:root:安庆:12058,[WinError 10054] 远程主机强迫关闭了一个现有的连接。
@@ -160,7 +213,10 @@ if __name__=='__main__':
 		# threads.append(threading.Thread(target=get_city_yj,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
 
 		# 特色美食
-		threads.append(threading.Thread(target=get_city_cy,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
+		# threads.append(threading.Thread(target=get_city_cy,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
+
+		# 必游景点
+		threads.append(threading.Thread(target=get_city_jd,args=(df.iloc[x:y].reset_index(drop=True),),name='T'+str(y)))
 
 	for t in threads:
 		t.start()
@@ -173,9 +229,13 @@ if __name__=='__main__':
 	# df=pd.DataFrame(data=items,columns=["data-id","城市","印象",'城市游记','印象游记','景点游记','餐饮游记','购物游记','娱乐游记'])
 	# df.to_csv('city_yj.csv',index=False,encoding='gb18030')
 
-	# 特色美食
-	df=pd.DataFrame(data=items,columns=["data-id","城市","美食","票数"])
-	df.to_csv('city_cy.csv',index=False,encoding='gb18030')
+	# 特色美食(已获取)
+	# df=pd.DataFrame(data=items,columns=["data-id","城市","美食","票数"])
+	# df.to_csv('city_cy.csv',index=False,encoding='gb18030')
+
+	# 必游景点
+	df=pd.DataFrame(data=items,columns=["data-id","城市","景点","点评"])
+	df.to_csv('city_jd.csv',index=False,encoding='gb18030')
 
 	end=time.time()
 	print('Scraping time:{} minutes'.format((end-start)//60))
