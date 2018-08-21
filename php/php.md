@@ -8,3 +8,16 @@
 
 #### 执行php代码
 	php -r "echo 'abc';"
+
+
+#### 项目应用记录
+~~~php
+// array_push — 将一个或多个单元压入数组的末尾（入栈）
+array_push($behaviors['verbFilter']['actions']['index'],'POST');
+
+// debug_backtrace — 产生一条回溯跟踪(backtrace)
+// 2: exlude ["object"] AND ["args"], 2: 限制返回堆栈帧的数量
+$backtrace=debug_backtrace(2,2);
+// array(0=>array('file'=>'/data/www/yii/api/modules/tp/controllers/TestController.php','line'=>50,'function'=>'responseSuccess','class'=>'common\\core\\PubFunction','type'=>'::',),1=>array('function'=>'actionFormat','class'=>'api\\modules\\tp\\controllers\\TestController','type'=>'->',),)",
+
+~~~
