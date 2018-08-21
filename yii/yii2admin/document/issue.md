@@ -16,3 +16,49 @@ view对应页面(index.php),body中删除对应代码即可
 原因:
 pjax导致了js失效
 ~~~
+
+
+
+### API
+
+#### 默认Index方法不支持POST的解决
+~~~
+POST方式调用接口: http://47.106.160.48/api/tp/test?access-token=M0eZFQzHhDwokrkCAdTMc2vyqayCxw3k
+返回
+{"name":"Method Not Allowed","message":"Method Not Allowed. This URL can only handle the following request methods: GET, HEAD.","code":0,"status":405,"type":"yii\\web\\MethodNotAllowedHttpException"}
+
+抛错位置:
+vendor/yiisoft/yii2/filters/VerbFilter.php
+101         if (!in_array($verb, $allowed)) {
+102             $event->isValid = false;
+103             // https://tools.ietf.org/html/rfc2616#section-14.7
+104             Yii::$app->getResponse()->getHeaders()->set('Allow', implode(', ', $allowed));
+105             throw new MethodNotAllowedHttpException('Method Not Allowed. This URL can only handle t    he following request methods: ' . implode(', ', $allowed) . '.');
+106         }
+
+
+方法一:
+修改框架代码: vendor/yiisoft/yii2/rest/ActiveController.php
+对index增加POST
+111     protected function verbs()
+112     {
+113         return [
+114             'index' => ['POST',GET', 'HEAD'],
+115             'view' => ['GET', 'HEAD'],
+116             'create' => ['POST'],
+117             'update' => ['PUT', 'PATCH'],
+118             'delete' => ['DELETE'],
+119         ];
+120     }
+
+方法二:
+// 重写行为方法
+public function behaviors(){
+    $behaviors=parent::behaviors();
+    // 设置认证方式. 不设置则无需access-token,可以随便调用
+    $behaviors['authenticator']=['class'=>QueryParamAuth::className(),];
+    // 使index方法支持POST
+   	$behaviors['verbFilter']['actions']['index']=['GET','POST','HEAD'];
+	return $behaviors;                                                                       
+}
+~~~
