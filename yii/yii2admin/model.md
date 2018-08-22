@@ -1,6 +1,7 @@
 ## Model中的方法
 	$model=XXX::find()
-
+	$result=static::find()->select('id')->where(['regexp','url','^'.$rule.'\\?'])->limit(1)->one();
+	
 #### like语句查询数据
 	$result=$model->where(['like','title','xxx'])->orderBy('sort asc')->all();
 	
