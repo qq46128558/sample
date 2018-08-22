@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'获取城市信息:印象游记/餐饮'
+'获取城市信息:印象游记/餐饮/景点'
 
 import logging
 import urllib.request as request
