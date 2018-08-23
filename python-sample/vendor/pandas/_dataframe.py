@@ -441,3 +441,20 @@ logging.info(user_info.iloc[0:2].reset_index(drop=True))
 # INFO:root:   age      city   sex height
 # 0   18   BeiJing  male    178
 # 1   30  ShangHai  male    168
+
+
+
+# 分组统计
+# 按sex分组并按age求和
+logging.info(user_info.groupby(by='sex').agg({'age':sum}).reset_index())
+# INFO:root:      sex  age
+# 0  female   25
+# 1    male   88
+# logging.info(user_info.groupby(by=['sex','city']).agg({'age':sum}).reset_index())
+
+# 按sex分组并求age的max,min
+logging.info(user_info.groupby(by='sex').agg({'age':['max','min']}).reset_index())
+# INFO:root:      sex age
+#           max min
+# 0  female  25  25
+# 1    male  40  18
