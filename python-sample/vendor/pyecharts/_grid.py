@@ -20,6 +20,7 @@ df4=df.sort_values(by="购物游记",ascending=False)[0:20]
 
 
 # title_top 标题的top位置(可以用百分比) width 图表宽 height 图表高
+# title_pos 可以控制标题的x轴位置,可以用百分比
 # 先算出柱状图高度占比，下面有，得出间隔增量是25
 bar1=Bar('餐饮类标签排名',title_top="0%")
 bar2=Bar('景点类标签排名',title_top="25%")
@@ -28,6 +29,7 @@ bar4=Bar('购物类标签排名',title_top="75%")
 # is_splitline_show 显示X轴的标尺线
 # xaxis_rotate 未知
 # legend_top 图例的顶部位置(可以用百分比)
+# legend_pos 以控制图例的x轴位置,可以用百分比
 # 图例的名字不同，则柱状图的颜色不同
 bar1.add('餐饮游记',df1['城市'],df1['餐饮游记'],is_splitline_show=True,xaxis_rotate=30,legend_top="0%")
 bar2.add('景点游记',df2['城市'],df2['景点游记'],is_splitline_show=True,xaxis_rotate=30,legend_top="25%")
@@ -37,6 +39,7 @@ bar4.add('购物游记',df4['城市'],df4['购物游记'],is_splitline_show=True
 grid=Grid(width=1280,height=700)
 # grid_top grid组件离容器顶部距离
 # grid_bottom grid组件离容器底部距离
+# 也支持grid_left grid_right
 # 100-(80+5)=15 容器的高度占比
 grid.add(bar1,grid_top="5%",grid_bottom="80%")
 # 四个柱状图高度占比:4*15=60
