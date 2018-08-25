@@ -29,6 +29,9 @@ def get_city_info():
     try:
         html=get_one_page(baseurl)
         soup=BeautifulSoup(html,'html.parser')
+        # with open('soup.txt','w',encoding='utf-8') as f:
+        #     f.write(str(soup))
+        
         # 爬取总页数(上一页的前一个兄弟标签即为总页数)(前一个是空白)
         # tag=soup.find('a',class_='next').previous_sibling.previous_sibling
         # totalpage=int(tag.string) if tag!=None else 1
