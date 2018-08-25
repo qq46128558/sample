@@ -35,26 +35,32 @@ def get_city_info(df):
         dict['城市']=df['城市'][i]
         baseurl=baseurl.format(df.get('拼音')[i])
         try:
+            time.sleep(random.choice(range(2,5)))
             html=get_one_page(baseurl)
             soup=BeautifulSoup(html,'html.parser')
             # with open('soup.txt','w',encoding='utf-8') as f:
             #     f.write(str(soup))
             
+            # 是否又小龙虾
+            txttag=soup.find('div',class_='txt')
             # 爬取总页数(上一页的前一个兄弟标签即为总页数)(前一个是空白)
             pagetag=soup.find('a',class_='next')
-            if pagetag==None:
+            if txttag==None:
                 with lock:
                     items.append((dict['城市'],'没有',0,0,0,0,0))
                 # 没有小龙虾餐厅下一个城市
-                logging.info("%s没有小龙虾标记的餐厅."%(dict['城市']))
+                logging.info("%s/%s没有小龙虾标记的餐厅."%(dict['城市'],df.get('拼音')[i]))
                 continue
-            tag=pagetag.previous_sibling.previous_sibling
-            totalpage=int(tag.string) if tag!=None else 1
+            if pagetag==None:
+                totalpage=1
+            else:
+                tag=pagetag.previous_sibling.previous_sibling
+                totalpage=int(tag.string) # if tag!=None else 1
             logging.debug(totalpage)
             # totalpage=1
             for i in range(1,totalpage+1):
                 if i!=1:
-                    time.sleep(random.choice(range(0,5)))
+                    time.sleep(random.choice(range(2,5)))
                     logging.debug(baseurl+"p%d"%i)
                     html=get_one_page(baseurl+"p%d"%i)
                     soup=BeautifulSoup(html,'html.parser')
@@ -89,7 +95,7 @@ def get_city_info(df):
                     logging.info(dict)
                     with lock:
                         items.append((dict['城市'],dict['餐厅'],dict['点评'],dict['人均'],dict['口味'],dict['环境'],dict['服务']))
-            logging.info("{}小龙虾餐厅{}数据爬取完成.".format(dict['城市'],totalpage))
+            logging.info("{}小龙虾餐厅{}页数据爬取完成.".format(dict['城市'],totalpage))
         except Exception as e:
             error_msg="%s/%s:%s"%(df.get('城市')[error_i],df.get('拼音')[error_i],str(e))
             logging.error(error_msg)
@@ -110,17 +116,21 @@ def get_one_city_info(city_py):
         # with open('soup.txt','w',encoding='utf-8') as f:
         #     f.write(str(soup))
         
+        # 是否又小龙虾
+        txttag=soup.find('div',class_='txt')
         # 爬取总页数(上一页的前一个兄弟标签即为总页数)(前一个是空白)
         pagetag=soup.find('a',class_='next')
-        if pagetag==None:
+        if txttag==None:
             with lock:
                 items.append((city_py,'没有',0,0,0,0,0))
             # 没有小龙虾餐厅下一个城市
             logging.info("%s没有小龙虾标记的餐厅."%(dict['城市']))
             return
-
-        tag=pagetag.previous_sibling.previous_sibling
-        totalpage=int(tag.string) if tag!=None else 1
+        if pagetag==None:
+            totalpage=1
+        else:
+            tag=pagetag.previous_sibling.previous_sibling
+            totalpage=int(tag.string) # if tag!=None else 1
         logging.debug(totalpage)
         # totalpage=1
         for i in range(1,totalpage+1):
@@ -170,7 +180,7 @@ if __name__=='__main__':
     # for t in threads:
     #     t.join()
 
-    get_one_city_info('beijing')
+    get_one_city_info('alashan')
 
     df=pd.DataFrame(data=items,columns={'城市','餐厅','点评','人均','口味','环境','服务'})
     df.to_csv('xiaolongxia.csv',index=False,encoding='gb18030')
