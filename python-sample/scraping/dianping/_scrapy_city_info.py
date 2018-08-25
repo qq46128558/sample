@@ -181,9 +181,9 @@ if __name__=='__main__':
     for t in threads:
         t.join()
 
-    # get_one_city_info('alashan')
+    # get_one_city_info('hainanzhou')
 
-    df=pd.DataFrame(data=items,columns={'城市','餐厅','点评','人均','口味','环境','服务'})
+    df=pd.DataFrame(data=items,columns=['城市','餐厅','点评','人均','口味','环境','服务'])
     df.to_csv('xiaolongxia.csv',index=False,encoding='gb18030')
 
     end=time.time()
