@@ -171,16 +171,16 @@ lock=threading.Lock()
 if __name__=='__main__':
     start=time.time()
 
-    # df=pd.read_csv('city.csv',encoding='gb18030')
-    # threads=[]
-    # for x,y in [(0,800),(800,1600),(1600,df.get('城市').count())]:
-    #     threads.append(threading.Thread(target=get_city_info,name='T'+str(x),args=(df.iloc[x:y].reset_index(drop=True),)))
-    # for t in threads:
-    #     t.start()
-    # for t in threads:
-    #     t.join()
+    df=pd.read_csv('city.csv',encoding='gb18030')
+    threads=[]
+    for x,y in [(0,800),(800,1600),(1600,df.get('城市').count())]:
+        threads.append(threading.Thread(target=get_city_info,name='T'+str(x),args=(df.iloc[x:y].reset_index(drop=True),)))
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
 
-    get_one_city_info('alashan')
+    # get_one_city_info('alashan')
 
     df=pd.DataFrame(data=items,columns={'城市','餐厅','点评','人均','口味','环境','服务'})
     df.to_csv('xiaolongxia.csv',index=False,encoding='gb18030')
