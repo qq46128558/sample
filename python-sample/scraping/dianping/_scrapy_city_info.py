@@ -33,10 +33,10 @@ def get_city_info(df):
     for i in range(0,df['城市'].count()):
         error_i=i
         dict['城市']=df['城市'][i]
-        baseurl=baseurl.format(df.get('拼音')[i])
+        url=baseurl.format(df.get('拼音')[i])
         try:
             time.sleep(random.choice(range(2,5)))
-            html=get_one_page(baseurl)
+            html=get_one_page(url)
             soup=BeautifulSoup(html,'html.parser')
             # with open('soup.txt','w',encoding='utf-8') as f:
             #     f.write(str(soup))
@@ -45,6 +45,7 @@ def get_city_info(df):
             txttag=soup.find('div',class_='txt')
             # 爬取总页数(上一页的前一个兄弟标签即为总页数)(前一个是空白)
             pagetag=soup.find('a',class_='next')
+            # INFO:root:阿拉善/alashan没有小龙虾标记的餐厅.？(明明有)
             if txttag==None:
                 with lock:
                     items.append((dict['城市'],'没有',0,0,0,0,0))
@@ -61,8 +62,8 @@ def get_city_info(df):
             for i in range(1,totalpage+1):
                 if i!=1:
                     time.sleep(random.choice(range(2,5)))
-                    logging.debug(baseurl+"p%d"%i)
-                    html=get_one_page(baseurl+"p%d"%i)
+                    logging.debug(url+"p%d"%i)
+                    html=get_one_page(url+"p%d"%i)
                     soup=BeautifulSoup(html,'html.parser')
                 # 爬取餐厅信息
                 tags=soup.find_all('div',class_='txt')
@@ -108,10 +109,10 @@ def get_one_city_info(city_py):
     baseurl='http://www.dianping.com/{}/ch10/g219'
     dict={}
     dict['城市']=city_py
-    baseurl=baseurl.format(city_py)
+    url=baseurl.format(city_py)
 
     try:
-        html=get_one_page(baseurl)
+        html=get_one_page(url)
         soup=BeautifulSoup(html,'html.parser')
         # with open('soup.txt','w',encoding='utf-8') as f:
         #     f.write(str(soup))
@@ -136,8 +137,8 @@ def get_one_city_info(city_py):
         for i in range(1,totalpage+1):
             if i!=1:
                 time.sleep(random.choice(range(5)))
-                logging.debug(baseurl+"p%d"%i)
-                html=get_one_page(baseurl+"p%d"%i)
+                logging.debug(url+"p%d"%i)
+                html=get_one_page(url+"p%d"%i)
                 soup=BeautifulSoup(html,'html.parser')
             # 爬取餐厅信息
             tags=soup.find_all('div',class_='txt')
