@@ -446,7 +446,7 @@ logging.info(user_info.iloc[0:2].reset_index(drop=True))
 
 # 分组统计
 # 按sex分组并按age求和
-logging.info(user_info.groupby(by='sex').agg({'age':sum}).reset_index())
+logging.info(user_info.groupby(by='sex').agg({'age':'sum'}).reset_index())
 # INFO:root:      sex  age
 # 0  female   25
 # 1    male   88
