@@ -450,7 +450,8 @@ logging.info(user_info.groupby(by='sex').agg({'age':sum}).reset_index())
 # INFO:root:      sex  age
 # 0  female   25
 # 1    male   88
-# logging.info(user_info.groupby(by=['sex','city']).agg({'age':sum}).reset_index())
+# logging.info(user_info.groupby(by=['sex','city']).agg({'age':'sum'}).reset_index())
+# logging.info(user_info.groupby(by=['sex','city']).agg({'age':'mean'}).reset_index())
 
 # 按sex分组并求age的max,min
 logging.info(user_info.groupby(by='sex').agg({'age':['max','min']}).reset_index())
