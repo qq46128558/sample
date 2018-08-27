@@ -20,4 +20,6 @@ array_push($behaviors['verbFilter']['actions']['index'],'POST');
 $backtrace=debug_backtrace(2,2);
 // array(0=>array('file'=>'/data/www/yii/api/modules/tp/controllers/TestController.php','line'=>50,'function'=>'responseSuccess','class'=>'common\\core\\PubFunction','type'=>'::',),1=>array('function'=>'actionFormat','class'=>'api\\modules\\tp\\controllers\\TestController','type'=>'->',),)",
 
+// long2ip — 将长整型转化为字符串形式带点的互联网标准格式地址（IPV4）
+// ip2long — 将 IPV4 的字符串互联网协议转换成长整型数字
 ~~~
