@@ -34,3 +34,7 @@
 
 #### 选取指定ID:top-alert的类名为alert-content的子元素
     $('#top-alert .alert-content').text('abc')
+
+#### 选取指定tag指定class的元素
+    // <ul class="page-sidebar-menu page-header-fixed hidden-sm hidden-xs"...
+    $('ul.page-sidebar-menu.page-header-fixed.hidden-sm.hidden-xs')

@@ -9,6 +9,8 @@
 #### 执行php代码
 	php -r "echo 'abc';"
 
+#### 检查php文件的语法
+	php -l index.php
 
 #### 项目应用记录
 ~~~php

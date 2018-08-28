@@ -43,3 +43,16 @@ return $this->render('edit', [
 #### 删除记录
 	<!-- 根据id从url参数中取值 -->
 	$this->delRow($model, 'id')
+
+
+#### 保存(修改)记录
+~~~php
+$model=\backend\models\Admin::findOne($uid);
+if (!$model) return;
+$data=[
+    'last_login_time'=>time(),
+    'last_login_ip'=>ip2long(\Yii::$app->request->getUserIP()),
+];
+$model->setAttributes($data);
+$model->save();
+~~~

@@ -26,3 +26,7 @@
 #### 判断某Cookie名是否存在
 	if ($cookies->has('language')) ...
 	if (isset($cookies['language'])) ...
+
+
+#### 获取登录用户的IP
+	Yii::$app->request->getUserIP()
