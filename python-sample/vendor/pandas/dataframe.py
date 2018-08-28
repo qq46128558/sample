@@ -4,6 +4,7 @@
 
 import pandas as pd
 from numpy import NaN
+import time
 
 # 写csv文件
 list=[]
@@ -133,13 +134,30 @@ a = df.drop_duplicates(subset=['pop'],keep='first')
 print(a)
 #   pop  state
 # 0   a      1
-# 1   b      1
-# 2   c      2
-# 3   d      2
+# 1   b      2
+# 2   c      3
+# 3   d      4
 
-# 查看重复得数据(暂时有问题)
+
+# 查看(上面)有哪些重复得数据
 # keep=False 将重复数据全部去除
 b=df.drop_duplicates(subset=['pop'],keep=False)
-# a=a.append(b)
-# a.drop_duplicates(subset=['pop'],keep=False)
-# print(a)
+a=a.append(b,ignore_index=True)
+a.drop_duplicates(subset=['pop'],keep=False,inplace=True)
+print(a)
+#   pop  state
+# 1   b      2
+# 2   c      3
+# 3   d      4
+
+
+# 先有结构,再append数据
+df=pd.DataFrame(columns=['date','name','value'])
+df=df.append({'date':time.ctime(),'name':'Rose','value':101},ignore_index=True)
+df=df.append({'date':time.ctime(),'name':'Mary','value':160},ignore_index=True)
+df=df.append({'date':time.ctime(),'name':'Loli','value':86},ignore_index=True)
+print(df)
+#                        date  name value
+# 0  Tue Aug 28 13:48:43 2018  Rose   101
+# 1  Tue Aug 28 13:48:43 2018  Mary   160
+# 2  Tue Aug 28 13:48:43 2018  Loli    86

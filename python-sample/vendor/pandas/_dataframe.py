@@ -459,3 +459,4 @@ logging.info(user_info.groupby(by='sex').agg({'age':['max','min']}).reset_index(
 #           max min
 # 0  female  25  25
 # 1    male  40  18
+
