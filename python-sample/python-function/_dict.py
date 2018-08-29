@@ -30,3 +30,18 @@ print(dict(zip(['one', 'two', 'three'], [1, 2, 3])))
 # 可迭代对象方式来构造字典
 print(dict([('one', 1), ('two', 2), ('three', 3)]))
 # {'three': 3, 'one': 1, 'two': 2}
+
+
+# 循坏dict
+d = {'name1' : 'pythontab', 'name2' : '.', 'name3' : 'com'}
+for key in d:
+    print (key, ' value : ', d[key])
+# name1  value :  pythontab
+# name2  value :  .
+# name3  value :  com
+
+for key, value in d.items():
+    print (key, ' value : ', value)
+# name1  value :  pythontab
+# name2  value :  .
+# name3  value :  com
