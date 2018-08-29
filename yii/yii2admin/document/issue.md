@@ -17,6 +17,22 @@ view对应页面(index.php),body中删除对应代码即可
 pjax导致了js失效
 ~~~
 
+#### Model保存失败无提示(是因为校验失败)
+Model的校验代码
+~~~
+vendor/yiisoft/yii2/validators/Validator.php 288
+	public function validateAttribute($model, $attribute)
+~~~
+
+
+
+
+
+
+
+
+
+
 
 
 ### API

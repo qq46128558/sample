@@ -3,6 +3,8 @@
 
 #### 当前用户的ID。 未认证用户则为 Null 。
     $id = Yii::$app->user->id;
+    Yii::$app->user->identity->id;
+    Yii::$app->user->identity->username;
 
 #### 判断当前用户是否是游客（未认证的）
     $isGuest = Yii::$app->user->isGuest;
