@@ -38,3 +38,11 @@
 #### 选取指定tag指定class的元素
     // <ul class="page-sidebar-menu page-header-fixed hidden-sm hidden-xs"...
     $('ul.page-sidebar-menu.page-header-fixed.hidden-sm.hidden-xs')
+
+
+#### 取label标签下for属性为article-content的子节点a的文本
+    //<label class="" for="article-content">文章內容<a href="javascript:void(0)" onclick="switchContent('_cn')">(隐藏)</a></label>
+    $('label[for=article-content] a').text()
+
+#### 取目标的上层节点
+    $('#article-content_cn').parent()

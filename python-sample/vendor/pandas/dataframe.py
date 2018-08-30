@@ -122,8 +122,9 @@ print(df)
 # 1   钙  2/0/2    强化骨骼
 # 2   锌  0/1/0  提高男性魅力
 df.to_csv('1.csv',index=False,encoding='gbk')
+# utf_8_sig能解决encoding='utf-8'的乱码问题
+df.to_csv('2.csv',index=False,encoding='utf_8_sig')
 # 1/1/1 写入为2001/1/1问题,未解决
-
 
 
 # 数据去重

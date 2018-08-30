@@ -28,12 +28,14 @@ logging.info(columns)
 # 自己：INFO:root:['MemberList', 'UserName', 'City', 'DisplayName', 'PYQuanPin', 'RemarkPYInitial', 'Province', 'KeyWord', 'RemarkName', 'PYInitial', 'EncryChatRoomId', 'Alias', 'Signature', 'NickName', 'RemarkPYQuanPin', 'HeadImgUrl', 'UniFriend', 'Sex', 'AppAccountFlag', 'VerifyFlag', 'ChatRoomId', 'HideInputBarFlag', 'AttrStatus', 'SnsFlag', 'MemberCount', 'OwnerUin', 'ContactFlag', 'Uin', 'StarFriend', 'Statues', 'WebWxPluginSwitch', 'HeadImgFlag', 'IsOwner']
 # 其他：INFO:root:['MemberList', 'Uin', 'UserName', 'NickName', 'HeadImgUrl', 'ContactFlag', 'MemberCount', 'RemarkName', 'HideInputBarFlag', 'Sex', 'Signature', 'VerifyFlag', 'OwnerUin', 'PYInitial', 'PYQuanPin', 'RemarkPYInitial', 'RemarkPYQuanPin', 'StarFriend', 'AppAccountFlag', 'Statues', 'AttrStatus', 'Province', 'City', 'Alias', 'SnsFlag', 'UniFriend', 'DisplayName', 'ChatRoomId', 'KeyWord', 'EncryChatRoomId', 'IsOwner']
 
+# 循环friends
 for friend in friends[1:]:
     dict={}
+    # 循环friend字段
     for key in columns:
         # 需要从1开始，0为是自己，部分key不同，会报错：KeyError: 'WebWxPluginSwitch'
         dict[key]=friend[key]
     df=df.append(dict,ignore_index=True)
 
 # 用gb18030有些会乱码问号???
-df.to_csv('friends.csv',index=False,encoding='gb18030')
+df.to_csv('friends.csv',index=False,encoding='utf_8_sig')
