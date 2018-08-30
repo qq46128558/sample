@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=(8,8))
 # 参数设置这个饼为正圆
 plt.axes(aspect=1)
+
 plt.pie(
 	[7,87,38], 	# 性别统计结果
 	labels=['未知','男','女'],		# 设置饼图的标签
@@ -18,6 +19,8 @@ plt.pie(
 	startangle=90,			# 起始角度，0，表示从0开始逆时针转，为第一块。一般选择从90度开始比较好看
 	pctdistance=0.6,		# 饼图区域文本距离圆点距离
 	)
+# 图例
+plt.legend(loc='upper left',bbox_to_anchor=(-0.1,1))
 # 解决 Windows 环境下乱码问题
 # font_set = FontProperties(fname=r"c:\windows\fonts\simsun.ttc", size=15) 
 # plt.title(u'微信好友性别比例', fontproperties=font_set)

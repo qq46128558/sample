@@ -57,4 +57,20 @@ plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['font.family']='sans-serif'
 plt.title(u'微信好友性别比例')
 plt.savefig('friends_pie.jpg')
-plt.show()
+# plt.show()
+
+
+df_province=df.Province.value_counts()
+logging.info(df_province)
+# 地图1
+map=Map(u"微信好友省份分布","数据来源:微信通讯录",width=1200,height=600)
+map.add("",df_province.keys(),df_province.values,maptype='china',is_visualmap=True,visual_text_color='#000')
+map.render('friends_map.html')
+
+df_city=df.City.value_counts()
+logging.info(df_city)
+# 地图2
+geo=Geo(u"微信好友城市分布","数据来源:微信通讯录",title_color="#fff",title_top="2%",title_pos="center",width=1200,height=600,background_color="#404a59")
+# attr,value=get.cast(values)
+geo.add("城市",df_city.keys(),df_city.values,visual_range=[0,100],visual_text_color='#fff',legend_top="10%",symbol_size=5,is_visualmap=True)
+geo.render('friends_geo.html')
