@@ -81,6 +81,7 @@ $query->where('YEAR(somedate) = 2015');
 
 #### addParams()
 ~~~
+// 经验证只有这种写法,或者配合用andWhere()
 $query->where('status=:status')
     ->addParams([':status' => $status]);
 ~~~
