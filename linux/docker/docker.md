@@ -11,7 +11,7 @@ Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻�
     # centos
     yum -y install docker-io
     # ubuntu
-    apt-get install docker-io
+    apt-get install docker.io
 
 ### 启动服务
 service docker start
