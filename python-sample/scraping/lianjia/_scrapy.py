@@ -20,16 +20,32 @@ def get_one_page(url):
     return None
 
 def get_areas(html):
-    pass
+    content=etree.HTML(html)
+    # @data-index属性
+    areas=content.xpath("//dd[@data-index='0']//div[@class='option-list']/a/text()")
+    areas_link=content.xpath("//dd[@data-index='0']//div[@class='option-list']/a/@href")
+    logging.info(areas)
+    for i in range(1,len(areas)):
+        if areas_link[i][0]=="/":
+            url = 'https://bj.lianjia.com' + areas_link[i]
+        else:
+            url=areas_link[i]
+        html=get_one_page(url)
+        totalpage=re.findall("page-data=\'{\"totalPage\":(\d+),\"curPage\"",html)
+        logging.info(totalpage)
+        totalpage=int(totalpage[0]) if totalpage!=[] else 0
+        logging.info("{}区域有{}页".format(areas[i],totalpage))
+
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     start=time.time()
     url="https://bj.lianjia.com/zufang"
     html=get_one_page(url)
     get_areas(html)
     
     end=time.time()
-    print('Scraping time:%d minutes'%(end-start)//60)
+    print("Scraping time:%d minutes"%((end-start)//60))
 
 
 if __name__=='__main__':
