@@ -24,6 +24,8 @@
 	$result=$this::findOne(123);
 	if ($result)
 		return $result->title
+	// 指定属性(若id不存在,则报错)
+	$value=$this::findOne(123)->getAttribute('title');
 
 #### 添加非表字段属性
 ~~~php
