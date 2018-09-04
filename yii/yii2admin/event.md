@@ -15,3 +15,20 @@ public static function modelAdminLog($event){
 	file_put_contents('sample.txt',var_export($event,1),FILE_APPEND);
 }
 ~~~
+
+#### 回调函数应用
+~~~php
+public static function modelAdminLog($event){
+// 取得事件名
+$event->name
+
+// 触发事件的模型
+$event->sender
+// 新属性值
+$event->sender->attributes
+// 旧属性值
+$event->sender->oldAttributes
+
+// 未知
+$event->changedAttributes
+~~~

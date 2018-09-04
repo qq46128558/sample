@@ -8,6 +8,7 @@
 #### 根据ID查找一个Model
 	<!-- backend\models\Menu -->
 	$model = Menu::findOne($id)
+	<!-- 验证findOne()使用limit(1)报错 -->
 
 #### 加载数据库设置的默认值到model
 	<!-- vendor/yiisoft/yii2/db/ActiveRecord.php -->
@@ -38,4 +39,12 @@ public function getPidname(){
         return Yii::t('backend','一級菜單');
 }
 // 则可以通过$model->pidname取得值,也可以应用于view页面
+// 也可以通过$model->getPidname()获取
+
+
+// 使用另一个字符串填充字符串为指定长度
+echo str_pad($input, 10, " ", STR_PAD_LEFT);
+
+// 交换数组中的键和值
+$exclude=array_flip(array('create_time','update_time'));
 ~~~

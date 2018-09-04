@@ -25,8 +25,13 @@ vendor/yiisoft/yii2/validators/Validator.php 288
 ~~~
 
 
-
-
+#### var_export does not handle circular reference
+~~~
+将var_export
+$data['remark']=var_export($event,1)
+改为print_r即可
+$data['remark']=print_r($event,1)
+~~~
 
 
 

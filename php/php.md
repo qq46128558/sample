@@ -24,4 +24,11 @@ $backtrace=debug_backtrace(2,2);
 
 // long2ip — 将长整型转化为字符串形式带点的互联网标准格式地址（IPV4）
 // ip2long — 将 IPV4 的字符串互联网协议转换成长整型数字
+
+// 得到一个对象是哪个类的实例
+get_class(obj);
+
+// 得到一个对象的类型
+gettype(1);
+
 ~~~
