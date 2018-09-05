@@ -64,21 +64,21 @@ def get_areas_info(area,area_link):
             # 凯景铭座  
             dict["title"].extend(content.xpath("//div[@class='where']/a/span/text()"))
             # 4室1厅  
-            dict["room_type"].extend(content.xpath("//div[@class='where']/span[1]/span/text()") if length==len(content.xpath("//div[@class='where']/span[1]/span/text()")) else ('page'+str(j))*length )
+            dict["room_type"].extend(content.xpath("//div[@class='where']/span[1]/span/text()")) #if length==len(content.xpath("//div[@class='where']/span[1]/span/text()")) else ('page'+str(j))*length )
             # 178.91平米  
-            dict["square"].extend(content.xpath("//div[@class='where']/span[2]/text()") if length==len(content.xpath("//div[@class='where']/span[2]/text()")) else ('page'+str(j))*length )
+            dict["square"].extend(content.xpath("//div[@class='where']/span[2]/text()")) # if length==len(content.xpath("//div[@class='where']/span[2]/text()")) else ('page'+str(j))*length )
             # 东 南 北
-            dict["position"].extend(content.xpath("//div[@class='where']/span[3]/text()") if length==len(content.xpath("//div[@class='where']/span[3]/text()")) else ('page'+str(j))*length )
+            dict["position"].extend(content.xpath("//div[@class='where']/span[3]/text()")) # if length==len(content.xpath("//div[@class='where']/span[3]/text()")) else ('page'+str(j))*length )
             # 安定门租房
-            dict["detail_place"].extend(content.xpath("//div[@class='other']/div/a/text()") if length==len(content.xpath("//div[@class='other']/div/a/text()")) else ('page'+str(j))*length )
+            dict["detail_place"].extend(content.xpath("//div[@class='other']/div/a/text()")) # if length==len(content.xpath("//div[@class='other']/div/a/text()")) else ('page'+str(j))*length )
             # 高楼层(共19层)
-            dict["floor"].extend(content.xpath("//div[@class='other']/div/text()[1]") if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
+            dict["floor"].extend(content.xpath("//div[@class='other']/div/text()[1]")) # if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
             # 高楼层(共19层)
-            dict["total_floor"].extend(content.xpath("//div[@class='other']/div/text()[1]") if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
+            dict["total_floor"].extend(content.xpath("//div[@class='other']/div/text()[1]")) # if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
             # 2001年建塔楼
-            dict["house_year"].extend(content.xpath("//div[@class='other']/div/text()[2]") if length==len(content.xpath("//div[@class='other']/div/text()[2]")) else ('page'+str(j))*length )
+            dict["house_year"].extend(content.xpath("//div[@class='other']/div/text()[2]")) # if length==len(content.xpath("//div[@class='other']/div/text()[2]")) else ('page'+str(j))*length )
             # 22000
-            dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()") if length==len(content.xpath("//div[@class='col-3']/div/span/text()")) else ('page'+str(j))*length )
+            dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()")) # if length==len(content.xpath("//div[@class='col-3']/div/span/text()")) else ('page'+str(j))*length )
 
         logging.info('{} 第{}页爬取完成'.format(area,j))
         # :['雅宝公寓\xa0\xa0', '保利蔷薇\xa0\xa0'
