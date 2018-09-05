@@ -11,6 +11,8 @@ from lxml import etree
 import pandas as pd
 # from urllib.request import urlopen
 # from urllib.request import Request
+# 引入多线程
+import threading
 
 def get_one_page(url):
     headers={"User-Agent":'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'}
@@ -21,28 +23,42 @@ def get_one_page(url):
     return None
 
 def get_areas(html):
+    global dict
     content=etree.HTML(html)
     # @data-index属性
     areas=content.xpath("//dd[@data-index='0']//div[@class='option-list']/a/text()")
     areas_link=content.xpath("//dd[@data-index='0']//div[@class='option-list']/a/@href")
     logging.info(areas)
-    # for i in range(1,len(areas)):
-    for i in range(1,2):
-        if areas_link[i][0]=="/":
-            url = 'https://bj.lianjia.com' + areas_link[i]
-        else:
-            url=areas_link[i]
-        html=get_one_page(url)
-        totalpage=re.findall("page-data=\'{\"totalPage\":(\d+),\"curPage\"",html)
-        logging.info(totalpage)
-        totalpage=int(totalpage[0]) if totalpage!=[] else 0
-        logging.info("{}区域有{}页".format(areas[i],totalpage))
-        dict={'title':[],'room_type':[],'square':[],'position':[],'detail_place':[],'floor':[],'total_floor':[],'house_year':[],'price':[]}
-        # for j in range(1,totalpage+1):
-        for j in range(1,3):
-            time.sleep(1)
-            html=get_one_page(url+"/pg{}".format(j))
-            content=etree.HTML(html)
+    threads=[]
+    for i in range(1,len(areas)):
+    # for i in range(1,2):
+        threads.append(threading.Thread(target=get_areas_info,args=(areas[i],areas_link[i],),name="T"+str(i)))
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    df=pd.DataFrame(dict)   
+    df.to_csv('lianjia.csv',index=False,encoding='utf_8_sig')
+
+def get_areas_info(areas,areas_link):
+    global dict
+    if areas_link[0]=="/":
+        url = 'https://bj.lianjia.com' + areas_link
+    else:
+        url=areas_link
+    html=get_one_page(url)
+    totalpage=re.findall("page-data=\'{\"totalPage\":(\d+),\"curPage\"",html)
+    logging.info(totalpage)
+    totalpage=int(totalpage[0]) if totalpage!=[] else 0
+    logging.info("{}区域有{}页".format(areas,totalpage))
+    
+    # for j in range(1,totalpage+1):
+    for j in range(1,3):
+        time.sleep(1)
+        html=get_one_page(url+"/pg{}".format(j))
+        content=etree.HTML(html)
+        with lock:
             # 凯景铭座  
             dict["title"].extend(content.xpath("//div[@class='where']/a/span/text()"))
             # 4室1厅  
@@ -62,21 +78,22 @@ def get_areas(html):
             # 22000
             dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()"))
 
-            # logging.info(dict["title"])
-            # :['雅宝公寓\xa0\xa0', '保利蔷薇\xa0\xa0'
-    df=pd.DataFrame(dict)   
-    df.to_csv('lianjia.csv',index=False,encoding='utf_8_sig')
+        # logging.info(dict["title"])
+        # :['雅宝公寓\xa0\xa0', '保利蔷薇\xa0\xa0'
+
 
 def main():
     logging.basicConfig(level=logging.INFO)
     start=time.time()
     url="https://bj.lianjia.com/zufang"
     html=get_one_page(url)
+    dict={'title':[],'room_type':[],'square':[],'position':[],'detail_place':[],'floor':[],'total_floor':[],'house_year':[],'price':[]}
     get_areas(html)
-    
     end=time.time()
     print("Scraping time:%d minutes"%((end-start)//60))
 
+
+lock=threading.Lock()
 
 if __name__=='__main__':
     main()
