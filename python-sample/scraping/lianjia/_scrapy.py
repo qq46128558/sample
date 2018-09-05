@@ -41,45 +41,51 @@ def get_areas(html):
     df=pd.DataFrame(dict)   
     df.to_csv('lianjia.csv',index=False,encoding='utf_8_sig')
 
-def get_areas_info(areas,areas_link):
+def get_areas_info(area,area_link):
     global dict
-    if areas_link[0]=="/":
-        url = 'https://bj.lianjia.com' + areas_link
+    if area_link[0]=="/":
+        url = 'https://bj.lianjia.com' + area_link
     else:
-        url=areas_link
+        url=area_link
     html=get_one_page(url)
     totalpage=re.findall("page-data=\'{\"totalPage\":(\d+),\"curPage\"",html)
     logging.info(totalpage)
     totalpage=int(totalpage[0]) if totalpage!=[] else 0
-    logging.info("{}区域有{}页".format(areas,totalpage))
+    logging.info("{}区域有{}页".format(area,totalpage))
     
-    # for j in range(1,totalpage+1):
-    for j in range(1,3):
+    for j in range(1,totalpage+1):
+    # for j in range(1,2):
         time.sleep(1)
         html=get_one_page(url+"/pg{}".format(j))
         content=etree.HTML(html)
+        length=len(content.xpath("//div[@class='where']/a/span/text()"))
         with lock:
+            dict['area'].extend([area]*length)
             # 凯景铭座  
             dict["title"].extend(content.xpath("//div[@class='where']/a/span/text()"))
             # 4室1厅  
-            dict["room_type"].extend(content.xpath("//div[@class='where']/span[1]/span/text()"))
+            dict["room_type"].extend(content.xpath("//div[@class='where']/span[1]/span/text()") if length==len(content.xpath("//div[@class='where']/span[1]/span/text()")) else ('page'+str(j))*length )
             # 178.91平米  
-            dict["square"].extend(content.xpath("//div[@class='where']/span[2]/text()"))
+            dict["square"].extend(content.xpath("//div[@class='where']/span[2]/text()") if length==len(content.xpath("//div[@class='where']/span[2]/text()")) else ('page'+str(j))*length )
             # 东 南 北
-            dict["position"].extend(content.xpath("//div[@class='where']/span[3]/text()"))
+            dict["position"].extend(content.xpath("//div[@class='where']/span[3]/text()") if length==len(content.xpath("//div[@class='where']/span[3]/text()")) else ('page'+str(j))*length )
             # 安定门租房
-            dict["detail_place"].extend(content.xpath("//div[@class='other']/div/a/text()"))
+            dict["detail_place"].extend(content.xpath("//div[@class='other']/div/a/text()") if length==len(content.xpath("//div[@class='other']/div/a/text()")) else ('page'+str(j))*length )
             # 高楼层(共19层)
-            dict["floor"].extend(content.xpath("//div[@class='other']/div/text()[1]"))
+            dict["floor"].extend(content.xpath("//div[@class='other']/div/text()[1]") if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
             # 高楼层(共19层)
-            dict["total_floor"].extend(content.xpath("//div[@class='other']/div/text()[1]"))
+            dict["total_floor"].extend(content.xpath("//div[@class='other']/div/text()[1]") if length==len(content.xpath("//div[@class='other']/div/text()[1]")) else ('page'+str(j))*length )
             # 2001年建塔楼
-            dict["house_year"].extend(content.xpath("//div[@class='other']/div/text()[2]"))
+            dict["house_year"].extend(content.xpath("//div[@class='other']/div/text()[2]") if length==len(content.xpath("//div[@class='other']/div/text()[2]")) else ('page'+str(j))*length )
             # 22000
-            dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()"))
+            dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()") if length==len(content.xpath("//div[@class='col-3']/div/span/text()")) else ('page'+str(j))*length )
 
-        # logging.info(dict["title"])
+        logging.info('{} 第{}页爬取完成'.format(area,j))
         # :['雅宝公寓\xa0\xa0', '保利蔷薇\xa0\xa0'
+        # strlen=''
+        # for key in dict:
+        #     strlen+=key+":"+str(len(dict[key]))
+        # logging.info(strlen)
 
 
 def main():
@@ -87,13 +93,13 @@ def main():
     start=time.time()
     url="https://bj.lianjia.com/zufang"
     html=get_one_page(url)
-    dict={'title':[],'room_type':[],'square':[],'position':[],'detail_place':[],'floor':[],'total_floor':[],'house_year':[],'price':[]}
     get_areas(html)
     end=time.time()
     print("Scraping time:%d minutes"%((end-start)//60))
 
 
 lock=threading.Lock()
+dict={'area':[],'title':[],'room_type':[],'square':[],'position':[],'detail_place':[],'floor':[],'total_floor':[],'house_year':[],'price':[]}
 
 if __name__=='__main__':
     main()
