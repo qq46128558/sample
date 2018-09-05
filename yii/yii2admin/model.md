@@ -48,3 +48,20 @@ echo str_pad($input, 10, " ", STR_PAD_LEFT);
 // 交换数组中的键和值
 $exclude=array_flip(array('create_time','update_time'));
 ~~~
+
+
+#### 操作过程出现错误的相关方法(一般如保存操作后)
+~~~
+// $model是否有错误产生
+$model->hasErrors();
+
+// 获取$model的错误信息
+$attributes=$model->getErrors();
+// array ('name' => array (0 => '編碼 的值 "1" 已經被佔用了。',),)
+~~~
+
+
+#### 获取模型的字段数组
+	$fields=$model->attributeLabels();
+	// 可以通过字段名称获取Label名称
+	$fields['title']

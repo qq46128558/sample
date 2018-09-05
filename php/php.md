@@ -31,4 +31,60 @@ get_class(obj);
 // 得到一个对象的类型
 gettype(1);
 
+// ucfirst — 将字符串的首字母转换为大写
+string ucfirst ( string $str )
+
+// ucwords — 将字符串中每个单词的首字母转换为大写
+// 默认：$delimiters 空格符、制表符、换行符、回车符、水平线以及竖线
+string ucwords ( string $str [, string $delimiters = " \t\r\n\f\v" ] )
+
+// str_replace — 子字符串替换
+mixed str_replace ( mixed $search , mixed $replace , mixed $subject [, int &$count ] )
+
+// array_flip — 交换数组中的键和值
+array array_flip ( array $array )
+
+// substr — 返回字符串的子串
+string substr ( string $string , int $start [, int $length ] )
+~~~
+
+#### PHP重写原则
+- final修饰的类方法不可被子类重写
+- PHP是否重写父类方法只会根据方法名是否一致判断（5.3以后重写父类方法参数个数必须一致）
+- 重写时访问级别只可以等于或者宽松于父类 不可提升访问级别
+	- 父类的public方法不能被子类重写为protected或者private，protected方法不能被重写为private，可以宽松er，不可以严格er
+- parent::getPicturesrc($imageID); // 调用父类的方法
+
+
+#### 修饰符
+|修饰符|说明|
+|-|-|
+|final|不可重写|
+|static|静态|
+|public|所有可访问|
+|protected|类内/子类可访问|
+|private|类内可访问|
+
+
+#### [PHP中的静态方法和非静态方法调用方式](https://blog.csdn.net/u010250863/article/details/59542688 "https://blog.csdn.net/u010250863/article/details/59542688")
+- 非静态方法的调用方式
+	- self::methodName() (方法中不含$this)
+	- className::methodName() (方法中不含$this)
+	- $obj->methodName()
+- 静态方法内调用非静态方法
+	- self::methodName() (方法中不含$this)
+	- className::methodName() (方法中不含$this)
+- 非静态属性是不能用className::propertyName,方式调用的
+- 对象也不可以直接调用静态属性,静态属性属于类
+
+
+#### json格式判断
+~~~php
+// 判断数据不是JSON格式
+return is_null(json_decode($str));
+
+// 判断数据是合法的json数据: (PHP版本大于5.3)
+json_decode($string);
+return (json_last_error() == JSON_ERROR_NONE);
+//  json编解码所操作字符串必须是UTF8的
 ~~~

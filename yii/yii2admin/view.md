@@ -42,3 +42,19 @@ $this->myparams=array('item1','item2');
 
 #### 按钮中执行JS
 	<?= Html::button('重置', ['class' => 'btn btn-default','onclick'=>"javascript:$('#menusearch-title').val('');"]) ?>
+
+
+#### view中foreach/if的写法
+~~~
+<?php foreach($data as $key=>$value):?>
+	...
+<?php endforeach ?>
+
+<?php if ($targetmodel->is_picture($key)):?>
+	...
+<?php elseif ($targetmodel->is_content($key)): ?>
+	...
+<?php else : ?>
+	...
+<?php endif ?>
+~~~

@@ -37,14 +37,31 @@ def get_areas(html):
         logging.info(totalpage)
         totalpage=int(totalpage[0]) if totalpage!=[] else 0
         logging.info("{}区域有{}页".format(areas[i],totalpage))
-        dict={'title':[],'room_type':[]}
+        dict={'title':[],'room_type':[],'square':[],'position':[],'detail_place':[],'floor':[],'total_floor':[],'house_year':[],'price':[]}
         # for j in range(1,totalpage+1):
         for j in range(1,3):
             time.sleep(1)
             html=get_one_page(url+"/pg{}".format(j))
             content=etree.HTML(html)
+            # 凯景铭座  
             dict["title"].extend(content.xpath("//div[@class='where']/a/span/text()"))
+            # 4室1厅  
             dict["room_type"].extend(content.xpath("//div[@class='where']/span[1]/span/text()"))
+            # 178.91平米  
+            dict["square"].extend(content.xpath("//div[@class='where']/span[2]/text()"))
+            # 东 南 北
+            dict["position"].extend(content.xpath("//div[@class='where']/span[3]/text()"))
+            # 安定门租房
+            dict["detail_place"].extend(content.xpath("//div[@class='other']/div/a/text()"))
+            # 高楼层(共19层)
+            dict["floor"].extend(content.xpath("//div[@class='other']/div/text()[1]"))
+            # 高楼层(共19层)
+            dict["total_floor"].extend(content.xpath("//div[@class='other']/div/text()[1]"))
+            # 2001年建塔楼
+            dict["house_year"].extend(content.xpath("//div[@class='other']/div/text()[2]"))
+            # 22000
+            dict["price"].extend(content.xpath("//div[@class='col-3']/div/span/text()"))
+
             # logging.info(dict["title"])
             # :['雅宝公寓\xa0\xa0', '保利蔷薇\xa0\xa0'
     df=pd.DataFrame(dict)   
