@@ -17,15 +17,17 @@ logging.info('{}{}'.format('\n',df.describe()))
 '北京路段_房屋均价分布图'
 df_detail_place=df.groupby(by='detail_place').price.agg(['mean','count']).reset_index().sort_values(by='count',ascending=False)[0:20]
 logging.debug(df_detail_place)
+#  df_detail_place.mean:'function' object has no attribute 'map'
+df_detail_place['mean']=df_detail_place['mean'].map(lambda x:round(x,0))
 
-line = Line("北京主要路段房租均价")
+line = Line("北京路段房租均价",title_pos="right")
 line.add("路段",df_detail_place['detail_place'],df_detail_place['mean'],
 	is_stack=True,xaxis_rotate=30,yaxix_min=4.2,
     mark_point=['min','max'],xaxis_interval=0,line_color='lightblue',
     line_width=4,mark_point_textcolor='black',mark_point_color='lightblue',
     is_splitline_show=False)
 
-bar = Bar("北京主要路段房屋数量")
+bar = Bar("北京路段租房数量")
 bar.add("路段",df_detail_place['detail_place'],df_detail_place['count'],
 	is_stack=True,xaxis_rotate=30,yaxix_min=4.2,
     xaxis_interval=0,is_splitline_show=False)
