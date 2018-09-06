@@ -12,6 +12,17 @@
 #### 检查php文件的语法
 	php -l index.php
 
+
+
+#### php.ini
+~~~php
+// post 表单数据的最大允许值
+post_max_size 
+// 上传文件最大允许值
+upload_max_filesize 
+~~~
+
+
 #### 项目应用记录
 ~~~php
 // array_push — 将一个或多个单元压入数组的末尾（入栈）
@@ -88,3 +99,11 @@ json_decode($string);
 return (json_last_error() == JSON_ERROR_NONE);
 //  json编解码所操作字符串必须是UTF8的
 ~~~
+
+
+### 允许跨域请求
+	// php控制器中设置
+	// 允许任意域名发起的跨域请求
+	header("Access-Control-Allow-Origin: *"); 
+	//有一些请求还是会出错,再加这句,多个值用逗号隔开 设置允许跨域的header属性
+	header('Access-Control-Allow-Headers: X-Requested-With,X_Requested_With'); 

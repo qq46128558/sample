@@ -1,16 +1,23 @@
 ## [UEditor](https://ueditor.baidu.com/website/index.html "https://ueditor.baidu.com/website/index.html")富文本web编辑器
 
 #### 相关文件
-- 配置文件 vendor/kucha/ueditor/assets/ueditor.config.js
+- 前端配置文件 vendor/kucha/ueditor/assets/ueditor.config.js
 - 编辑器源码文件 vendor/kucha/ueditor/assets/ueditor.all.js
 - widget后台入口文件 vendor/kucha/ueditor/UEditor.php
 - 在后台入口文件中注册ueditor的js文件: UEditorAsset::register($this->view)
 - UEditorAsset 即 endor/kucha/ueditor/UEditorAsset.php
+- 前端参数: 'serverUrl' => Url::to(['/public/ueditor']) (服务器统一请求接口路径)
+	- 指向控制器 backend/controllers/PublicController.php
+	- ueditor方法:
+		- 'class' => 'common\actions\UEditorAction',
+ 		- 'config' => Yii::$app->params['ueditorConfig'],
+ 	- 指向 common/actions/UEditorAction.php 文件
+ 	- 基类 vendor/kucha/ueditor/UEditorAction.php
+ 	- 读取 config配置与后端配置文件 vendor/kucha/ueditor/config.php 合并
 
 
 
-
-#### view中配置参数
+#### view中前端配置参数
 ~~~php
 <?=$form->field($model, 'content_cn')->widget('\kucha\ueditor\UEditor',
 [
@@ -156,3 +163,54 @@ toolbars: [
 <script type="text/javascript" charset="utf-8" src="ueditor-patch-149.js"></script>
 ~~~
 
+
+
+#### [编辑后端配置参数](http://fex.baidu.com/ueditor/#server-config "http://fex.baidu.com/ueditor/#server-config")
+~~~php
+// 配置文件
+vendor/kucha/ueditor/config.php
+// yii2 admin配置位置 (由前端参数serverUrl指向的控制器加载)
+common/config/params.php
+	'ueditorConfig'=>[]
+
+// 常用参数
+// 上传图片给返回的路径添加指定的前缀
+imageUrlPrefix 
+// 上传文件大小限制 单位为B 默认2048000(2M)
+imageMaxSize
+// 上传文件格式控制
+imageAllowFiles 
+// 图片上传保存路径
+imagePathFormat 
+~~~
+
+
+
+#### [上传路径配置](http://fex.baidu.com/ueditor/#server-path "http://fex.baidu.com/ueditor/#server-path")
+
+
+
+#### ueditor的请求
+~~~php
+// 所有请求向serverUrl的控制器 public/ueditor 发起, 再通过它分发到其他 php 脚本执行
+
+// 测试
+http://47.106.160.48/tpadmin/public/ueditor
+// 返回 {"state": "请求地址出错"} 表示正常
+
+// 请求配置信息
+http://47.106.160.48/tpadmin/public/ueditor?action=config
+// 对应代码 common/actions/UEditorAction.php 文件
+// 基类: vendor/kucha/ueditor/UEditorAction.php
+protected function handleAction()
+{   
+    $action = Yii::$app->request->get('action');
+    switch ($action) {
+        case 'config':
+            $result = json_encode($this->config);
+            break;
+            ...
+~~~
+
+
+#### [常用API](http://fex.baidu.com/ueditor/#api-common "http://fex.baidu.com/ueditor/#api-common")
