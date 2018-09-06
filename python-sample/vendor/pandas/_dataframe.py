@@ -193,6 +193,9 @@ logging.info(user_info.age.cumsum())
 
 # 一次性获取多个统计指标
 # 总数、平均数、标准差、最小值、最大值、25%/50%/75% 分位数
+# 25%: 等于该样本中所有数值由小到大排列后第25%的数字
+# 50%: 中位数
+# 75%: 高位数
 logging.info(user_info.describe())
 # INFO:root:             age
 # count   4.000000

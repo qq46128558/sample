@@ -3,6 +3,9 @@
 #### 相关文件
 - 配置文件 vendor/kucha/ueditor/assets/ueditor.config.js
 - 编辑器源码文件 vendor/kucha/ueditor/assets/ueditor.all.js
+- widget后台入口文件 vendor/kucha/ueditor/UEditor.php
+- 在后台入口文件中注册ueditor的js文件: UEditorAsset::register($this->view)
+- UEditorAsset 即 endor/kucha/ueditor/UEditorAsset.php
 
 
 
@@ -144,5 +147,12 @@ toolbars: [
         'charts', // 图表
     ]
 ]
+~~~
+
+
+#### [如何使用补丁文件](http://fex.baidu.com/ueditor/#start-patch "http://fex.baidu.com/ueditor/#start-patch")
+~~~html
+<!--要在ueditor js下边加载相应的patch文件-->
+<script type="text/javascript" charset="utf-8" src="ueditor-patch-149.js"></script>
 ~~~
 

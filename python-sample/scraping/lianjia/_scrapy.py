@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'北京链家租房数据'
+'北京链家租房数据爬取'
 
 import logging
 import requests
