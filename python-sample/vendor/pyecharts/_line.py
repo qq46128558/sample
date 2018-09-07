@@ -13,7 +13,7 @@ df=pd.read_csv('city_yj.csv',encoding='gb18030')
 # 餐饮游记排序后再切片取前20名
 df=df.sort_values(by="餐饮游记",ascending=False)[0:20]
 logging.info(df)
-# 还原排序
+# 打散游记数量的排序
 df=df.sort_values(by="城市")
 
 # title_top 标题的top位置(可以用百分比) width 图表宽 height 图表高
@@ -25,7 +25,7 @@ line=Line('餐饮类标签',title_top="10",width=800,height=500)
 # yaxix_min 未知
 # mark_point 标记点(min,max)
 # xaxis_interval X轴间隔多少个“城市”显示
-# line_color 县颜色
+# line_color 线颜色
 # line_width 线宽
 # mark_point_textcolor 标记点的字体颜色
 # mark_point_color 未知

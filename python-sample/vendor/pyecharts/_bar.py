@@ -23,5 +23,11 @@ bar=Bar('餐饮类标签排名',title_top="10",width=800,height=500)
 # xaxis_rotate 未知
 # legend_top 图例的顶部位置(可以用百分比)
 # legend_pos 以控制图例的x轴位置,可以用百分比
-bar.add('游记数量',df['城市'],df['餐饮游记'],is_splitline_show=True,xaxis_rotate=30,legend_top="10")
+# is_stack 未知
+# xaxis_interval X轴间隔多少个“城市”显示
+# yaxix_min 未知
+bar.add('游记数量',df['城市'],df['餐饮游记'],
+	is_splitline_show=True,xaxis_rotate=30,legend_top="10",
+	is_stack=True,xaxis_interval=0,yaxix_min=4.2
+	)
 bar.render('bar.html')
