@@ -456,6 +456,7 @@ logging.info(user_info.groupby(by='sex').agg({'age':'sum'}).reset_index())
 # logging.info(user_info.groupby(by=['sex','city']).agg({'age':'sum'}).reset_index())
 # logging.info(user_info.groupby(by=['sex','city']).agg({'age':'mean'}).reset_index())
 # logging.info(user_info.groupby(by='sex').age.agg(['mean','count']).reset_index(inplace=True))
+# logging.info(user_info.groupby(by='sex').age.mean()).reset_index(inplace=True))
 
 
 # 按sex分组并求age的max,min
