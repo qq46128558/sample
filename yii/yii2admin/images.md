@@ -43,6 +43,19 @@
 
 #### 加载图片控件
 ~~~php
+$form是common\core\ActiveForm
+调用field()方法, 通过 public $fieldClass = 'common\core\ActiveField'; 控制返回field为core类的field
+common\core\ActiveField.php 调用 widget()方法
+然后这一句: $this->parts['{input}'] = $divstring.$class::widget($config).'</div>'; 触发进入基类
+vendor/yiisoft/yii2/base/Widget.php 137: $widget = Yii::createObject($config);
+经过几重调用才进入common:
+    vendor/yiisoft/yii2/BaseYii.php:349
+    vendor/yiisoft/yii2/di/Container.php:156
+    vendor/yiisoft/yii2/di/Container.php:383
+    vendor/yiisoft/yii2/di/Container.php:383
+    vendor/yiisoft/yii2/base/BaseObject.php:109
+    common/widgets/images/Images.php:25
+
 common/widgets/images/Images.php
 // 继承InputWidget
 class Images extends InputWidget
