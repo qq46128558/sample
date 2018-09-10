@@ -9,17 +9,28 @@
 </script>
 </head>
 <body>
-    <div id="47f4656d62b940a59460d945fc36787b" style="width:800px;height:400px;"></div>
+    <div id="eae354518d1242d3bf5294ce96fbb7b2" style="width:1280px;height:700px;"></div>
     <script type="text/javascript">
 
-var myChart_47f4656d62b940a59460d945fc36787b = echarts.init(document.getElementById('47f4656d62b940a59460d945fc36787b'), 'light', {renderer: 'canvas'});
+var myChart_eae354518d1242d3bf5294ce96fbb7b2 = echarts.init(document.getElementById('eae354518d1242d3bf5294ce96fbb7b2'), 'light', {renderer: 'canvas'});
 
-var option_47f4656d62b940a59460d945fc36787b = {
+var option_eae354518d1242d3bf5294ce96fbb7b2 = {
     "title": [
         {
-            "text": "\u5317\u4eac\u8def\u6bb5\u79df\u623f\u6570\u91cf",
+            "text": "\u4ef7\u683c\u533a\u95f4&\u623f\u6e90\u6570\u91cf\u5206\u5e03",
             "left": "auto",
             "top": "auto",
+            "textStyle": {
+                "fontSize": 18
+            },
+            "subtextStyle": {
+                "fontSize": 12
+            }
+        },
+        {
+            "text": "\u8def\u6bb5\u79df\u623f\u6570\u91cf",
+            "left": "auto",
+            "top": "40%",
             "textStyle": {
                 "fontSize": 18
             },
@@ -46,7 +57,7 @@ var option_47f4656d62b940a59460d945fc36787b = {
             }
         }
     },
-    "series_id": 3982503,
+    "series_id": 1071512,
     "tooltip": {
         "trigger": "item",
         "triggerOn": "mousemove|click",
@@ -63,30 +74,14 @@ var option_47f4656d62b940a59460d945fc36787b = {
     "series": [
         {
             "type": "bar",
-            "name": "\u8def\u6bb5",
+            "name": "\u623f\u6e90\u6570",
             "data": [
-                633.0,
-                428.0,
-                399.0,
-                366.0,
-                329.0,
-                252.0,
-                212.0,
-                194.0,
-                190.0,
-                187.0,
-                173.0,
-                153.0,
-                141.0,
-                132.0,
-                131.0,
-                127.0,
-                127.0,
-                125.0,
-                111.0,
-                108.0
+                3202.0,
+                3076.0,
+                3061.0,
+                1232.0
             ],
-            "stack": "stack_3982503",
+            "stack": "stack_1071512",
             "barCategoryGap": "20%",
             "label": {
                 "normal": {
@@ -109,7 +104,49 @@ var option_47f4656d62b940a59460d945fc36787b = {
             "markLine": {
                 "data": []
             },
-            "seriesId": 3982503
+            "seriesId": 1071512,
+            "xAxisIndex": 0,
+            "yAxisIndex": 0
+        },
+        {
+            "type": "bar",
+            "name": "\u8def\u6bb5",
+            "data": [
+                633.0,
+                428.0,
+                399.0,
+                366.0,
+                329.0,
+                252.0,
+                212.0,
+                194.0
+            ],
+            "stack": "stack_8816825",
+            "barCategoryGap": "20%",
+            "label": {
+                "normal": {
+                    "show": false,
+                    "position": "top",
+                    "textStyle": {
+                        "fontSize": 12
+                    }
+                },
+                "emphasis": {
+                    "show": true,
+                    "textStyle": {
+                        "fontSize": 12
+                    }
+                }
+            },
+            "markPoint": {
+                "data": []
+            },
+            "markLine": {
+                "data": []
+            },
+            "seriesId": 8816825,
+            "xAxisIndex": 1,
+            "yAxisIndex": 1
         },
         {
             "type": "line",
@@ -118,7 +155,7 @@ var option_47f4656d62b940a59460d945fc36787b = {
             "symbolSize": 4,
             "smooth": false,
             "step": false,
-            "stack": "stack_3340383",
+            "stack": "stack_2599760",
             "showSymbol": true,
             "data": [
                 2690.0,
@@ -128,19 +165,7 @@ var option_47f4656d62b940a59460d945fc36787b = {
                 1692.0,
                 1558.0,
                 1454.0,
-                1612.0,
-                9963.0,
-                1637.0,
-                4357.0,
-                7626.0,
-                10360.0,
-                3395.0,
-                15606.0,
-                4483.0,
-                5012.0,
-                15178.0,
-                8459.0,
-                3061.0
+                1612.0
             ],
             "label": {
                 "normal": {
@@ -159,7 +184,7 @@ var option_47f4656d62b940a59460d945fc36787b = {
             },
             "lineStyle": {
                 "normal": {
-                    "width": 4,
+                    "width": 1,
                     "opacity": 1,
                     "curveness": 0,
                     "type": "solid",
@@ -202,12 +227,25 @@ var option_47f4656d62b940a59460d945fc36787b = {
             "markLine": {
                 "data": []
             },
-            "seriesId": 3982503,
-            "xAxisIndex": 0,
+            "seriesId": 8816825,
+            "xAxisIndex": 1,
             "yAxisIndex": 1
         }
     ],
     "legend": [
+        {
+            "data": [
+                "\u623f\u6e90\u6570"
+            ],
+            "selectedMode": "multiple",
+            "show": true,
+            "left": "25%",
+            "top": "2%",
+            "orient": "horizontal",
+            "textStyle": {
+                "fontSize": 12
+            }
+        },
         {
             "data": [
                 "\u8def\u6bb5",
@@ -215,8 +253,8 @@ var option_47f4656d62b940a59460d945fc36787b = {
             ],
             "selectedMode": "multiple",
             "show": true,
-            "left": "center",
-            "top": "top",
+            "left": "25%",
+            "top": "42%",
             "orient": "horizontal",
             "textStyle": {
                 "fontSize": 12
@@ -249,6 +287,37 @@ var option_47f4656d62b940a59460d945fc36787b = {
                 }
             },
             "data": [
+                "\u4fbf\u5b9c",
+                "\u666e\u901a",
+                "\u9ad8\u7aef",
+                "\u8c6a\u534e"
+            ]
+        },
+        {
+            "show": true,
+            "nameLocation": "middle",
+            "nameGap": 25,
+            "nameTextStyle": {
+                "fontSize": 14
+            },
+            "axisTick": {
+                "alignWithLabel": false
+            },
+            "inverse": false,
+            "boundaryGap": true,
+            "type": "category",
+            "splitLine": {
+                "show": false
+            },
+            "axisLabel": {
+                "interval": 0,
+                "rotate": 30,
+                "margin": 8,
+                "textStyle": {
+                    "fontSize": 12
+                }
+            },
+            "data": [
                 "\u71d5\u987a\u8def\u56fd\u9053",
                 "\u798f\u6210\u4e94\u671f\u516c\u4ea4\u603b\u7ad9",
                 "\u9996\u5c14\u751c\u57ce",
@@ -256,20 +325,9 @@ var option_47f4656d62b940a59460d945fc36787b = {
                 "\u5929\u6d0b\u57ce",
                 "\u71d5\u987a\u8def\u4e1c",
                 "\u5929\u6d0b\u57ce4\u4ee3",
-                "\u71d5\u4eac\u822a\u57ce",
-                "\u4ea6\u5e84",
-                "\u798f\u6210\u56db\u671f",
-                "\u987a\u4e49\u57ce",
-                "\u56de\u9f99\u89c2",
-                "\u5317\u82d1",
-                "\u5927\u5cea",
-                "\u53cc\u4e95",
-                "\u957f\u9633",
-                "\u65e7\u5bab",
-                "\u671b\u4eac",
-                "\u540e\u6c99\u5cea",
-                "\u826f\u4e61"
-            ]
+                "\u71d5\u4eac\u822a\u57ce"
+            ],
+            "gridIndex": 2
         }
     ],
     "yAxis": [
@@ -323,7 +381,35 @@ var option_47f4656d62b940a59460d945fc36787b = {
                 "textStyle": {
                     "fontSize": 12
                 }
-            }
+            },
+            "gridIndex": 2
+        },
+        {
+            "show": true,
+            "nameLocation": "middle",
+            "nameGap": 25,
+            "nameTextStyle": {
+                "fontSize": 14
+            },
+            "axisTick": {
+                "alignWithLabel": false
+            },
+            "inverse": false,
+            "boundaryGap": true,
+            "type": "value",
+            "splitLine": {
+                "show": false
+            },
+            "axisLabel": {
+                "interval": "auto",
+                "formatter": "{value} ",
+                "rotate": 0,
+                "margin": 8,
+                "textStyle": {
+                    "fontSize": 12
+                }
+            },
+            "gridIndex": 2
         }
     ],
     "color": [
@@ -352,9 +438,29 @@ var option_47f4656d62b940a59460d945fc36787b = {
         "#6950a1",
         "#918597",
         "#f6f5ec"
+    ],
+    "grid": [
+        {
+            "top": "5%",
+            "bottom": "65%",
+            "left": "5%",
+            "right": "55%"
+        },
+        {
+            "top": "45%",
+            "bottom": "5%",
+            "left": "5%",
+            "right": "55%"
+        },
+        {
+            "top": "45%",
+            "bottom": "5%",
+            "left": "5%",
+            "right": "55%"
+        }
     ]
 };
-myChart_47f4656d62b940a59460d945fc36787b.setOption(option_47f4656d62b940a59460d945fc36787b);
+myChart_eae354518d1242d3bf5294ce96fbb7b2.setOption(option_eae354518d1242d3bf5294ce96fbb7b2);
 
 </script>
 </body>
