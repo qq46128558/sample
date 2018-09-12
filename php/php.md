@@ -57,6 +57,15 @@ array array_flip ( array $array )
 
 // substr — 返回字符串的子串
 string substr ( string $string , int $start [, int $length ] )
+
+// uniqid — 生成一个唯一ID
+string uniqid ([ string $prefix = "" [, bool $more_entropy = false ]] )
+
+// md5_file — 计算指定文件的 MD5 散列值
+string md5_file ( string $filename [, bool $raw_output = FALSE ] )
+
+// unlink — 删除文件
+bool unlink ( string $filename [, resource $context ] )
 ~~~
 
 #### PHP重写原则
