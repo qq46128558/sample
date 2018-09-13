@@ -97,3 +97,23 @@ public function behaviors(){
 	return $behaviors;                                                                       
 }
 ~~~
+
+
+### JS
+
+#### js文件中引入另外一个js
+~~~
+new_element=document.createElement("script");
+new_element.setAttribute("type","text/javascript");
+new_element.setAttribute("src","a.js"); // 在这里引入了a.js
+document.body.appendChild(new_element);
+~~~
+
+#### common.js中使用layui.js
+~~~
+html中先加载了layui.js, 然后在common.js中可以直接使用(就像使用jquery一样), 如:
+//dom加载完成后执行的js
+;$(function(){
+	layui.use('layer',function(){var layer = layui.layer;});
+});
+~~~
