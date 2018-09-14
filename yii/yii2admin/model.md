@@ -4,7 +4,21 @@
 	
 #### like语句查询数据
 	$result=$model->where(['like','title','xxx'])->orderBy('sort asc')->all();
-	
+
+#### or语句+and语句
+	$query=$model->select(['name','title','value'])
+        ->filterWhere(['name'=>$config])
+        ->orFilterWhere(['title'=>$config])
+        ->andWhere(['status'=>1])
+        ->orderBy(['sort'=>SORT_ASC,'update_time'=>SORT_DESC]);
+	// (name='xxx' or title='xxx') and (status=1)
+
+#### \yii\db\Query支持防sql注入
+	->where(['name'=>$name])
+	// 或
+	->where('name=:name')
+	->addParams([':name'=>$name])
+
 #### 根据ID查找一个Model
 	<!-- backend\models\Menu -->
 	$model = Menu::findOne($id)
