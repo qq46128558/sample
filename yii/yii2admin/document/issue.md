@@ -117,3 +117,6 @@ html中先加载了layui.js, 然后在common.js中可以直接使用(就像使�
 	layui.use('layer',function(){var layer = layui.layer;});
 });
 ~~~
+
+#### js传值到php
+	可以通过url传参或cookies存值
