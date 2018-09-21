@@ -34,7 +34,21 @@ $data['remark']=print_r($event,1)
 ~~~
 
 
+#### 文件上传获取$_FILES为空Array()
+~~~
+使用Yii的ActiveForm的fileInput(),后台使用\yii\web\UploadedFile
+获取实例(getInstance())时返回为Null,跟踪发现$_FILES为空Array()
 
+原因:
+提交按钮class="ajax-post"
+则会调用 common\metronic\other\js\common.js
+以 $.ajax post方式提交数据,导致获取不到$_FILES数据
+
+解决:
+1. 不以$.post()方式传数据.
+2. 使用自定义上传文件widget.
+[其他原因参考资料](https://blog.csdn.net/dxk539687357/article/details/52460685 "https://blog.csdn.net/dxk539687357/article/details/52460685")
+~~~
 
 
 
@@ -83,3 +97,26 @@ public function behaviors(){
 	return $behaviors;                                                                       
 }
 ~~~
+
+
+### JS
+
+#### js文件中引入另外一个js
+~~~
+new_element=document.createElement("script");
+new_element.setAttribute("type","text/javascript");
+new_element.setAttribute("src","a.js"); // 在这里引入了a.js
+document.body.appendChild(new_element);
+~~~
+
+#### common.js中使用layui.js
+~~~
+html中先加载了layui.js, 然后在common.js中可以直接使用(就像使用jquery一样), 如:
+//dom加载完成后执行的js
+;$(function(){
+	layui.use('layer',function(){var layer = layui.layer;});
+});
+~~~
+
+#### js传值到php
+	可以通过url传参或cookies存值

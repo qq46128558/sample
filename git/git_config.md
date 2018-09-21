@@ -16,3 +16,10 @@ git config --global alias.rlg "reflog --name-status --date=local"
 
 #### 生成SSH公钥
 ssh-keygen -t rsa -C "youremail@example.com"
+
+
+#### 查看配置信息
+git config --global --list
+
+#### 查看指定项配置信息
+git config xxxxxx

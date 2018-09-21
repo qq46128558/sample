@@ -26,7 +26,8 @@
     $("#checkboxID").prop('checked');
     $("#checkboxID").is(':checked');
     $("#checkboxID").get(0).checked;
-
+    // checkbox未选中, 则post不传值
+    
 #### 给Checkbox加Click和Change事件
     $("#checkboxID").change(function() { 
         alert("checked"); 

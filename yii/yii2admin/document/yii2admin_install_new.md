@@ -1,6 +1,7 @@
 
 ## [yii2admin](https://github.com/e282486518/yii2admin.git "https://github.com/e282486518/yii2admin.git")
 yii2+metronic v4.5.6+bootstrap v3.3.6
++layui v2.4.3
 
 
 - [yii2admin oschina]( http://git.oschina.net/ccdream/yii2admin "http://git.oschina.net/ccdream/yii2admin")

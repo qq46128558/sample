@@ -58,3 +58,27 @@ $this->myparams=array('item1','item2');
 	...
 <?php endif ?>
 ~~~
+
+
+
+#### 在View中注入JS
+~~~
+<?php $this->beginBlock('js'); ?>
+layui.use('upload',function(){
+    var upload=layui.upload;
+    var uploadInst=upload.render({
+        elem:'#file'
+        ,done: function(res){
+            if(res.code > 0){
+                return layer.msg('<?=Yii::t("backend","上傳失敗")?>');
+            }
+        }
+        ,error: function(){
+        }
+    });
+})
+
+<?php $this->endBlock() ?>
+<!-- 将数据块 注入到视图中的某个位置 -->
+<?php $this->registerJs($this->blocks['js'], \yii\web\View::POS_END); ?>
+~~~

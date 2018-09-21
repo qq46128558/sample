@@ -69,10 +69,9 @@ js:
 对应目录是:
 backend/web/assets/c68869b8
 
-12. 临时总结
+12. 一些总结
 - backend/web/assets/c68869b8/.... 内容不上传git
-    (服务器安装完成后是否可以直接修改呢?)
+    (经验证c68869b8可以直接删除,然后清除缓存,刷新后会自动重新生成)
 - asset文件中配置的资源文件前缀目录是: common/metronic/
-- 修改资源应修改此目录内文件: common/metronic/, 再更新到web/assets
-    (反向思维:是否可以在web/assets中修改看到效果后,再覆盖common/metronic对应文件?)
+- 修改资源应修改此目录内文件: common/metronic/
 ~~~
