@@ -64,5 +64,3 @@ re_telephone=re.compile('^(\d{3})-(\d{3,8})$')
 print('12.',re_telephone.match('010-12345').groups())
 print('13.',re_telephone.match('010-8086').groups())
 # 编译后生成Regular Expression对象，由于该对象自己包含了正则表达式，所以调用对应的方法时不用给出正则字符串。
-
-

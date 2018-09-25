@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '爬取电视指南网延禧攻略信息'
-'多线程|正则分割'
+'多线程|正则分割|正则替换'
 # http://www.tvzn.com/14784/yanyuanbiao.html
 
 import logging
@@ -47,13 +47,25 @@ def get_actors_info(dict):
 	html=get_one_page(url)
 	soup=BeautifulSoup(html,'html.parser')
 	actorinfo=soup.div.find(id='gaiyao').find(class_='tn-box-content tn-widget-content tn-corner-bottom').text
-	# 正则匹配分割字符串
-	actorinfo=re.split('\s\s+|\r\n|\n|:',actorinfo)
+	# 用encode查看换行符
+	logging.debug(soup.div.find(id='gaiyao').find(class_='tn-box-content tn-widget-content tn-corner-bottom').encode('gbk'))
+
+	# 正则替换: 分开处理\r\n与\n
+	actorinfo=re.sub('\r\n','<br>',actorinfo)
+	actorinfo=re.sub('\n','',actorinfo)
+	actorinfo=actorinfo.replace(' ','')
+	
+	
+	# 正则匹配分割字符串:<br>及:分割
+	actorinfo=re.split('<br>|:',actorinfo)
 	logging.info(actorinfo)
-	dict['info']=actorinfo
+	dict['身高']=actorinfo[4]
+	dict['体重']=actorinfo[6]
+	dict['生日']=actorinfo[10]
+	dict['星座']=actorinfo[12]
 	logging.debug(dict)
 	with lock:
-		items.append((dict['name'],dict['role'],dict['info']))
+		items.append((dict['name'],dict['role'],dict['身高'],dict['体重'],dict['生日'],dict['星座']))
 
 logging.basicConfig(level=logging.INFO)
 baseUrl="http://www.tvzn.com/{}"
@@ -71,7 +83,7 @@ if __name__=='__main__':
 	for t in threads:
 		t.join()
 	logging.debug(items)
-	df=pd.DataFrame(data=items,columns=['name','role','info'])
+	df=pd.DataFrame(data=items,columns=['name','role','身高','体重','生日','星座'])
 	df.to_csv('actors_info.csv',index=False,encoding='utf_8_sig')
 	end_time=time.time()
 	print("Scraping time:%ds"%(round(end_time-start_time,3)))
