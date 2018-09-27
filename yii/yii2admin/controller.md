@@ -56,3 +56,12 @@ $data=[
 $model->setAttributes($data);
 $model->save();
 ~~~
+
+
+#### 获取资源包的路径
+~~~php
+$view = \Yii::$app->view;
+$am = $view->getAssetManager();
+$bundle = $am->getBundle('backend\assets\AppAsset');
+$bundle->baseUrl;
+~~~
