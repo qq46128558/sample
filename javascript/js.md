@@ -30,3 +30,7 @@ function getScrollbarWidth() {
 
 }
 ~~~
+
+
+#### 修改元素的class属性
+	document.getElementById('xxx').className='layui-this';
