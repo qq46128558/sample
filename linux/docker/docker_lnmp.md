@@ -75,3 +75,9 @@
 	}
 	~~~
 15. 测试index.php页面是否能正常打开
+
+## 问题记录
+- PHP Warning:  Module 'pdo_mysql' already loaded in Unknown on line 0
+	- /usr/local/etc/php/中有php.ini
+	- /usr/local/etc/php/conf.d中有docker-php-ext-pdo_mysql.ini
+	- 两个ini中有重复的extension,注释其中一个即可

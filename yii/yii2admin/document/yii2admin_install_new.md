@@ -142,3 +142,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
 
 
 
+## 问题记录
+
+* composer install出现: Authentication required (packagist.phpcomposer.com)
+    - 修改composer.json, 把url属性的packagist.phpcomposer.com改为packagist.org
