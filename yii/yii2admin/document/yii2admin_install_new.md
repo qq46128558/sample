@@ -106,7 +106,8 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
             try_files $uri /backend/web/index.php?$args;
         }
         # API重写
-        location /api/v {
+        #location /api/v {
+        location ~ /api/(tp|v) {
             alias  /data/www/yii/api/web;
             #注意：这里不能用try_files，当location /api和目录名称相同时会出现重写错误！
             try_files $uri /api/web/index.php?$args;

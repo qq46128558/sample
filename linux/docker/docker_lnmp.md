@@ -81,3 +81,13 @@
 	- /usr/local/etc/php/中有php.ini
 	- /usr/local/etc/php/conf.d中有docker-php-ext-pdo_mysql.ini
 	- 两个ini中有重复的extension,注释其中一个即可
+- 修改nginx容器配置文件出错,导致容器无法启动
+	- 修改无法启动的容器中的内容的方法
+	- 方案一：创建新镜像
+	- 方案二：直接修改容器的文件
+		- 所有的容器数据都存在/var/lib/docker/aufs/diff/路径下
+		- 进入目录,查找配置文件 find ./ -name 'nginx.conf'
+		- 有可能有多个结果,(暂未知如何判断是哪个ID目录)[源文](https://www.cnblogs.com/51kata/p/5276407.html "https://www.cnblogs.com/51kata/p/5276407.html")
+		- 修改完毕后用 docker start 容器名/ID  即可重新启动容器
+	- 建议配置文件也挂载到外部目录 -v
+- 网站存取文件的权限在phpfpm容器中修改
