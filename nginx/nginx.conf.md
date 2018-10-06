@@ -180,3 +180,14 @@ $time_local|11/Apr/2018:14:53:36 +0800 |(服务器时间LOG Format 格式)
 $uri|/echo |(请求中的当前URI)
 
 
+#### 使nginx解析php
+~~~
+location ~ \.php$ {
+                root           /var/www/html/taiping;
+                fastcgi_pass   phpfpm:9000;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                include        fastcgi_params;
+                fastcgi_param PHP_ADMIN_VALUE "open_basedir=/var/www/html/taiping/:/tmp/:/proc/";
+        }
+~~~
