@@ -47,6 +47,7 @@
 |合并拷贝|ctrl+shift+c|-
 |填充颜色|alt+delete|-
 |取消选择|ctrl+d|-
+|内容识别缩放|ctrl+shift+alt+c|编辑
 
 
 
