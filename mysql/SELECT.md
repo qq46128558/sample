@@ -48,3 +48,7 @@ COMMIT WORK;
 
 #### WHERE子句关键字
 	IS NULL	AND	OR	IN	NOT	LIKE REGEXP
+
+
+#### 查询数据表行数及大小
+	SELECT table_name,table_rows,data_length FROM information_schema.tables WHERE table_schema='quickbi_meta_db';
