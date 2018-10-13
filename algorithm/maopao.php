@@ -5,14 +5,19 @@
 // 将值小的数据移至在前面，值大的数据就放在后面。
 $arr=[6,2,4,8,5,9,7,1,3,8];
 $len=count($arr);
-$innerlen=$len-1;
+$sublen=$len-1;
 // 将数组转换为字符串显示
 echo join('',$arr),PHP_EOL;
+
+// 计算执行次数
+$count=0;
 
 // 第一个for循环来控制数据比较的轮次数
 for ($i=0;$i<$len;$i++){
     // 第二个for循环来控制次数并判断大小交换位置
-    for ($j=0;$j<$innerlen;$j++){
+    for ($j=0;$j<$sublen;$j++){
+        $count++;
+        // 每一个和下一个比较
         if ($arr[$j]>$arr[$j+1]){
             // 通过$temp变量交换位置
             $temp=$arr[$j];
@@ -22,6 +27,7 @@ for ($i=0;$i<$len;$i++){
     }
 }
 
-echo join('',$arr);
+echo join('',$arr),PHP_EOL;
 // 6248597138
 // 1234567889
+echo 'Counts:'.$count;

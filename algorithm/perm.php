@@ -17,16 +17,18 @@ function perm(&$ar,$k,$m){
     // 初始值是否等于最大值
     if ($k==$m){
         // 将数组转换为字符串
-        echo join('',$ar)," ";
+        echo join('',$ar)," ",PHP_EOL;
     }else{
         // 循环调用函数
         for ($i=$k;$i<=$m;$i++){
             // 调用swap函数 交换位置
             swap($ar[$k],$ar[$i]);
+            echo "Swap:",join('',$ar)," ";
             // 递归调用自己
             perm($ar,$k+1,$m);
             // 再次调用swap函数 还原位置
             swap($ar[$k],$ar[$i]);
+            echo "Reswap:",join('',$ar)," ";
 
         }
     }
