@@ -37,3 +37,27 @@ lay-skin=" "	定义相同元素的不同风格，如checkbox的开关风格
 lay-filter=" "	事件过滤器。你可能会在很多地方看到他，他一般是用于监听特定的自定义事件。你可以把它看作是一个ID选择器
 lay-submit	定义一个触发表单提交的button，不用填写值
 ~~~
+
+## 布局
+	
+	采用 layui-row 来定义行，如：<div class="layui-row"></div>
+	采用类似 layui-col-md* 这样的预设类来定义一组列（column），且放在行（row）内
+	可对列追加类似 layui-col-space5、 layui-col-md-offset3 这样的预设类来定义列的间距和偏移。
+	最后，在列（column）元素中放入你自己的任意元素填充内容，完成布局！
+
+## 内置背景色
+	
+	class="layui-bg-black"
+
+## 图标
+	
+	<i class="layui-icon layui-icon-face-smile"></i>   
+	<i class="layui-icon layui-icon-face-smile" style="font-size: 30px; color: #1E9FFF;"></i>  
+
+## 动画
+
+	<div class="layui-anim layui-anim-up layui-anim-loop"></div>
+
+## 按钮
+	<button class="layui-btn">一个标准的按钮</button>
+	<a href="http://www.layui.com" class="layui-btn">一个可跳转的按钮</a>
