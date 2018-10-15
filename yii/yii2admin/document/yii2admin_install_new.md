@@ -44,6 +44,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
 1. 下载安装
     - 切换工作目录: cd /data/www
     - 下载yii2admin源码: git clone  http://git.oschina.net/ccdream/yii2admin yii
+        - git clone -b dev git@gitee.com:usana/taiping.git
     - cd /data/www/yii
 2. 配置composer.json
     - config内对象增加fxp-asset以及github-oauth
@@ -73,6 +74,8 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
     - 重启php服务: /etc/init.d/php-fpm restart
     
 3. 安装依赖库: composer install
+    - 提示:Authentication required
+    - 修改composer.json, 将packagist的url改为https://packagist.org即可
 
 4. 配置环境、配置数据库并安装数据库(开始安装): /usr/local/php/bin/php /data/www/yii/yii install
     
@@ -101,7 +104,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
             try_files $uri /frontend/web/index.php?$args;
         }
         # 后台重写
-        location /admin {
+        location /tpadmin {
             alias  /data/www/yii/backend/web;
             try_files $uri /backend/web/index.php?$args;
         }

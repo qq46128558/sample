@@ -18,3 +18,11 @@
 /usr/sbin：用户系统管理程序
 /opt: 可选的操作系统组件和第三方应用程序
 ~~~
+
+### ssh远程一段时间无操作后自动断开的解决
+
+1. 修改/etc/ssh/sshd_config
+2. 增加或修改 ClientAliveInterval 30 (表示每30秒发送一次心跳信号)
+3. 增加或修改 ClientAliveCountMax 1 (表示客户端无回应次数大于该值时自动断开连接)
+4. 重启ssh服务: /etc/init.d/ssh restart
+5. 退出ssh远程后再次连入
