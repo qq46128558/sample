@@ -67,6 +67,9 @@
 #### 查找普通文件内容包含getSql的文件
 	find . -type f |xargs grep "getSql"
 
+#### 其他记录
+    # 同-xdev: 将范围局限在先行的文件系统中
+    find . -mount
 
 
 
