@@ -65,6 +65,8 @@ lay-submit	定义一个触发表单提交的button，不用填写值
 
 ## 表单
 
+依赖加载模块：form
+
 ~~~html
 <form class="layui-form layui-form-pane" action="">
 	<div class="layui-form-item">
@@ -83,6 +85,8 @@ lay-submit	定义一个触发表单提交的button，不用填写值
 ~~~
 
 ## 导航
+
+依赖加载模块：element
 
 ~~~html
 <ul class="layui-nav layui-nav-tree layui-nav-side">
@@ -108,3 +112,114 @@ lay-submit	定义一个触发表单提交的button，不用填写值
 </span>
 ~~~
 
+## 选项卡
+
+依赖加载组件：element
+
+~~~html
+<div class="layui-tab">
+  <ul class="layui-tab-title">
+    <li class="layui-this">网站设置</li>
+    <li>用户管理</li>
+    <li>权限分配</li>
+    <li>商品管理</li>
+    <li>订单管理</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">内容1</div>
+    <div class="layui-tab-item">内容2</div>
+    <div class="layui-tab-item">内容3</div>
+    <div class="layui-tab-item">内容4</div>
+    <div class="layui-tab-item">内容5</div>
+  </div>
+</div>
+~~~
+
+## 进度条
+
+依赖加载组件：element
+
+~~~html
+<div class="layui-progress">
+  <div class="layui-progress-bar" lay-percent="10%"></div>
+</div>
+~~~
+
+## 面板
+
+依赖加载组件：element
+
+~~~html
+<div class="layui-card">
+  <div class="layui-card-header">卡片面板</div>
+  <div class="layui-card-body">
+    卡片式面板面板通常用于非白色背景色的主体内<br>
+    从而映衬出边框投影
+  </div>
+</div>
+~~~
+
+折叠面板
+
+~~~html
+<div class="layui-collapse">
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">杜甫</h2>
+    <div class="layui-colla-content layui-show">内容区域</div>
+  </div>
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">李清照</h2>
+    <div class="layui-colla-content layui-show">内容区域</div>
+  </div>
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">鲁迅</h2>
+    <div class="layui-colla-content layui-show">内容区域</div>
+  </div>
+</div>
+~~~
+
+## 表格
+
+	<table class="layui-table">
+	<table lay-even lay-skin="line" lay-size="lg">
+
+## 徽章
+
+	<span class="layui-badge-dot"></span>
+	<span class="layui-badge">6</span>
+	<span class="layui-badge-rim">6</span>
+
+## 时间线
+
+~~~html
+<ul class="layui-timeline">
+  <li class="layui-timeline-item">
+    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+    <div class="layui-timeline-content layui-text">
+      <h3 class="layui-timeline-title">8月18日</h3>
+      <p>
+        layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
+        <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
+        <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
+      </p>
+    </div>
+  </li>
+</ul>
+~~~
+
+## 辅助
+
+	<blockquote class="layui-elem-quote">引用区域的文字</blockquote>
+	<blockquote class="layui-elem-quote layui-quote-nm">引用区域的文字</blockquote>
+	<hr class="layui-bg-red">
+	
+字段集区块
+
+~~~html
+<fieldset class="layui-elem-field">
+  <legend>字段集区块 - 默认风格</legend>
+  <div class="layui-field-box">
+    内容区域
+  </div>
+</fieldset>
+~~~
