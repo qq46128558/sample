@@ -59,5 +59,52 @@ lay-submit	定义一个触发表单提交的button，不用填写值
 	<div class="layui-anim layui-anim-up layui-anim-loop"></div>
 
 ## 按钮
+
 	<button class="layui-btn">一个标准的按钮</button>
 	<a href="http://www.layui.com" class="layui-btn">一个可跳转的按钮</a>
+
+## 表单
+
+~~~html
+<form class="layui-form layui-form-pane" action="">
+	<div class="layui-form-item">
+    	<label class="layui-form-label">输入框</label>
+    	<div class="layui-input-block">
+      		<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    	</div>
+    </div>
+    <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+	      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	    </div>
+  	</div>
+</form>
+~~~
+
+## 导航
+
+~~~html
+<ul class="layui-nav layui-nav-tree layui-nav-side">
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;">默认展开</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:;">选项1</a></dd>
+      <dd><a href="javascript:;">选项2</a></dd>
+      <dd><a href="">跳转</a></dd>
+    </dl>
+  </li>
+</ul>
+~~~
+
+面包屑
+
+~~~html
+<span class="layui-breadcrumb">
+  <a href="">首页</a>
+  <a href="">国际新闻</a>
+  <a href="">亚太地区</a>
+  <a><cite>正文</cite></a>
+</span>
+~~~
+
