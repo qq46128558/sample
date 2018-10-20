@@ -11,3 +11,5 @@ List containers
 #### 查看所有正在运行中的容器列表
     docker ps
     
+#### 只显示容器的数字ID
+	docker ps -q
