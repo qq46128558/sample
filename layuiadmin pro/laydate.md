@@ -10,7 +10,7 @@
 layui.use('laydate',function(){
 	var laydate=layui.laydate;
 	laydate.render({
-		elem:'#test' // 指定元素
+		elem:'#test1' // 指定元素
 	});
 });
 </script>
