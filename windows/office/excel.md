@@ -22,3 +22,12 @@
 ## 多行复制成一行并分行显示
 
 	菜单>开始>打开剪贴板(旁边小图标)>选中多行复制>选中单元格并双击出现光标>点击剪贴板中的内容 即可
+
+## 简繁体转换
+
+	默认审阅菜单中有,如没有则需要管理加载项.
+	菜单>文件>选项>加载项>管理,COM加载项>转到>中文转换加载项,一般位置:
+	D:\Program Files (x86)\Microsoft Office\Office15\ADDINS\TCSCCONV.DLL
+	D:\Program Files (x86)\Microsoft Office\Office14\ADDINS\TCSCCONV.DLL
+	多试几次,看哪个能用就用哪个,试过遇到的情况是需要将14内的复制到15内,excel才能用
+	复制前先备份
