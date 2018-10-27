@@ -29,7 +29,7 @@ laytpl(getTpl).render(data,function(html){
 |{{d.field}}|输出一个普通字段,不转义html
 |{{=d.field}}|同上,转义html
 |{{# javascript表达式}}|js语句,一般用于逻辑处理(输出函数写{{ fn() }} 未理解)
-|{{! template !}}|不解析该区域
+|{{! template !}}|不解析该区域,即原樣呈現出來,暫未知應用場景
 
 ## 分隔符
 

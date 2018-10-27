@@ -27,6 +27,7 @@
 	通过对任意元素设定 lay-href="/user/set/uid=123/type=1"
 	直接对 a 标签设定 href，如： <a href="#/user/set">text</a>
 	在 JS 代码中，还可通过 location.hash = '/user/set';
+	(input的lay-action,li的data-jump也是路由跳转?
 
 ## 路由结尾
 	user/set: 读取的视图文件是：.views/user/set.html
