@@ -1,4 +1,11 @@
 
+#### 显示结果方式\g与\G
+	
+	# \g等同于;(分号)
+	SELECT * FROM `tablename`\g
+	# \G将行结果以纵向呈现(方便黑屏界面的阅读)
+	SELECT * FROM `tablename`\G
+
 
 #### SELECT 显示加锁
 ~~~
