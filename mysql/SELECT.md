@@ -1,4 +1,8 @@
 
+#### 生成密码
+	SELECT PASSWORD('123456');
+	SELECT OLD_PASSWORD('123456');
+	
 #### 显示结果方式\g与\G
 	
 	# \g等同于;(分号)
