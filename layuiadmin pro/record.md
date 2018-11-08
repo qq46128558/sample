@@ -12,7 +12,7 @@
 
 4. body中有div id="LAY_app"，应改是嵌入各种页面用
 5. layui的js脚本: src="layui/layui.js"
-6. 模块化的用法:layui.use() 方式来加载该入口文件, base是存放新模块的目录
+6. 模块化的用法:layui.config() 方式来加载该入口文件, base是存放新模块的目录
 
     ~~~javascript
     layui.config({
@@ -23,4 +23,16 @@
 
 ## layuiadmin pro模块的加载
 
-1. 主入口：src/index.js 或 dist/index.js
+1. pro的入口模块：src/index.js 或 dist/index.js (未完全读懂)
+2. layui.extend()加载带目录的模块
+
+	- setter:配置模块
+	- admin与view:核心模块
+
+3. define(['setter', 'admin'], function(exports){ 定义新模块(index),并依赖setter与admin
+
+	- renderPage方法: 根据路由渲染页面
+	- entryPage方法: 入口页面
+		- 渲染页面views/layout.html: 是整个框架结构的承载
+		- 默认主页: setter.entry(config.js中配置,应该就是views/index.html)
+	- exports: 对外输出{render: renderPage}

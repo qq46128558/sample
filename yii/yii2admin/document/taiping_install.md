@@ -40,42 +40,18 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
     - 引入yii框架所需要的组件：composer global require "fxp/composer-asset-plugin:^1.2.0"
         - 有可能报错,但不影响安装: Unzip with unzip command failed, falling back to ZipArchive class
 
-### 安装Yii2Admin
+### 安装taiping
 1. 下载安装
     - 切换工作目录: cd /data/www
-    - 下载yii2admin源码: git clone  http://git.oschina.net/ccdream/yii2admin yii
+    - 下载yii2admin源码: 
         - git clone -b dev git@gitee.com:usana/taiping.git
-    - cd /data/www/yii
-2. 配置composer.json
-    - config内对象增加fxp-asset以及github-oauth
-    - extra内对象删除
-    ~~~
-    "config": {
-        "fxp-asset":{
-                "installer-paths":{
-                        "npm-asset-library": "vendor/npm",
-                        "bower-asset-library": "vendor/bower"
-                }
-        },
-        "github-oauth":{
-                "github.com":"填入你的github token"
-        }
-    },
-    "extra": {
-    },
-    ~~~
-    **如何获取github token**
-
-    登入你的github账号>>右上角settings>>Developer settings>>Personal access tokens>>generate new token
-
+    - cd /data/www/taiping
 2. 安装依赖库前, 修改配置 vim /usr/local/php/etc/php.ini
     - 否则后面composer会报错: Failed to download bower-asset/yii2-pjax from source: The Process class relies on proc_open, which is not available on your PHP installation / The Process class relies on proc_open, which is not available on your PHP installation.
     - 找到 disable_functions = passthru,exec,system,chroot,chgrp,... **这一段, 将proc_open以及proc_get_status删除**, 表示proc_open,proc_get_status可用
     - 重启php服务: /etc/init.d/php-fpm restart
     
 3. 安装依赖库: composer install
-    - 提示:Authentication required
-    - 修改composer.json, 将packagist的url改为https://packagist.org即可
 
 4. 配置环境、配置数据库并安装数据库(开始安装): /usr/local/php/bin/php /data/www/yii/yii install
     
@@ -90,44 +66,28 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
         charset      utf-8;
         client_max_body_size  32M;
         listen       80; ## listen for ipv4
-        #listen       [::]:80 default_server ipv6only=on; ## listen for ipv6
         server_name  _;
-        root  /data/www/yii;
+        root  /data/www/taiping;
         index index.php index.html;
         access_log off;
-        #access_log   /path/to/logs/advanced.access.log main buffer=50k;
-        #error_log    /path/to/logs/advanced.error.log warn;
-        # location优先级： (location =) > (location 完整路径) > (location ^~ 路径) > (location ~,~* 正则顺序) > (location 部分起始路径) > (/)
         # 前台重写
         location / {
-            root /data/www/yii/frontend/web;
+            root /data/www/taiping/frontend/web;
             try_files $uri /frontend/web/index.php?$args;
         }
         # 后台重写
         location /tpadmin {
-            alias  /data/www/yii/backend/web;
+            alias  /data/www/taiping/backend/web;
             try_files $uri /backend/web/index.php?$args;
         }
         # API重写
-        #location /api/v {
         location ~ /api/(tp|v) {
-            alias  /data/www/yii/api/web;
-            #注意：这里不能用try_files，当location /api和目录名称相同时会出现重写错误！
+            alias  /data/www/taiping/api/web;
             try_files $uri /api/web/index.php?$args;
-            #if (!-f $request_filename){
-            #        rewrite ^(.*)$ /api/web/index.php?r=$1 last;
-            #}
         }
         # 存储重写，必须存在不然这个目录下的图片都会出问题（都会使用location /这个下面的重写）
         location /storage {
-            #下面这句是将www.xxx.com/storage重定向/vagrant/yii2admin/storage/web目录中
-            alias  /data/www/yii/storage/web;
-            #注意：这里不能用try_files，当location /storage和目录名称相同时会出现重写错误！
-            #try_files $uri /storage/web/index.php?$args;
-            #下面是隐藏index.php的重写
-            #if (!-f $request_filename){
-            #        rewrite ^(.*)$ /storage/web/index.php?$args last;
-            #}
+            alias  /data/www/taiping/storage/web;
         }
         include enable-php.conf;
         #error_page  404 /404.html;
@@ -141,12 +101,5 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
     }
     ~~~
     - 重启服务: /etc/init.d/nginx restart
-6. 测试 http://服务器IP地址/ 能打开前台页面, http://服务器IP地址/admin 能打开后台页面
-7. 最后shell退出screen: exit
+6. 测试 http://服务器IP地址/ 能打开前台页面, http://服务器IP地址/tpadmin 能打开后台页面
 
-
-
-## 问题记录
-
-* composer install出现: Authentication required (packagist.phpcomposer.com)
-    - 修改composer.json, 把url属性的packagist.phpcomposer.com改为packagist.org
