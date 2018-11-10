@@ -24,3 +24,18 @@
 * -q 不显示任何信息(一般用于脚本)
 * -i 忽略字符大小写的差别
 * -v 反转查找
+
+
+#### 显示匹配某个结果之前的3行，使用 -B 选项：(反之:-A 显示匹配结果之前的行)
+    seq 10|grep "5" -B3
+    2
+    3
+    4
+    5
+
+~~~阿里运维应用示例
+puadmin lscs|grep -B1 ERROR
+# 则出现一行OK和一行ERROR
+puadmin lscs|grep -v OK|grep -B1 ERROR
+# 则先排除OK的,形成一个ERROR带一级标题的结果,再抓取ERROR的并多显示前面的一级标题
+~~~
