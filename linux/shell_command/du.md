@@ -36,3 +36,7 @@ du [选项][文件]
 
 #### 查看.开头的文件大小
 	du .[!.]* -h
+
+#### 查看目录大小并排除指定目录
+
+	du -sh * --exclude=boot --exclude=run --exclude=proc
