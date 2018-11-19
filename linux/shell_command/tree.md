@@ -1,6 +1,10 @@
 ## 以树形结构查看文件
     - 配置alias: alias tt='tree -apughDC'
     
+### 常用
+    tree -apughDCL 2 
+    tree -apughDC `路径`
+
 #### 基本使用
     tree `路径`
 
@@ -38,4 +42,7 @@
     #-g Displays file group owner or GID number
     tree -pug `路径`
 
+#### 显示层数
 
+    #-L level      Descend only level directories deep.
+    tree -L 2 `路径`
