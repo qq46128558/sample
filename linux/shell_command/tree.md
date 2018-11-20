@@ -3,7 +3,7 @@
     
 ### 常用
     tree -apughDCL 2 
-    tree -apughDC `路径`
+    tree -apughDC `路径`d
 
 #### 基本使用
     tree `路径`
