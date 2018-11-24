@@ -10,6 +10,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import time
 from urllib.parse import urlencode # 编码 URL 字符串
+import numpy as np
 
 logging.basicConfig(level=logging.INFO)
 
@@ -38,7 +39,8 @@ def parse_one_page(html):
     df=pd.read_html(content.prettify(),header=0)[0]
     # prettify()优化代码,[0]从pd.read_html返回的list中提取出DataFrame]
     df.to_csv(r'1.csv', mode='a', encoding='utf_8_sig', header=1, index=0)
-    
+    # list=np.array(df).tolist()
+    # logging.info(list)
 
 def main(page):
     html=get_one_page(page)
