@@ -3,8 +3,17 @@
 """ pandas DataFrame的应用 """
 
 import pandas as pd
+import numpy as np
 from numpy import NaN
 import time
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+# dataframe 转 list
+df=pd.read_csv('2.csv')
+logging.info(np.array(df).tolist())
+# INFO:root:[['VC', '1/1/1', '增强免疫力'], ['钙', '2/0/2', '强化骨骼'], ['锌', '0/1/0', '提高男性魅力']]
 
 # 写csv文件
 list=[]
