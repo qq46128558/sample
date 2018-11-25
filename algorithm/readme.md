@@ -201,6 +201,6 @@ sample
 
 自动补全控件,其实就可以用字典树来实现
 
-
+## LRU 算法(least recently used最近最少使用)
 
 
