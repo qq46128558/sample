@@ -14,6 +14,11 @@
 * 字符串截取
   * mid(b2,5,1)
   * left(b2,1)
+* 换行符
+  * char(10)
+* 在数据列表中查找值
+  * =vlookup(查找的值,查找的范围,返回值取查找范围内哪一列的结果值,是否模糊匹配)
+  * =vlookup(h2,ECS!A$2:F$160,6,false)
 
 ## 分组统计
 
@@ -31,3 +36,4 @@
 	D:\Program Files (x86)\Microsoft Office\Office14\ADDINS\TCSCCONV.DLL
 	多试几次,看哪个能用就用哪个,试过遇到的情况是需要将14内的复制到15内,excel才能用
 	复制前先备份
+
