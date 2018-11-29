@@ -1,3 +1,8 @@
+
+#### 显示创建表的信息
+	
+	SHOW CREATE TABLE `tablename`\G
+	
 #### 显示连接数
 	
 	SHOW STATUS LIKE 'thread%';

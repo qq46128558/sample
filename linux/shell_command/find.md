@@ -1,3 +1,9 @@
+
+#### 查找当前目录及子目录下查找所有以.bat或.lock结尾的文件
+    find . \( -name "*.bat" -o -name "*.lock" \)
+    # 或
+    find . -name "*.bat" -o -name "*.lock"
+
 #### 查找并显示文件
     find . -name "testweb.php" -ls
 
