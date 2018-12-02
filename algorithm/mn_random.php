@@ -17,10 +17,15 @@
     if ($m>=$n) return range(1,$n);
     // 如果同一时间多次执行，则不能调用make_seed，否则有可能是相同的随机数
     // mt_srand(make_seed());
+    // 返回的数组中从 start 到 end （含 start 和 end）的单元
     $base=range(1,$n);
+    // 循环个数
     for($i=0;$i<$m;$i++){
+        // 生成随机数($base数组的上下标)(如果随机数为$i,应该是没交换到)
         $rand=mt_rand($i,$n-1);
+        // 如果为初始值
         if($base[$i]==$i+1){
+            // 则交换值
             $base[$i]=$base[$rand];
             $base[$rand]=$i+1;
         }
