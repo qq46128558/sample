@@ -14,3 +14,8 @@ seq命令用于产生从某个数到另外一个数之间的所有整数。
 * -s, --separator=字符串   使用指定字符串分隔数字（默认使用：\n）
 * -w, --equal-width        在列前添加0 使得宽度相同
 
+## 实例
+
+### 产生100个1M的临时文件
+
+	seq -w 3 1 100|xargs -n1 -i dd if=/dev/zero of=tempfile_{}.log bs=1M count=1

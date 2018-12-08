@@ -26,3 +26,13 @@
 3. 增加或修改 ClientAliveCountMax 1 (表示客户端无回应次数大于该值时自动断开连接)
 4. 重启ssh服务: /etc/init.d/ssh restart
 5. 退出ssh远程后再次连入
+
+### 七种文件类型
+
+* - 普通文件
+* d 目录文件
+* c 字符设备文件,如:/dev/zero
+* b 块设备文件,如:/dev/vda1
+* s 套接口文件,如:/var/lib/mysql/mysql.sock
+* p 管道文件 
+* l 符号链接文件,有点像win下的快捷快式
