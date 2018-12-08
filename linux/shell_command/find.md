@@ -1,4 +1,19 @@
 
+#### 循环删除查找出来指定位置的文件
+
+~~~shell
+# 删除前先手工备份
+logs=$(find /var/nginx/www/html/test -name "*.log")
+for log in $logs
+do
+rm -rf $log
+done
+~~~
+
+    # 一行脚本
+    for log in $(find /var/nginx/www/html/test -name "*.log");do rm -rf $log;done
+    find /var/nginx/www/html/test/ -name "*.log" -exec rm -rf {} \;
+    find /var/nginx/www/html/test/ -name "*.log"|xargs -i rm -rf {}
 
 #### 查找当前目录及子目录下查找所有以.bat或.lock结尾的文件
     find . \( -name "*.bat" -o -name "*.lock" \)

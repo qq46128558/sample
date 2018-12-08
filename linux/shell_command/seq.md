@@ -18,4 +18,4 @@ seq命令用于产生从某个数到另外一个数之间的所有整数。
 
 ### 产生100个1M的临时文件
 
-	seq -w 3 1 100|xargs -n1 -i dd if=/dev/zero of=tempfile_{}.log bs=1M count=1
+	seq -w 1 100|xargs -n1 -i dd if=/dev/zero of=tempfile_{}.log bs=1M count=1
