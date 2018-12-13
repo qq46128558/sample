@@ -22,7 +22,13 @@
 		0346349a1a64
 		1f47fade220d
 		419f6c33af0e
+
+#### 利用grep来对比上面两个文件(其实可以用diff)
 	
+	# 将上面的结果写入used.imageid与all.imageid
+	# 将used.imageid串成正则表达式如:|0346349a1a64|1f47fade220d|419f6c33af0e , 然后再grep
+	sid=`cat used.imageid|awk 'BEGIN{var i}{i=i"|"$1}END{print i}'`;cat all.imageid |grep -E $sid --color=auto
+
 #### 正则表达式 [:digit:]
 
 	# 数字开头 单个字符 数字(任意长度) G结尾
