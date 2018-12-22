@@ -15,7 +15,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
 3. 启动一个会话: screen -S lnmp
 4. 安装lnmp: wget -c http://soft.vpser.net/lnmp/lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && ./install.sh lnmp
     - Install MySQL 5.7.22
-    - 配置mysql密码如: 123456(自定义)
+    - 配置mysql密码如: 123456(自定义)(taiping@123456)
     - enable InnoDB: y
     - Install PHP 7.2.6
     - Don't install Memory Allocator. (Default)
@@ -45,7 +45,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
     - 切换工作目录: cd /data/www
     - 下载yii2admin源码: git clone  http://git.oschina.net/ccdream/yii2admin yii
         - git clone -b dev git@gitee.com:usana/taiping.git
-    - cd /data/www/yii
+    - cd /data/www/taiping
 2. 配置composer.json
     - config内对象增加fxp-asset以及github-oauth
     - extra内对象删除
@@ -77,8 +77,8 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
     - 提示:Authentication required
     - 修改composer.json, 将packagist的url改为https://packagist.org即可
 
-4. 配置环境、配置数据库并安装数据库(开始安装): /usr/local/php/bin/php /data/www/yii/yii install
-    
+4. 配置环境、配置数据库并安装数据库(开始安装): /usr/local/php/bin/php /data/www/taiping/yii install
+    (tpadmin/tpadmin@123)
 5. 配置nginx
     - 备份原配置文件 cp /usr/local/nginx/conf/nginx.conf /usr/local/nginx/conf/nginx.conf.bak
     - 修改配置文件 vim /usr/local/nginx/conf/nginx.conf
@@ -92,7 +92,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
         listen       80; ## listen for ipv4
         #listen       [::]:80 default_server ipv6only=on; ## listen for ipv6
         server_name  _;
-        root  /data/www/yii;
+        root  /data/www/taiping;
         index index.php index.html;
         access_log off;
         #access_log   /path/to/logs/advanced.access.log main buffer=50k;
@@ -100,18 +100,18 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
         # location优先级： (location =) > (location 完整路径) > (location ^~ 路径) > (location ~,~* 正则顺序) > (location 部分起始路径) > (/)
         # 前台重写
         location / {
-            root /data/www/yii/frontend/web;
+            root /data/www/taiping/frontend/web;
             try_files $uri /frontend/web/index.php?$args;
         }
         # 后台重写
         location /tpadmin {
-            alias  /data/www/yii/backend/web;
+            alias  /data/www/taiping/backend/web;
             try_files $uri /backend/web/index.php?$args;
         }
         # API重写
         #location /api/v {
         location ~ /api/(tp|v) {
-            alias  /data/www/yii/api/web;
+            alias  /data/www/taiping/api/web;
             #注意：这里不能用try_files，当location /api和目录名称相同时会出现重写错误！
             try_files $uri /api/web/index.php?$args;
             #if (!-f $request_filename){
@@ -121,7 +121,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
         # 存储重写，必须存在不然这个目录下的图片都会出问题（都会使用location /这个下面的重写）
         location /storage {
             #下面这句是将www.xxx.com/storage重定向/vagrant/yii2admin/storage/web目录中
-            alias  /data/www/yii/storage/web;
+            alias  /data/www/taiping/storage/web;
             #注意：这里不能用try_files，当location /storage和目录名称相同时会出现重写错误！
             #try_files $uri /storage/web/index.php?$args;
             #下面是隐藏index.php的重写
@@ -135,6 +135,7 @@ yii2+metronic v4.5.6+bootstrap v3.3.6
         location = /requirements.php {
             deny all;
         }
+        #此处注意有个.ht(会过滤.html)
         location ~ \.(ht|svn|git|env) {
             deny all;
         }
