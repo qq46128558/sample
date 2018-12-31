@@ -1,4 +1,17 @@
 
+#### 查看提示符格式
+
+	echo $PS1
+	# ${debian_chroot:+($debian_chroot)}\u@\h:\w\$
+	# root@iZwz9eqxyns1r4q5wr19ijZ:/var/nginx/www/html/test#
+
+#### 修改提示符颜色
+	
+	# [\e[F;Bm]要改变颜色的部分[\e[0m] F前景30~37 B背景40~47
+	# 颜色顺序 black red green yellow blue magenta cyan white。
+	export PS1='${debian_chroot:+($debian_chroot)}\u@\h:\[\e[33;40m\]\w\[\e[0m\]\$'
+	# root@iZwz9eqxyns1r4q5wr19ijZ:/var/nginx/www/html/test# (路径带颜色)
+
 #### 释放被cache的内存 /proc/sys/vm/drop_caches
 	
 	# 释放前先sync,防止数据丢失
