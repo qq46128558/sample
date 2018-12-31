@@ -11,6 +11,18 @@
 	# 颜色顺序 black red green yellow blue magenta cyan white。
 	export PS1='${debian_chroot:+($debian_chroot)}\u@\h:\[\e[33;40m\]\w\[\e[0m\]\$'
 	# root@iZwz9eqxyns1r4q5wr19ijZ:/var/nginx/www/html/test# (路径带颜色)
+	\d 代表日期
+	\H 完整的主机名称
+	\h 仅取主机的第一个名字
+	\t 显示时间为24小时格式(带秒)
+	\T 示时间为12小时格式
+	\A 显示时间为24小时格式
+	\u 当前用户的账号名称
+	\v BASH的版本信息
+	\w 完整的工作目录名称
+	\W 列出最后一个目录
+	\# 下达的第几个命令
+	\$ 提示字符，如果是root时，提示符为：# ，普通用户则为：$
 
 #### 释放被cache的内存 /proc/sys/vm/drop_caches
 	
