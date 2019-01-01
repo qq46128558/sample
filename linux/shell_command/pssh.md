@@ -21,6 +21,35 @@ ssh命令是一个python编写可以在多台服务器上执行命令的工具�
 	-i：每个服务器内部处理信息输出
 	-P：打印出服务器返回信息
 
+## 注意
+	a 使用前提
+	中心主机连接远程主机可以通过ssh密钥无密码连接
+	b 命令格式
+	pssh 总是通过清单 文件指定主机
+	其中的每行采用 [user] host[:port] 形式。
+	c 创建servers.txt文件
+	文件的内容为远程主机的ip,和用于连接ssh的用户名和端口
+	# vim /home/server.txt
+	192.168.0.177
+	root@183.62.138.82:22031
+	d pssh用法-在多个主机上并行地运行命令
+	# pssh -P -h /home/server.txt hostname
+
+~~~
+# 建立ssh密钥登陆，脚本批量创建(验证通过)
+[root@57135test pssh-1.4.3]# ssh-keygen -t rsa
+创建rsa.sh脚本 test.txt中写入要管理的IP
+[root@192 sh]# more rsa.sh 
+#!/bin/sh
+#by authors chy 2016
+for i in $(cat test.txt)
+do
+        ssh-copy-id -i /root/.ssh/id_rsa.pub $i
+        echo $i"设置密码登录成功"
+done
+注：可以将IP写在test.txt文件中
+~~~
+
 ## 实例
 
 ### 获取每台服务器的uptime：
