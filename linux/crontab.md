@@ -118,6 +118,9 @@ crond服务
 
 	01 * * * * root run-parts /etc/cron.hourly
 
+~~~
+當使用者使用 crontab 這個指令來建立工作排程之後，該項工作就會被紀錄到 /var/spool/cron/ 裡面去了，而且是以帳號來作為判別的喔！舉例來說， dmtsai 使用 crontab 後， 他的工作會被紀錄到 /var/spool/cron/dmtsai 裡頭去！但請注意，不要使用 vi 直接編輯該檔案， 因為可能由於輸入語法錯誤，會導致無法執行 cron 喔！另外， cron 執行的每一項工作都會被紀錄到 /var/log/cron 這個登錄檔中，所以囉，如果你的 Linux 不知道有否被植入木馬時，也可以搜尋一下 /var/log/cron 這個登錄檔呢！
+~~~
 
 ~~~
 個人化的行為使用『 crontab -e 』：如果你是依據個人需求來建立的例行工作排程，建議直接使用 crontab -e 來建立你的工作排程較佳！ 這樣也能保障你的指令行為不會被大家看到 (/etc/crontab 是大家都能讀取的權限喔！)；
