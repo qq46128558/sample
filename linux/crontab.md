@@ -117,3 +117,13 @@ crond服务
 ### 每小时执行/etc/cron.hourly目录内的脚本
 
 	01 * * * * root run-parts /etc/cron.hourly
+
+
+~~~
+個人化的行為使用『 crontab -e 』：如果你是依據個人需求來建立的例行工作排程，建議直接使用 crontab -e 來建立你的工作排程較佳！ 這樣也能保障你的指令行為不會被大家看到 (/etc/crontab 是大家都能讀取的權限喔！)；
+系統維護管理使用『 vim /etc/crontab 』：如果你這個例行工作排程是系統的重要工作，為了讓自己管理方便，同時容易追蹤，建議直接寫入 /etc/crontab 較佳！
+自己開發軟體使用『 vim /etc/cron.d/newfile 』：如果你是想要自己開發軟體，那當然最好就是使用全新的設定檔，並且放置於 /etc/cron.d/ 目錄內即可。
+
+/etc/crontab 与 /etc/cron.d/* 使用的是7位设定
+『分 時 日 月 周 身份 指令』七個欄位的設定
+~~~
