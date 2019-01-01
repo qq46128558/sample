@@ -82,3 +82,16 @@ server1上运行：
 server1上运行：(nginx-0.6.34是一个目录)
 
 	tar czvf – nginx-0.6.34 | nc 192.168.228.222 1234
+
+### 其他测试
+	
+	# 向localhost 22端口,发送test字符串
+	echo "test"|nc localhost 22
+	# 返回:
+	SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.4
+	Protocol mismatch.
+
+	# 阿里nuwa角色测试(在NuwaZK#角色机器上执行)
+	echo srvr|nc localhost 10240|grep Mode
+	# 返回
+	Mode: follower
