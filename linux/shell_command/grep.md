@@ -72,3 +72,8 @@ puadmin lscs|grep -B1 ERROR
 puadmin lscs|grep -v OK|grep -B1 ERROR
 # 则先排除OK的,形成一个ERROR带一级标题的结果,再抓取ERROR的并多显示前面的一级标题
 ~~~
+
+#### grep带上进程标题
+
+	ps aux|grep -v grep|grep -e PID -e XXX --color=auto 
+	ps aux|head -1;ps aux|grep mysql
