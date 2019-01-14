@@ -23,3 +23,20 @@ git config --global --list
 
 #### 查看指定项配置信息
 git config xxxxxx
+
+#### 在CMD终端中设置在全局Git环境中，长期存储密码
+	
+	# push一次后,会自动保存密码至/root/.git-credentials
+	git config --global credential.helper store
+
+#### 其他设置密码方式
+
+	# 记住密码（默认15分钟）：
+	git config --global credential.helper cache
+	# 自定义存储时间
+	git config credential.helper 'cache --timeout=3600'
+	
+#### 使用HTTPS协议，有一种简单粗暴的方式是在远程地址中带上密码
+	
+	git remote set-url origin http://yourname:password@bitbucket.org/yourname/project.git
+	
