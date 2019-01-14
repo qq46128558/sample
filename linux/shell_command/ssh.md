@@ -69,3 +69,10 @@ ssh(选项)(参数)
 
 	ssh -R 2344:10.210.1.65:22 root@60.190.239.50 -p 3402
 
+### 阿里云运维实例
+    
+    # tj_show -r 查指定角色的机器,--ip 转成ip地址
+    # 将传入的ip地址, 一个个执行ssh 连入, 连入后执行后面的 echo 一串命令
+    tj_show -r pangu.PanguTools# --ip |xargs -n1 -i ssh " echo {}; puadmin lscs | grep tcp; echo -e \"\n\n\""
+
+
