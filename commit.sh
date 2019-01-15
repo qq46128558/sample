@@ -1,4 +1,5 @@
 #普通修改后快捷更新到Git
+git pull
 result=`git status -s|sed 's/??/ A/g'`
 git add -A
 
