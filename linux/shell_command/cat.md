@@ -1,4 +1,10 @@
 
+#### dns
+
+##### 查看dns伺服器
+	
+	cat /etc/resolv.conf
+
 #### cpu
 	
 	总核数 = 物理CPU个数 X 每颗物理CPU的核数 

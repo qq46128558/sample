@@ -74,12 +74,20 @@ curl -I http://man.linuxde.net
 	#-I/--head	只显示请求头信息
 	curl www.baidu.com -I
 
-#####获取页面
+##### 获取页面
 	curl `url_address`
 
-#####使用地址重定向
+##### 使用地址重定向
 	#-L, --location      Follow redirects (H)
 	curl -L `url_address`
 
-#####查看帮助
+##### 查看帮助
 	curl --help
+
+## 示例
+
+### 獲取本機公網IP地址 
+	
+	curl ipinfo.io
+	curl ifconfig.me
+
